@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueSky Adventures Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Link to Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="portal-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-mountain-sun"></i>
+                <span>BlueSky Adventures</span>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <!-- Add other potential future links here if needed -->
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search something...">
+                </div>
+            </header>
+
+            <div class="welcome-banner">
+                 <h2>Welcome!</h2>
+                 <p>Access your schedules, forms, and logs below.</p>
+            </div>
+
+            <h2>Quick Access Links</h2>
+            <div class="link-cards-grid">
+                <!-- Job Schedule Card -->
+                <div class="card">
+                    <i class="fas fa-calendar-alt card-icon job-icon"></i>
+                    <h3>Job Schedule</h3>
+                    <p>View weekly job assignments.</p>
+                    <!-- !!! LINK ADDED HERE !!! -->
+                    <a href="https://airtable.com/appW0gt2fgh05uB6f/shr5KOt1URui5CEli" class="card-button" target="_blank">Access Schedule</a>
+                </div>
+
+                <!-- Gym Schedule Card -->
+                <div class="card">
+                    <i class="fas fa-dumbbell card-icon gym-icon"></i>
+                    <h3>Gym Schedule</h3>
+                    <p>Check gym availability & bookings.</p>
+                    <a href="https://airtable.com/appW0gt2fgh05uB6f/shrDMYtk8btnasmON" class="card-button" target="_blank">View Gym Times</a>
+                     <!-- !!! REPLACE # with your Airtable Gym Schedule Link !!! -->
+                </div>
+
+                <!-- Time Off Request Form Card -->
+                <div class="card">
+                    <i class="fas fa-file-alt card-icon form-icon"></i>
+                    <h3>Time Off Request</h3>
+                    <p>Submit your Day off requests here.</p>
+                    <a href="https://airtable.com/appzUivoXSDXmiB0k/pagoGSDvLUHkXNhqH/form" class="card-button" target="_blank">Open Form</a>
+                     <!-- !!! REPLACE # with your Airtable Time Off Form Link !!! -->
+                </div>
+
+                <!-- Route Log Card -->
+                <div class="card">
+                    <i class="fas fa-route card-icon route-icon"></i>
+                    <h3>Route Log</h3>
+                    <p>Review past route information.</p>
+                    <a href="https://airtable.com/appW0gt2fgh05uB6f/shrsDyxkYn6ZxAfst" class="card-button" target="_blank">View Log</a>
+                     <!-- !!! REPLACE # with your Airtable Route Log Link !!! -->
+                </div>
+
+                <!-- Staff Days Card -->
+                <div class="card">
+                    <i class="fas fa-user-clock card-icon staff-icon"></i>
+                    <h3>Staff Days</h3>
+                    <p>Check staff availability/schedule.</p>
+                    <a href="https://airtable.com/appW0gt2fgh05uB6f/shr0ILbxOV3acWiyH" class="card-button" target="_blank">Check Availability</a>
+                     <!-- !!! REPLACE # with your Airtable Staff Days Link !!! -->
+                </div>
+
+                <!-- Route Input Form Card -->
+                <div class="card">
+                    <i class="fas fa-keyboard card-icon input-icon"></i>
+                    <h3>Route Input Form</h3>
+                    <p>Enter daily route details.</p>
+                    <a href="https://airtable.com/appW0gt2fgh05uB6f/pagmhPana0Pl3HtDp/form" class="card-button" target="_blank">Enter Route</a>
+                     <!-- !!! REPLACE # with your Airtable Route Input Form Link !!! -->
+                </div>
+
+                 <!-- Impact Report Form Card -->
+                <div class="card">
+                    <i class="fas fa-chart-line card-icon impact-icon"></i>
+                    <h3>Impact Report Form</h3>
+                    <p>Submit your activity impact report.</p>
+                    <a href="https://airtable.com/appW0gt2fgh05uB6f/pagX4KBE29VWrxyaA/form" class="card-button" target="_blank">Submit Report</a>
+                     <!-- !!! REPLACE # with your Airtable Impact Report Form Link !!! -->
+                </div>
+
+                 <!-- Changes Request Form Card -->
+                <div class="card">
+                    <i class="fas fa-edit card-icon changes-icon"></i>
+                    <h3>Changes Request Form</h3>
+                    <p>Request modifications or updates.</p>
+                    <a href="https://airtable.com/appW0gt2fgh05uB6f/pagaCEWlAT2fiBSFh/form" class="card-button" target="_blank">Request Change</a>
+                     <!-- !!! REPLACE # with your Airtable Changes Request Form Link !!! -->
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="right-sidebar">
+            <div class="calendar-widget">
+                <div class="calendar-header">
+                    <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                    <h3 id="monthYear">Month Year</h3>
+                    <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-days-header">
+                    <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+                </div>
+                <div class="calendar-days-grid" id="calendarDays">
+                    <!-- Calendar days will be generated by JavaScript -->
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

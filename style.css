@@ -1,0 +1,307 @@
+/* Basic Reset & Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7fe; /* Light purple/gray background */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align container top on mobile */
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Portal Container Layout */
+.portal-container {
+    display: grid;
+    grid-template-columns: 240px 1fr 300px; /* Sidebar | Main Content | Right Sidebar */
+    gap: 25px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 1400px;
+    min-height: 80vh;
+    overflow: hidden;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    background-color: #fff;
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #e0e0e0;
+}
+
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #4a47a3;
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+
+.sidebar .logo i {
+    margin-right: 10px;
+    font-size: 1.5em;
+}
+
+.sidebar nav ul { list-style: none; }
+.sidebar nav li { margin-bottom: 5px; }
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.sidebar nav a i { margin-right: 12px; width: 20px; text-align: center; }
+.sidebar nav a:hover { background-color: #eef2ff; color: #4a47a3; }
+.sidebar nav li.active a { background-color: #4a47a3; color: #fff; }
+
+
+/* --- Main Content --- */
+.main-content {
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.main-content header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #f4f7fe;
+    padding: 8px 15px;
+    border-radius: 20px;
+    width: 60%;
+    max-width: 400px;
+}
+.search-bar i { color: #aaa; margin-right: 10px; }
+.search-bar input { border: none; outline: none; background: none; width: 100%; font-size: 0.95em; }
+
+.welcome-banner {
+    background: linear-gradient(90deg, #4a47a3, #6e6afc);
+    color: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+.welcome-banner h2 { margin-bottom: 5px; font-weight: 600; }
+
+.main-content h2 { /* "Quick Access Links" title */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Link Cards Grid */
+.link-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 200px;
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); }
+.card-icon { font-size: 2.5em; margin-bottom: 15px; color: #4a47a3; }
+/* Specific icon colors */
+.job-icon { color: #28a745; } .gym-icon { color: #fd7e14; } .form-icon { color: #17a2b8; } .route-icon { color: #6f42c1; } .staff-icon { color: #ffc107; } .input-icon { color: #007bff; } .impact-icon { color: #dc3545; } .changes-icon { color: #6c757d; }
+.card h3 { font-size: 1.1em; margin-bottom: 8px; font-weight: 600; }
+.card p { font-size: 0.9em; color: #666; margin-bottom: 15px; flex-grow: 1; }
+.card-button {
+    display: inline-block;
+    background-color: #4a47a3;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+}
+.card-button:hover { background-color: #3a368a; }
+
+
+/* --- Right Sidebar --- */
+.right-sidebar {
+    background-color: #fff;
+    padding: 25px;
+    border-left: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Calendar Widget Styling */
+.calendar-widget {
+    background-color: #f9faff;
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid #e8ecf7;
+    margin-top: 0;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.calendar-header h3 { font-size: 1.1em; font-weight: 600; color: #4a47a3; }
+.calendar-header button { background: none; border: none; font-size: 1em; cursor: pointer; color: #4a47a3; padding: 5px; }
+.calendar-header button:hover { color: #3a368a; }
+
+.calendar-days-header,
+.calendar-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-days-header div { font-weight: 600; font-size: 0.85em; color: #888; padding-bottom: 8px; }
+
+.calendar-days-grid div {
+    font-size: 0.9em;
+    padding: 8px 0;
+    border-radius: 50%;
+    cursor: default;
+    transition: background-color 0.2s ease;
+    line-height: 1.5;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+.calendar-days-grid div.other-month-day { color: #ccc; }
+.calendar-days-grid div.today { background-color: #4a47a3; color: #fff; font-weight: 600; }
+.calendar-days-grid div:not(.other-month-day):not(.today):hover { background-color: #eef2ff; color: #4a47a3; }
+
+/* --- Responsive Styles --- */
+
+/* Laptops / Smaller Desktops */
+@media (max-width: 1200px) {
+    .portal-container {
+        grid-template-columns: 220px 1fr 280px;
+        gap: 20px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+    .portal-container {
+        grid-template-columns: 200px 1fr; /* Keep sidebar, stack main/right */
+        grid-template-areas:
+            "sidebar main"
+            "sidebar right";
+        gap: 15px;
+        min-height: 90vh; /* Allow more height */
+    }
+    .sidebar { grid-area: sidebar; }
+    .main-content { grid-area: main; padding: 20px; }
+    .right-sidebar { grid-area: right; border-left: none; border-top: 1px solid #e0e0e0; padding: 20px; }
+    .search-bar { width: 70%; }
+    .link-cards-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } /* Slightly smaller cards */
+}
+
+/* Large Phones / Small Tablets */
+@media (max-width: 768px) {
+     body {
+        padding: 0; /* Remove body padding */
+        align-items: stretch; /* Allow container to take full height */
+     }
+    .portal-container {
+        grid-template-columns: 1fr; /* Stack everything */
+        grid-template-areas:
+            "sidebar"
+            "main"
+            "right";
+        border-radius: 0;
+        min-height: 100vh;
+        gap: 0;
+    }
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 15px;
+        height: auto; /* Collapse height */
+    }
+    .main-content { padding: 15px; } /* Reduce padding */
+    .main-content header {
+        flex-direction: row; /* Keep search bar in row */
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .search-bar { width: 100%; max-width: none; padding: 6px 12px; } /* Smaller padding */
+    .welcome-banner { padding: 15px 20px; }
+    .main-content h2 { font-size: 1.3em; }
+    .link-cards-grid {
+        grid-template-columns: 1fr; /* Single column card layout */
+        gap: 15px; /* Reduce gap between cards */
+    }
+     .card {
+        min-height: auto; /* Allow cards to shrink */
+        padding: 15px;
+    }
+    .card-icon { font-size: 2em; margin-bottom: 10px; }
+    .card h3 { font-size: 1em; }
+    .card p { font-size: 0.85em; margin-bottom: 12px; }
+    .card-button { padding: 7px 15px; font-size: 0.85em; }
+
+    .right-sidebar { padding: 15px; }
+}
+
+/* Smaller Phones */
+@media (max-width: 576px) {
+    .sidebar .logo span { font-size: 1.1em; } /* Slightly smaller logo text */
+    .sidebar nav a { padding: 10px 12px; font-size: 0.95em; } /* Smaller nav items */
+    .main-content h2 { font-size: 1.2em; } /* Smaller section title */
+    .welcome-banner { padding: 12px 15px; }
+    .welcome-banner h2 { font-size: 1.1em; }
+    .welcome-banner p { font-size: 0.9em; }
+
+    /* Adjust calendar for small screens */
+    .calendar-widget { padding: 10px; }
+    .calendar-header h3 { font-size: 1em; }
+    .calendar-days-header div { font-size: 0.8em; }
+    .calendar-days-grid { gap: 3px; } /* Tighter day grid */
+    .calendar-days-grid div {
+        font-size: 0.85em;
+        width: 26px; /* Smaller circles */
+        height: 26px;
+        line-height: 1.4;
+        padding: 6px 0;
+    }
+}
