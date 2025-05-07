@@ -27,7 +27,7 @@
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <!-- This div will be shown only after password entry -->
+            <!-- This div will be shown only if authenticated -->
             <div id="pageContentWrapper" style="display: none;">
                 <header class="main-header">
                     <div class="header-title-search">
@@ -182,18 +182,6 @@
             </div>
         </aside>
     </div>
-
-    <!-- Global Password Modal -->
-    <div id="globalPasswordModal" class="modal">
-        <div class="modal-content">
-            <h3>Portal Access Required</h3>
-            <p>Please enter the password to access the portal.</p>
-            <input type="password" id="globalPasswordInput" placeholder="Portal Password">
-            <button id="submitGlobalPasswordButton">Unlock Portal</button>
-            <p id="globalPasswordError" class="error-message"></p>
-        </div>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>
