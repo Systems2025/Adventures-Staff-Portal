@@ -27,98 +27,147 @@
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <header>
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search something...">
-                </div>
-            </header>
+            <!-- This div will be shown only after password entry -->
+            <div id="pageContentWrapper" style="display: none;">
+                <header class="main-header">
+                    <div class="header-title-search">
+                        <h1>Department Portal</h1>
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search links...">
+                        </div>
+                    </div>
+                </header>
 
-            <div class="welcome-banner">
-                 <h2>Welcome!</h2>
-                 <p>Access your schedules, forms, and logs below.</p>
-            </div>
-
-            <h2>Quick Access Links</h2>
-            <div class="link-cards-grid">
-                <!-- Job Schedule Card -->
-                <div class="card">
-                    <i class="fas fa-calendar-alt card-icon job-icon"></i>
-                    <h3>Job Schedule</h3>
-                    <p>View weekly job assignments.</p>
-                    <!-- !!! LINK ADDED HERE !!! -->
-                    <a href="https://airtable.com/appW0gt2fgh05uB6f/shrqCRNAoX9pFqonu" class="card-button" target="_blank">Access Schedule</a>
+                <div class="static-welcome-message">
+                    <h2>Welcome to the Portal!</h2>
+                    <p>Select a department below to access its resources.</p>
                 </div>
 
-                <!-- Gym Schedule Card -->
-                <div class="card">
-                    <i class="fas fa-dumbbell card-icon gym-icon"></i>
-                    <h3>Gym Schedule</h3>
-                    <p>Check gym availability & bookings.</p>
-                    <a href="https://airtable.com/appW0gt2fgh05uB6f/shrDMYtk8btnasmON" class="card-button" target="_blank">View Gym Times</a>
-                     <!-- !!! REPLACE # with your Airtable Gym Schedule Link !!! -->
-                </div>
+                <div class="departments-grid-container">
+                    <!-- General Department -->
+                    <div class="department-block" data-department="general">
+                        <div class="department-block-header"><i class="fas fa-asterisk"></i><h3>General</h3></div>
+                        <p class="department-block-summary">Common resources & awards.</p>
+                    </div>
+                    <div class="department-links-wrapper" id="links-general" data-department-content="general">
+                        <h4>Links for General Department:</h4>
+                        <div class="link-cards-grid">
+                            <div class="card">
+                                <i class="fas fa-award card-icon staff-icon"></i>
+                                <h3>Embody The Values Award</h3>
+                                <p>Nominate a colleague for embodying our core values.</p>
+                                <a href="#" class="card-button" target="_blank">Nominate Now</a>
+                            </div>
+                            <!-- Add more General cards here -->
+                        </div>
+                    </div>
 
-                <!-- Time Off Request Form Card -->
-                <div class="card">
-                    <i class="fas fa-file-alt card-icon form-icon"></i>
-                    <h3>Time Off Request</h3>
-                    <p>Submit your Day off requests here.</p>
-                    <a href="https://airtable.com/appzUivoXSDXmiB0k/pagoGSDvLUHkXNhqH/form" class="card-button" target="_blank">Open Form</a>
-                     <!-- !!! REPLACE # with your Airtable Time Off Form Link !!! -->
-                </div>
+                    <!-- Adventures Department -->
+                    <div class="department-block" data-department="adventures">
+                        <div class="department-block-header"><i class="fas fa-mountain-sun"></i><h3>Adventures</h3></div>
+                        <p class="department-block-summary">Schedules, forms, and logs.</p>
+                    </div>
+                    <div class="department-links-wrapper" id="links-adventures" data-department-content="adventures">
+                        <h4>Links for Adventures Department:</h4>
+                        <div class="link-cards-grid">
+                            <div class="card"><i class="fas fa-calendar-alt card-icon job-icon"></i><h3>Job Schedule</h3><p>View weekly job assignments.</p><a href="https://airtable.com/appW0gt2fgh05uB6f/shrqCRNAoX9pFqonu" class="card-button" target="_blank">Access Schedule</a></div>
+                            <div class="card"><i class="fas fa-dumbbell card-icon gym-icon"></i><h3>Gym Schedule</h3><p>Check gym availability & bookings.</p><a href="https://airtable.com/appW0gt2fgh05uB6f/shrDMYtk8btnasmON" class="card-button" target="_blank">View Gym Times</a></div>
+                            <div class="card"><i class="fas fa-file-alt card-icon form-icon"></i><h3>Time Off Request</h3><p>Submit your Day off requests here.</p><a href="https://airtable.com/appzUivoXSDXmiB0k/pagoGSDvLUHkXNhqH/form" class="card-button" target="_blank">Open Form</a></div>
+                            <div class="card"><i class="fas fa-route card-icon route-icon"></i><h3>Route Log</h3><p>Review past route information.</p><a href="https://airtable.com/appW0gt2fgh05uB6f/shrsDyxkYn6ZxAfst" class="card-button" target="_blank">View Log</a></div>
+                            <div class="card"><i class="fas fa-user-clock card-icon staff-icon"></i><h3>Staff Days</h3><p>Check staff availability/schedule.</p><a href="https://airtable.com/appW0gt2fgh05uB6f/shr0ILbxOV3acWiyH" class="card-button" target="_blank">Check Availability</a></div>
+                            <div class="card"><i class="fas fa-keyboard card-icon input-icon"></i><h3>Route Input Form</h3><p>Enter daily route details.</p><a href="https://airtable.com/appW0gt2fgh05uB6f/pagmhPana0Pl3HtDp/form" class="card-button" target="_blank">Enter Route</a></div>
+                            <div class="card"><i class="fas fa-chart-line card-icon impact-icon"></i><h3>Impact Report Form</h3><p>Submit your activity impact report.</p><a href="https://airtable.com/appW0gt2fgh05uB6f/pagX4KBE29VWrxyaA/form" class="card-button" target="_blank">Submit Report</a></div>
+                            <div class="card"><i class="fas fa-edit card-icon changes-icon"></i><h3>Changes Request Form</h3><p>Request modifications or updates.</p><a href="https://airtable.com/appW0gt2fgh05uB6f/pagaCEWlAT2fiBSFh/form" class="card-button" target="_blank">Request Change</a></div>
+                        </div>
+                    </div>
 
-                <!-- Route Log Card -->
-                <div class="card">
-                    <i class="fas fa-route card-icon route-icon"></i>
-                    <h3>Route Log</h3>
-                    <p>Review past route information.</p>
-                    <a href="https://airtable.com/appW0gt2fgh05uB6f/shrsDyxkYn6ZxAfst" class="card-button" target="_blank">View Log</a>
-                     <!-- !!! REPLACE # with your Airtable Route Log Link !!! -->
-                </div>
+                    <!-- Team Development Department -->
+                    <div class="department-block" data-department="team-development">
+                         <div class="department-block-header"><i class="fas fa-users-cog"></i><h3>Team Development</h3></div>
+                        <p class="department-block-summary">Growth & evaluation resources.</p>
+                    </div>
+                    <div class="department-links-wrapper" id="links-team-development" data-department-content="team-development">
+                         <h4>Links for Team Development Department:</h4>
+                        <div class="link-cards-grid">
+                            <div class="card"><i class="fas fa-clipboard-check card-icon form-icon"></i><h3>After Action Report (2025)</h3><p>Submit program after action reports.</p><a href="https://airtable.com/appCVpQpnHwVlLUB9/pagVng2OrqTWz35yy/form" class="card-button" target="_blank">Open Form</a></div>
+                            <div class="card"><i class="fas fa-tasks card-icon input-icon"></i><h3>Needs Assessment (2025)</h3><p>Complete program needs assessments.</p><a href="https://airtable.com/appCVpQpnHwVlLUB9/pagyMoKknxGH5UsmN/form" class="card-button" target="_blank">Open Form</a></div>
+                            <div class="card"><i class="fas fa-comments card-icon impact-icon"></i><h3>Participant Feedback (2025)</h3><p>Form for collecting participant feedback.</p><a href="https://airtable.com/appCVpQpnHwVlLUB9/pag16kpGMLUo5tETQ/form" class="card-button" target="_blank">Open Form</a></div>
+                            <div class="card"><i class="fas fa-file-signature card-icon changes-icon"></i><h3>Release Form (2025)</h3><p>Access and submit release forms.</p><a href="https://airtable.com/appxylcvDQHziBFW7/shrqPnSUFF5C69CT5" class="card-button" target="_blank">View/Submit Form</a></div>
+                        </div>
+                    </div>
 
-                <!-- Staff Days Card -->
-                <div class="card">
-                    <i class="fas fa-user-clock card-icon staff-icon"></i>
-                    <h3>Staff Days</h3>
-                    <p>Check staff availability/schedule.</p>
-                    <a href="https://airtable.com/appW0gt2fgh05uB6f/shr0ILbxOV3acWiyH" class="card-button" target="_blank">Check Availability</a>
-                     <!-- !!! REPLACE # with your Airtable Staff Days Link !!! -->
-                </div>
+                    <!-- Client Relations Department -->
+                    <div class="department-block" data-department="client-relations">
+                        <div class="department-block-header"><i class="fas fa-handshake"></i><h3>Client Relations</h3></div>
+                        <p class="department-block-summary">Client interaction resources.</p>
+                    </div>
+                    <div class="department-links-wrapper" id="links-client-relations" data-department-content="client-relations">
+                        <h4>Links for Client Relations:</h4>
+                        <div class="link-cards-grid">
+                             <div class="card placeholder-card"><i class="fas fa-folder-open card-icon"></i><h3>Client Portal Access</h3><p>Link to the client-facing portal.</p><a href="#" class="card-button" target="_blank">Open Portal</a></div>
+                             <div class="card placeholder-card"><i class="fas fa-envelope-open-text card-icon"></i><h3>Email Templates</h3><p>Standard communication templates.</p><a href="#" class="card-button" target="_blank">View Templates</a></div>
+                        </div>
+                    </div>
 
-                <!-- Route Input Form Card -->
-                <div class="card">
-                    <i class="fas fa-keyboard card-icon input-icon"></i>
-                    <h3>Route Input Form</h3>
-                    <p>Enter daily route details.</p>
-                    <a href="https://airtable.com/appW0gt2fgh05uB6f/pagmhPana0Pl3HtDp/form" class="card-button" target="_blank">Enter Route</a>
-                     <!-- !!! REPLACE # with your Airtable Route Input Form Link !!! -->
-                </div>
+                    <!-- Camp Department -->
+                    <div class="department-block" data-department="camp">
+                        <div class="department-block-header"><i class="fas fa-campground"></i><h3>Camp</h3></div>
+                        <p class="department-block-summary">Camp program information.</p>
+                    </div>
+                     <div class="department-links-wrapper" id="links-camp" data-department-content="camp">
+                        <h4>Links for Camp Department:</h4>
+                        <div class="link-cards-grid">
+                             <div class="card placeholder-card"><i class="fas fa-clipboard-list card-icon"></i><h3>Packing List</h3><p>Essential items for campers.</p><a href="#" class="card-button" target="_blank">View List</a></div>
+                             <div class="card placeholder-card"><i class="fas fa-first-aid card-icon"></i><h3>Medical Form</h3><p>Submit camper medical information.</p><a href="#" class="card-button" target="_blank">Open Form</a></div>
+                        </div>
+                    </div>
 
-                 <!-- Impact Report Form Card -->
-                <div class="card">
-                    <i class="fas fa-chart-line card-icon impact-icon"></i>
-                    <h3>Impact Report Form</h3>
-                    <p>Submit your activity impact report.</p>
-                    <a href="https://airtable.com/appW0gt2fgh05uB6f/pagX4KBE29VWrxyaA/form" class="card-button" target="_blank">Submit Report</a>
-                     <!-- !!! REPLACE # with your Airtable Impact Report Form Link !!! -->
-                </div>
+                    <!-- Family Life Department -->
+                    <div class="department-block" data-department="family-life">
+                        <div class="department-block-header"><i class="fas fa-home"></i><h3>Family Life</h3></div>
+                        <p class="department-block-summary">Family program resources.</p>
+                    </div>
+                    <div class="department-links-wrapper" id="links-family-life" data-department-content="family-life">
+                        <h4>Links for Family Life Department:</h4>
+                        <div class="link-cards-grid">
+                             <div class="card placeholder-card"><i class="fas fa-calendar-check card-icon"></i><h3>Event Calendar</h3><p>Upcoming family events.</p><a href="#" class="card-button" target="_blank">View Calendar</a></div>
+                             <div class="card placeholder-card"><i class="fas fa-photo-video card-icon"></i><h3>Photo Gallery</h3><p>Shared memories from events.</p><a href="#" class="card-button" target="_blank">Access Gallery</a></div>
+                        </div>
+                    </div>
 
-                 <!-- Changes Request Form Card -->
-                <div class="card">
-                    <i class="fas fa-edit card-icon changes-icon"></i>
-                    <h3>Changes Request Form</h3>
-                    <p>Request modifications or updates.</p>
-                    <a href="https://airtable.com/appW0gt2fgh05uB6f/pagaCEWlAT2fiBSFh/form" class="card-button" target="_blank">Request Change</a>
-                     <!-- !!! REPLACE # with your Airtable Changes Request Form Link !!! -->
-                </div>
+                    <!-- Operations Department -->
+                    <div class="department-block" data-department="operations">
+                        <div class="department-block-header"><i class="fas fa-cogs"></i><h3>Operations</h3></div>
+                        <p class="department-block-summary">Internal procedures & tools.</p>
+                    </div>
+                    <div class="department-links-wrapper" id="links-operations" data-department-content="operations">
+                        <h4>Links for Operations Department:</h4>
+                        <div class="link-cards-grid">
+                            <div class="card placeholder-card"><i class="fas fa-tools card-icon"></i><h3>Maintenance Request</h3><p>Submit equipment/facility issues.</p><a href="#" class="card-button" target="_blank">Open Form</a></div>
+                            <div class="card placeholder-card"><i class="fas fa-truck card-icon"></i><h3>Vehicle Log</h3><p>Track vehicle usage and maintenance.</p><a href="#" class="card-button" target="_blank">Access Log</a></div>
+                        </div>
+                    </div>
 
-            </div>
+                    <!-- Business Development Department -->
+                    <div class="department-block" data-department="business-development">
+                        <div class="department-block-header"><i class="fas fa-chart-line"></i><h3>Business Development</h3></div>
+                        <p class="department-block-summary">Growth & strategy resources.</p>
+                    </div>
+                    <div class="department-links-wrapper" id="links-business-development" data-department-content="business-development">
+                        <h4>Links for Business Development:</h4>
+                        <div class="link-cards-grid">
+                            <div class="card placeholder-card"><i class="fas fa-bullseye card-icon"></i><h3>Sales Targets</h3><p>Current sales goals and progress.</p><a href="#" class="card-button" target="_blank">View Targets</a></div>
+                            <div class="card placeholder-card"><i class="fas fa-lightbulb card-icon"></i><h3>New Initiative Proposal</h3><p>Submit ideas for new projects.</p><a href="#" class="card-button" target="_blank">Submit Idea</a></div>
+                        </div>
+                    </div>
+                </div> <!-- End of departments-grid-container -->
+            </div> <!-- End of pageContentWrapper -->
         </main>
 
         <!-- Right Sidebar -->
         <aside class="right-sidebar">
-            <div class="calendar-widget">
+             <div class="calendar-widget">
                 <div class="calendar-header">
                     <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
                     <h3 id="monthYear">Month Year</h3>
@@ -132,6 +181,17 @@
                 </div>
             </div>
         </aside>
+    </div>
+
+    <!-- Global Password Modal -->
+    <div id="globalPasswordModal" class="modal">
+        <div class="modal-content">
+            <h3>Portal Access Required</h3>
+            <p>Please enter the password to access the portal.</p>
+            <input type="password" id="globalPasswordInput" placeholder="Portal Password">
+            <button id="submitGlobalPasswordButton">Unlock Portal</button>
+            <p id="globalPasswordError" class="error-message"></p>
+        </div>
     </div>
 
     <script src="script.js"></script>
