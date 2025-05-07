@@ -88,7 +88,7 @@ body {
 .search-bar i { color: #adb5bd; margin-right: 10px; }
 .search-bar input { border: none; outline: none; background: none; width: 100%; font-size: 0.95em; }
 
-/* Ensure page content wrapper is hidden if JS fails or is slow */
+/* Ensure page content wrapper is hidden if JS fails or is slow, and by default */
 #pageContentWrapper {
     display: none;
 }
@@ -116,7 +116,7 @@ body {
     color: #fff;
     padding: 25px;
     border-radius: 12px;
-    margin-bottom: 5px;
+    margin-bottom: 5px; /* Small space before its links container (if visible) or next block */
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
@@ -131,12 +131,12 @@ body {
 }
 .department-block-header {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Icon above title */
     align-items: center;
     margin-bottom: 10px;
 }
 .department-block-header i {
-    font-size: 2.8em;
+    font-size: 2.8em; /* Larger icon */
     margin-bottom: 10px;
     opacity: 0.8;
 }
@@ -151,6 +151,9 @@ body {
 }
 
 /* Specific Department Block Colors (Examples - customize as needed) */
+.department-block[data-department="general"] { background: linear-gradient(135deg, #6e6afc, #4a47a3); box-shadow: 0 5px 15px rgba(74, 71, 163, 0.2); }
+.department-block[data-department="general"]:hover { box-shadow: 0 8px 20px rgba(74, 71, 163, 0.3); }
+
 .department-block[data-department="adventures"] { background: linear-gradient(135deg, #28a745, #218838); box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2); }
 .department-block[data-department="adventures"]:hover { box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3); }
 
@@ -180,11 +183,11 @@ body {
 .department-links-wrapper {
     display: none; /* Hidden by default */
     padding: 20px;
-    background-color: #fdfdff;
+    background-color: #fdfdff; /* Slightly off-white to differentiate */
     border: 1px solid #e9ecef;
-    border-top: none;
-    border-radius: 0 0 12px 12px;
-    margin-bottom: 25px;
+    border-top: none; /* No top border if it sits right under the block */
+    border-radius: 0 0 12px 12px; /* Rounded bottom corners */
+    margin-bottom: 25px; /* Space before the next department-block */
     box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 .department-links-wrapper.active {
@@ -198,10 +201,11 @@ body {
     border-bottom: 1px solid #e0e6ed;
 }
 
+
 /* Link Cards Grid & Card Styling */
 .link-cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); /* Adjust as needed */
     gap: 20px;
 }
 .card {
@@ -215,42 +219,45 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    min-height: 200px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    min-height: 200px; /* Adjusted min-height */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03); /* Very subtle card shadow */
 }
 .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07);
 }
 .card-icon {
-    font-size: 2.2em;
+    font-size: 2.2em; /* Adjusted icon size */
     margin-bottom: 15px;
     /* Default color can be set here if not using specific class colors */
 }
-/* Specific icon colors */
+/* Specific icon colors for cards (ensure these are defined) */
 .job-icon { color: #28a745; } .gym-icon { color: #fd7e14; } .form-icon { color: #17a2b8; } .route-icon { color: #6f42c1; } .staff-icon { color: #ffc107; } .input-icon { color: #007bff; } .impact-icon { color: #dc3545; } .changes-icon { color: #6c757d; }
+/* Add more specific icon colors if needed for new cards */
+.card.placeholder-card .card-icon { color: #6c757d; } /* Example for placeholder icons */
+
 
 .card h3 {
-    font-size: 1.05em;
+    font-size: 1.05em; /* Slightly smaller card titles */
     margin-bottom: 10px;
     font-weight: 600;
     color: #343a40;
 }
 .card p {
-    font-size: 0.88em;
+    font-size: 0.88em; /* Slightly smaller card paragraph text */
     color: #6c757d;
     margin-bottom: 18px;
-    flex-grow: 1;
+    flex-grow: 1; /* Allows paragraph to take available space */
 }
 .card-button {
     display: inline-block;
     background-color: #4a47a3;
     color: #fff;
-    padding: 9px 20px;
+    padding: 9px 20px; /* Adjusted padding */
     border-radius: 6px;
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.85em;
+    font-size: 0.85em; /* Slightly smaller button text */
     transition: background-color 0.2s ease;
     margin-top: auto; /* Pushes button to bottom if card content varies */
 }
@@ -258,87 +265,25 @@ body {
     background-color: #3a368a;
 }
 .card.placeholder-card {
-    /* Optional styling for placeholder cards */
+    /* Optional styling for placeholder cards, e.g., slightly muted */
+    /* background-color: #f9fafb; */
+    /* border-style: dashed; */
     /* opacity: 0.8; */
 }
 
-/* Global Password Modal Styling */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.75);
-}
-.modal-content {
-    background-color: #fff;
-    margin: 15% auto;
-    padding: 30px 35px;
-    border: none;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    text-align: center;
-}
-.modal-content h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #333;
-    font-size: 1.4em;
-    font-weight: 600;
-}
-.modal-content p {
-    margin-bottom: 20px;
-    font-size: 0.95em;
-    color: #555;
-}
-#globalPasswordInput {
-    width: calc(100% - 22px);
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1em;
-}
-#submitGlobalPasswordButton {
-    background-color: #4a47a3;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 500;
-    width: 100%;
-    transition: background-color 0.2s;
-}
-#submitGlobalPasswordButton:hover {
-    background-color: #3a368a;
-}
-.error-message {
-    color: #dc3545;
-    font-size: 0.9em;
-    margin-top: 15px;
-    min-height: 1.2em;
-}
 
 /* --- Right Sidebar --- */
 .right-sidebar {
     background-color: #fff;
     padding: 25px;
-    border-left: 1px solid #e9ecef;
+    border-left: 1px solid #e9ecef; /* Lighter border */
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
 /* Calendar Widget Styling */
 .calendar-widget {
-    background-color: #fdfdff;
+    background-color: #fdfdff; /* Very light background */
     border-radius: 10px;
     padding: 15px;
     border: 1px solid #e8ecf7;
@@ -380,19 +325,20 @@ body {
 
 
 /* --- Responsive Styles --- */
-@media (max-width: 1300px) {
+@media (max-width: 1300px) { /* Adjust breakpoint for wider layout */
     .portal-container {
         grid-template-columns: 220px 1fr 280px;
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px) { /* Adjusted breakpoint */
     .portal-container {
-        grid-template-columns: 200px 1fr;
+        grid-template-columns: 200px 1fr; /* Sidebar and main, right sidebar will stack */
         grid-template-areas:
             "sidebar main"
-            "sidebar right";
+            "sidebar right"; /* Stack right sidebar below main */
         gap: 15px;
+        min-height: 90vh;
     }
     .sidebar { grid-area: sidebar; }
     .main-content { grid-area: main; padding: 20px; }
@@ -402,36 +348,80 @@ body {
 }
 
 @media (max-width: 768px) {
-     body { padding: 0; align-items: stretch; }
+     body {
+        padding: 0; /* Remove body padding for full width on mobile */
+        align-items: stretch; /* Allow container to take full height */
+     }
     .portal-container {
-        grid-template-columns: 1fr;
-        grid-template-areas: "sidebar" "main" "right";
-        border-radius: 0; min-height: 100vh; gap: 0;
+        grid-template-columns: 1fr; /* Stack everything */
+        grid-template-areas:
+            "sidebar"
+            "main"
+            "right";
+        border-radius: 0;
+        min-height: 100vh;
+        gap: 0;
     }
-    .sidebar { border-right: none; border-bottom: 1px solid #e9ecef; padding: 15px; height: auto; }
-    .main-content { padding: 15px; }
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid #e9ecef;
+        padding: 15px;
+        height: auto; /* Collapse height */
+    }
+    .main-content { padding: 15px; } /* Reduce padding */
     .main-header h1 { font-size: 1.6em; }
+
     .department-block-header i { font-size: 2.4em; }
     .department-block-header h3 { font-size: 1.3em; }
-    .modal-content { margin: 25% auto; width: 90%; }
-    .link-cards-grid { grid-template-columns: 1fr; gap: 15px; }
-    .card { min-height: auto; padding: 15px; }
+
+    .link-cards-grid {
+        grid-template-columns: 1fr; /* Single column card layout */
+        gap: 15px; /* Reduce gap between cards */
+    }
+     .card {
+        min-height: auto; /* Allow cards to shrink */
+        padding: 15px;
+    }
+
+    .right-sidebar { padding: 15px; }
 }
 
 @media (max-width: 576px) {
-    body { padding: 0; }
+    body { padding: 0; } /* Ensure no body padding */
     .portal-container { border-radius: 0; }
-    .sidebar .logo span { font-size: 1.1em; }
-    .sidebar nav a { padding: 10px 12px; font-size: 0.95em; }
-    .main-header h1 { font-size: 1.4em; }
+
+    .sidebar .logo span { font-size: 1.1em; } /* Slightly smaller logo text */
+    .sidebar nav a { padding: 10px 12px; font-size: 0.95em; } /* Smaller nav items */
+
+    .main-header h1 { font-size: 1.4em; } /* Smaller section title */
     .search-bar { padding: 8px 12px; }
+
     .static-welcome-message h2 { font-size: 1.2em;}
+    .static-welcome-message p { font-size: 0.9em;}
+
+
     .department-block { padding: 20px; }
     .department-block-header i { font-size: 2.2em; }
     .department-block-header h3 { font-size: 1.2em; }
+    .department-block-summary { font-size: 0.9em; }
+
+
     .department-links-wrapper h4 { font-size: 1.1em; }
-    .modal-content { padding: 20px 25px; }
-    .modal-content h3 { font-size: 1.2em; }
+
+    .card h3 { font-size: 1em; }
+    .card p { font-size: 0.85em; }
+    .card-button { padding: 8px 16px; font-size: 0.8em;}
+
+
     .calendar-widget { padding: 10px; }
-    .calendar-days-grid div { width: 26px; height: 26px; font-size: 0.85em; }
+    .calendar-header h3 { font-size: 1em; }
+    .calendar-days-header div { font-size: 0.8em; }
+    .calendar-days-grid { gap: 3px; } /* Tighter day grid */
+    .calendar-days-grid div {
+        font-size: 0.85em;
+        width: 26px; /* Smaller circles */
+        height: 26px;
+        line-height: 1.4;
+        padding: 6px 0;
+    }
 }
