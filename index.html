@@ -18,36 +18,43 @@
             </div>
             <nav class="sidebar-navigation">
                 <h4 class="nav-section-title">Connect With Us</h4>
-                <ul>
-                    <li><a href="YOUR_BLUESKY_KENYA_WEBSITE_URL" target="_blank"><i class="fas fa-globe"></i> BlueSky Kenya Website</a></li>
-                    <li><a href="YOUR_BLUESKY_SHOPIFY_URL" target="_blank"><i class="fab fa-shopify"></i> BlueSky Shopify</a></li>
-                    <li><a href="YOUR_LINKEDIN_URL" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                <ul class="main-connect-links">
+                    <li><a href="YOUR_BLUESKY_KENYA_WEBSITE_URL" target="_blank" title="BlueSky Kenya Website"><i class="fas fa-globe"></i><span class="link-text">BlueSky Kenya Website</span></a></li>
+                    <li><a href="YOUR_BLUESKY_SHOPIFY_URL" target="_blank" title="BlueSky Shopify"><i class="fab fa-shopify"></i><span class="link-text">BlueSky Shopify</span></a></li>
+                    <li><a href="YOUR_LINKEDIN_URL" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i><span class="link-text">LinkedIn</span></a></li>
                 </ul>
 
-                <h4 class="nav-section-title">Instagram</h4>
-                <ul>
-                    <li><a href="YOUR_INSTAGRAM_CLIMB_URL" target="_blank"><i class="fab fa-instagram"></i> Climb</a></li>
-                    <li><a href="YOUR_INSTAGRAM_EXPEDITION_URL" target="_blank"><i class="fab fa-instagram"></i> Expedition</a></li>
-                    <li><a href="YOUR_INSTAGRAM_TEAMDEV_URL" target="_blank"><i class="fab fa-instagram"></i> Team Development</a></li>
-                    <li><a href="YOUR_INSTAGRAM_FAMILYLIFE_URL" target="_blank"><i class="fab fa-instagram"></i> Family Life</a></li>
-                    <li><a href="YOUR_INSTAGRAM_CAMP_URL" target="_blank"><i class="fab fa-instagram"></i> Camp</a></li>
-                </ul>
+                <div class="nav-section collapsible">
+                    <h4 class="nav-section-title collapsible-toggle">
+                        Instagram <i class="fas fa-chevron-down toggle-icon-sidebar"></i>
+                    </h4>
+                    <ul class="collapsible-content-sidebar" style="display: none;">
+                        <li><a href="YOUR_INSTAGRAM_CLIMB_URL" target="_blank"><i class="fab fa-instagram"></i><span class="link-text">Climb</span></a></li>
+                        <li><a href="YOUR_INSTAGRAM_EXPEDITION_URL" target="_blank"><i class="fab fa-instagram"></i><span class="link-text">Expedition</span></a></li>
+                        <li><a href="YOUR_INSTAGRAM_TEAMDEV_URL" target="_blank"><i class="fab fa-instagram"></i><span class="link-text">Team Development</span></a></li>
+                        <li><a href="YOUR_INSTAGRAM_FAMILYLIFE_URL" target="_blank"><i class="fab fa-instagram"></i><span class="link-text">Family Life</span></a></li>
+                        <li><a href="YOUR_INSTAGRAM_CAMP_URL" target="_blank"><i class="fab fa-instagram"></i><span class="link-text">Camp</span></a></li>
+                    </ul>
+                </div>
 
-                <h4 class="nav-section-title">Facebook</h4>
-                <ul>
-                    <li><a href="YOUR_FACEBOOK_CLIMB_URL" target="_blank"><i class="fab fa-facebook-square"></i> Climb</a></li>
-                    <li><a href="YOUR_FACEBOOK_EXPEDITION_URL" target="_blank"><i class="fab fa-facebook-square"></i> Expedition</a></li>
-                    <li><a href="YOUR_FACEBOOK_TEAMDEV_URL" target="_blank"><i class="fab fa-facebook-square"></i> Team Development</a></li>
-                    <li><a href="YOUR_FACEBOOK_FAMILYLIFE_URL" target="_blank"><i class="fab fa-facebook-square"></i> Family Life</a></li>
-                    <li><a href="YOUR_FACEBOOK_CAMP_URL" target="_blank"><i class="fab fa-facebook-square"></i> Camp</a></li>
-                </ul>
+                <div class="nav-section collapsible">
+                    <h4 class="nav-section-title collapsible-toggle">
+                        Facebook <i class="fas fa-chevron-down toggle-icon-sidebar"></i>
+                    </h4>
+                    <ul class="collapsible-content-sidebar" style="display: none;">
+                        <li><a href="YOUR_FACEBOOK_CLIMB_URL" target="_blank"><i class="fab fa-facebook-square"></i><span class="link-text">Climb</span></a></li>
+                        <li><a href="YOUR_FACEBOOK_EXPEDITION_URL" target="_blank"><i class="fab fa-facebook-square"></i><span class="link-text">Expedition</span></a></li>
+                        <li><a href="YOUR_FACEBOOK_TEAMDEV_URL" target="_blank"><i class="fab fa-facebook-square"></i><span class="link-text">Team Development</span></a></li>
+                        <li><a href="YOUR_FACEBOOK_FAMILYLIFE_URL" target="_blank"><i class="fab fa-facebook-square"></i><span class="link-text">Family Life</span></a></li>
+                        <li><a href="YOUR_FACEBOOK_CAMP_URL" target="_blank"><i class="fab fa-facebook-square"></i><span class="link-text">Camp</span></a></li>
+                    </ul>
+                </div>
             </nav>
         </aside>
 
         <!-- Main Content Area -->
         <main class="main-content">
-             <!-- This wrapper is for potential password protection setup; remove display:none if not using login page -->
-            <div id="pageContentWrapper" style="display: block;">  {/* Assuming no separate login for this version */}
+            <div id="pageContentWrapper">
                 <header>
                     <div class="search-bar">
                         <i class="fas fa-search"></i>
@@ -78,51 +85,37 @@
                         <div class="link-cards-grid">
                             <div class="card">
                                 <i class="fas fa-calendar-alt card-icon job-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Job Schedule</h3><p>View weekly job assignments.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Job Schedule</h3><p>View weekly job assignments.</p></div>
                                 <a href="https://airtable.com/appW0gt2fgh05uB6f/shrqCRNAoX9pFqonu" class="card-button" target="_blank">Access Schedule</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-dumbbell card-icon gym-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Gym Schedule</h3><p>Check gym availability & bookings.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Gym Schedule</h3><p>Check gym availability & bookings.</p></div>
                                 <a href="https://airtable.com/appW0gt2fgh05uB6f/shrDMYtk8btnasmON" class="card-button" target="_blank">View Gym Times</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-route card-icon route-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Route Log</h3><p>Review past route information.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Route Log</h3><p>Review past route information.</p></div>
                                 <a href="https://airtable.com/appW0gt2fgh05uB6f/shrsDyxkYn6ZxAfst" class="card-button" target="_blank">View Log</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-keyboard card-icon input-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Route Input Form</h3><p>Enter daily route details.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Route Input Form</h3><p>Enter daily route details.</p></div>
                                 <a href="https://airtable.com/appW0gt2fgh05uB6f/pagmhPana0Pl3HtDp/form" class="card-button" target="_blank">Enter Route</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-chart-line card-icon impact-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Impact Report Form</h3><p>Submit your activity impact report.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Impact Report Form</h3><p>Submit your activity impact report.</p></div>
                                 <a href="https://airtable.com/appW0gt2fgh05uB6f/pagX4KBE29VWrxyaA/form" class="card-button" target="_blank">Submit Report</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-user-clock card-icon staff-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Staff Days</h3><p>Check staff availability/schedule.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Staff Days</h3><p>Check staff availability/schedule.</p></div>
                                 <a href="https://airtable.com/appW0gt2fgh05uB6f/shr0ILbxOV3acWiyH" class="card-button" target="_blank">Check Availability</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-edit card-icon changes-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>System Changes Form</h3><p>Request modifications or updates.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>System Changes Form</h3><p>Request modifications or updates.</p></div>
                                 <a href="https://airtable.com/appW0gt2fgh05uB6f/pagaCEWlAT2fiBSFh/form" class="card-button" target="_blank">Request Change</a>
                             </div>
                         </div>
@@ -135,23 +128,17 @@
                         <div class="link-cards-grid">
                             <div class="card placeholder-card">
                                 <i class="fas fa-clipboard-list card-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Camper Registration</h3><p>Form for new camper sign-ups.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Camper Registration</h3><p>Form for new camper sign-ups.</p></div>
                                 <a href="YOUR_CAMPER_REGISTRATION_URL_HERE" class="card-button" target="_blank">Open Form</a>
                             </div>
                             <div class="card placeholder-card">
                                 <i class="fas fa-medkit card-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Camp Medical Info</h3><p>Access camper medical details.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Camp Medical Info</h3><p>Access camper medical details.</p></div>
                                 <a href="YOUR_CAMP_MEDICAL_INFO_URL_HERE" class="card-button" target="_blank">View Info</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-comment-dots card-icon review-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Staff Feedback</h3><p>Provide feedback on camp staff.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Staff Feedback</h3><p>Provide feedback on camp staff.</p></div>
                                 <a href="https://airtable.com/appeRJGibITxwV8VT/pagFcEoqOdxnpcZ64/form" class="card-button" target="_blank">Give Feedback</a>
                             </div>
                         </div>
@@ -164,16 +151,12 @@
                         <div class="link-cards-grid">
                             <div class="card placeholder-card">
                                 <i class="fas fa-calendar-alt card-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Family Event Calendar</h3><p>Upcoming events for families.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Family Event Calendar</h3><p>Upcoming events for families.</p></div>
                                 <a href="YOUR_FAMILY_EVENT_CALENDAR_URL_HERE" class="card-button" target="_blank">View Events</a>
                             </div>
                             <div class="card placeholder-card">
                                 <i class="fas fa-child card-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Youth Program Info</h3><p>Details on youth activities.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Youth Program Info</h3><p>Details on youth activities.</p></div>
                                 <a href="YOUR_YOUTH_PROGRAM_INFO_URL_HERE" class="card-button" target="_blank">Learn More</a>
                             </div>
                         </div>
@@ -186,37 +169,27 @@
                         <div class="link-cards-grid">
                             <div class="card">
                                 <i class="fas fa-hand-holding-usd card-icon funds-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Funds Request Form</h3><p>Submit requests for funding.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Funds Request Form</h3><p>Submit requests for funding.</p></div>
                                 <a href="https://airtable.com/appmuSrkNKkMg7tPL/pagZbTI6QFZBBSim5/form" class="card-button" target="_blank">Request Funds</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-door-open card-icon space-booking-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>BSK Space Booking Form</h3><p>Book spaces at BSK facilities.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>BSK Space Booking Form</h3><p>Book spaces at BSK facilities.</p></div>
                                 <a href="https://airtable.com/appSVWv7v0EDezEEk/pagSVUuZCvYzgyIs7/form" class="card-button" target="_blank">Book Space</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-book card-icon library-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Library Book Check Out</h3><p>Form to check out library books.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Library Book Check Out</h3><p>Form to check out library books.</p></div>
                                 <a href="https://airtable.com/appSVWv7v0EDezEEk/pagkFPACiJesul5ni/form" class="card-button" target="_blank">Check Out Book</a>
                             </div>
                             <div class="card placeholder-card">
                                 <i class="fas fa-calendar-week card-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Staff Schedule</h3><p>View current staff schedules.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Staff Schedule</h3><p>View current staff schedules.</p></div>
                                 <a href="YOUR_STAFF_SCHEDULE_URL_HERE" class="card-button" target="_blank">View Schedule</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-concierge-bell card-icon ops-request-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Operations Request Form</h3><p>Submit general operations requests.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Operations Request Form</h3><p>Submit general operations requests.</p></div>
                                 <a href="https://airtable.com/appSVWv7v0EDezEEk/pag3gof0NQ2Tn0E3F/form" class="card-button" target="_blank">Make Request</a>
                             </div>
                         </div>
@@ -229,23 +202,17 @@
                         <div class="link-cards-grid">
                             <div class="card placeholder-card">
                                 <i class="fas fa-bullseye card-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Market Research</h3><p>Latest market analysis reports.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Market Research</h3><p>Latest market analysis reports.</p></div>
                                 <a href="YOUR_MARKET_RESEARCH_URL_HERE" class="card-button" target="_blank">View Reports</a>
                             </div>
                             <div class="card placeholder-card">
                                 <i class="fas fa-handshake card-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Partnership Proposals</h3><p>Submit or review partnerships.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Partnership Proposals</h3><p>Submit or review partnerships.</p></div>
                                 <a href="YOUR_PARTNERSHIP_PROPOSALS_URL_HERE" class="card-button" target="_blank">Access Forms</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-file-invoice-dollar card-icon bizdev-request-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Bus. Dev. Request Form</h3><p>Submit business development requests.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Bus. Dev. Request Form</h3><p>Submit business development requests.</p></div>
                                 <a href="https://airtable.com/appEW0VJyoXrif1vC/pagotgHo43T9zDhXQ/form" class="card-button" target="_blank">Submit Request</a>
                             </div>
                         </div>
@@ -258,23 +225,17 @@
                         <div class="link-cards-grid">
                             <div class="card">
                                 <i class="fas fa-file-alt card-icon form-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Time Off Request</h3><p>Submit your Day off requests here.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Time Off Request</h3><p>Submit your Day off requests here.</p></div>
                                 <a href="https://airtable.com/appzUivoXSDXmiB0k/pagoGSDvLUHkXNhqH/form" class="card-button" target="_blank">Open Form</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-book-heart card-icon story-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Stories of Transformation</h3><p>Share impactful stories.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Stories of Transformation</h3><p>Share impactful stories.</p></div>
                                 <a href="https://airtable.com/appBnSpB3H3mclRjX/shrnzcoyAJp1HcuGo" class="card-button" target="_blank">Submit Story</a>
                             </div>
                             <div class="card">
                                 <i class="fas fa-user-check card-icon review-icon"></i>
-                                <div class="card-content-wrapper">
-                                    <h3>Performance Review</h3><p>Complete performance reviews.</p>
-                                </div>
+                                <div class="card-content-wrapper"><h3>Performance Review</h3><p>Complete performance reviews.</p></div>
                                 <a href="https://airtable.com/appzUivoXSDXmiB0k/pago8alsX0IqHO8Y3/form" class="card-button" target="_blank">Open Form</a>
                             </div>
                         </div>
@@ -285,7 +246,6 @@
 
         <!-- Right Sidebar -->
         <aside class="right-sidebar">
-             <!-- This wrapper is also for potential password protection setup -->
             <div id="rightSidebarContentWrapper" style="display: block;"> {/* Assuming no separate login for this version */}
                 <div class="registration-forms-widget">
                     <div class="widget-header">
