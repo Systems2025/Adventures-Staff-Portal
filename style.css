@@ -108,7 +108,8 @@ body {
 }
 
 #pageContentWrapper, #rightSidebarContentWrapper { /* For password protection setup */
-    display: none; /* Hidden by default, JS will show if authenticated */
+    /* display: none; Will be controlled by JS if using login page */
+    /* If NOT using login page, comment out or remove the display:none from here */
 }
 
 .main-content > header {
@@ -241,24 +242,21 @@ body {
     font-size: 2.5em;
     margin-bottom: 15px;
 }
-/* Specific icon colors for cards */
 .job-icon { color: #28a745; } 
 .gym-icon { color: #fd7e14; } 
-.form-icon { color: #17a2b8; } /* Used by Time Off */
+.form-icon { color: #17a2b8; } 
 .route-icon { color: #6f42c1; } 
-.staff-icon { color: #ffc107; } /* Used by Staff Days (now in Adventures) */
+.staff-icon { color: #ffc107; } 
 .input-icon { color: #007bff; } 
 .impact-icon { color: #dc3545; } 
-.changes-icon { color: #6c757d; } /* Used by System Changes (now in Adventures) */
+.changes-icon { color: #6c757d; } 
 .story-icon { color: #e83e8c; } 
-.review-icon { color: #20c997; } /* Used by Perf Review & Staff Feedback */
+.review-icon { color: #20c997; } 
 .funds-icon { color: #4B0082; } 
-/* New card icon colors */
-.space-booking-icon { color: #54a0ff; } /* Example for BSK Space Booking */
-.library-icon { color: #a55eea; } /* Example for Library */
-.ops-request-icon { color: #ff6b6b; } /* Example for Ops Request */
-.bizdev-request-icon { color: #1dd1a1; } /* Example for Biz Dev Request */
-
+.space-booking-icon { color: #54a0ff; } 
+.library-icon { color: #a55eea; } 
+.ops-request-icon { color: #ff6b6b; } 
+.bizdev-request-icon { color: #1dd1a1; } 
 .card.placeholder-card .card-icon { color: #aaa; }
 
 .card h3 { font-size: 1.1em; margin-bottom: 8px; font-weight: 600; color: #333; }
