@@ -1,9 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Main portal (index.html) DOM loaded.");
 
+    // --- Assuming no separate login for this version, otherwise keep authentication check ---
     const pageContentWrapper = document.getElementById('pageContentWrapper');
     const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
-    
+
+    if (pageContentWrapper) pageContentWrapper.style.display = 'block';
+    if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
+    initializeUIElements();
+    // --- End of simplified visibility toggle ---
+
+    /* 
+    // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE ---
     const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; // Must match the key used in login.js
 
     function isPortalAuthenticated() {
@@ -14,27 +22,50 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (isPortalAuthenticated()) {
         console.log("Portal is authenticated. Displaying content.");
-        if (pageContentWrapper) {
-            pageContentWrapper.style.display = 'block';
-        } else {
-            console.error("pageContentWrapper not found!");
-        }
-        if (rightSidebarContentWrapper) {
-            rightSidebarContentWrapper.style.display = 'block'; 
-        } else {
-            console.error("rightSidebarContentWrapper not found!");
-        }
-        
+        if (pageContentWrapper) pageContentWrapper.style.display = 'block';
+        if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block'; 
         initializeUIElements();
     } else {
         console.log("Portal not authenticated. Redirecting to login page.");
         window.location.href = 'login.html'; 
         return; 
     }
+    // --- END OF LOGIN PAGE AUTHENTICATION BLOCK ---
+    */
+
 
     function initializeUIElements() {
-        console.log("Initializing UI elements (department toggles)...");
+        console.log("Initializing UI elements...");
         initializeDepartmentToggles();
+        initializeSidebarCollapsibles(); // New function call
+    }
+
+    // --- Sidebar Collapsible Logic ---
+    function initializeSidebarCollapsibles() {
+        const collapsibleToggles = document.querySelectorAll('.sidebar-navigation .collapsible-toggle');
+        collapsibleToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.parentElement.classList.toggle('open'); // Optional: for styling the whole section
+                const content = this.nextElementSibling; // Assumes ul.collapsible-content-sidebar is next
+                const icon = this.querySelector('.toggle-icon-sidebar');
+
+                if (content.style.display === 'none' || content.style.display === '') {
+                    content.style.display = 'block';
+                    if (icon) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                        icon.classList.add('rotated'); // For CSS rotation
+                    }
+                } else {
+                    content.style.display = 'none';
+                    if (icon) {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                        icon.classList.remove('rotated');
+                    }
+                }
+            });
+        });
     }
 
     // --- Department Filter Logic ---
