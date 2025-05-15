@@ -70,7 +70,7 @@ body {
     cursor: default; 
 }
 .sidebar .sidebar-navigation ul:first-of-type .nav-section-title,
-.sidebar .sidebar-navigation > .nav-section-title:first-child {
+.sidebar .sidebar-navigation > .nav-section-title:first-child { /* For first title if not in a .nav-section div */
     margin-top: 0;
 }
 .nav-section.collapsible .nav-section-title.collapsible-toggle {
@@ -78,32 +78,32 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: color 0.2s ease;
 }
 .nav-section.collapsible .nav-section-title.collapsible-toggle:hover {
     color: #4a47a3;
 }
 .toggle-icon-sidebar {
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     font-size: 0.8em;
 }
-.toggle-icon-sidebar.rotated {
+.nav-section.collapsible.open .toggle-icon-sidebar { /* Target when section is open */
     transform: rotate(180deg);
 }
 
 
 .sidebar nav ul { list-style: none; padding-left: 0; }
 .sidebar nav ul.collapsible-content-sidebar {
-    padding-left: 15px; 
-    border-left: 2px solid #eef2ff;
-    margin-left: 5px;
-    overflow: hidden; /* For smooth collapse animation if added */
-    max-height: 0; /* Initially hidden for JS toggle, if using height animation */
-    transition: max-height 0.3s ease-out; /* For smooth collapse animation */
-    /* If not using height animation, keep display: none; from HTML and JS handles it */
+    padding-left: 10px; /* Less indent for cleaner look */
+    /* border-left: 2px solid #eef2ff; /* Optional border */
+    margin-left: 5px; 
+    margin-top: 5px; 
+    overflow: hidden; 
+    max-height: 0; /* Initially hidden for JS toggle and animation */
+    transition: max-height 0.3s ease-out; 
 }
 .sidebar nav ul.collapsible-content-sidebar.open {
     max-height: 500px; /* Adjust as needed, large enough for content */
-    /* If not using height animation, JS will set display: block; */
 }
 
 .sidebar nav li { margin-bottom: 3px; }
@@ -119,7 +119,6 @@ body {
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 .sidebar nav a .link-text { 
-    /* Default to inline for desktop */
     display: inline;
 }
 .sidebar nav a i {
@@ -263,9 +262,9 @@ body {
     padding: 20px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
     justify-content: space-between;
     min-height: 200px;
 }
@@ -294,20 +293,21 @@ body {
 .bizdev-request-icon { color: #1dd1a1; } 
 .card.placeholder-card .card-icon { color: #aaa; }
 
+.card-content-wrapper { 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    flex-grow: 1; /* Allows h3 and p to take space before button */
+}
 .card h3 { font-size: 1.1em; margin-bottom: 8px; font-weight: 600; color: #333; }
-.card p { font-size: 0.9em; color: #666; margin-bottom: 15px; flex-grow: 1; }
+.card p { font-size: 0.9em; color: #666; margin-bottom: 15px; } /* Removed flex-grow here */
 .card-button {
     display: inline-block; background-color: #4a47a3; color: #fff; padding: 8px 18px;
     border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9em;
-    transition: background-color 0.3s ease; margin-top: auto;
+    transition: background-color 0.3s ease; margin-top: auto; /* Ensures button is at bottom */
 }
 .card-button:hover { background-color: #3a368a; }
 .card.placeholder-card { background-color: #f9f9f9; border-style: dashed; opacity: 0.7; }
-.card-content-wrapper { /* For mobile card layout, default behavior */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Default desktop: center text under icon */
-}
 
 
 /* --- Right Sidebar --- */
@@ -387,20 +387,24 @@ body {
     }
     .sidebar { border-right: none; border-bottom: 1px solid #e0e0e0; padding: 15px; height: auto; }
     .sidebar .logo { justify-content: center; padding-left: 0; margin-bottom: 15px; }
-    .nav-section-title { text-align: center; font-size: 0.75em; padding: 8px 10px 4px 10px; }
+    .nav-section-title { text-align: left; font-size: 0.85em; padding: 10px 10px 8px 10px; } 
+    .nav-section.collapsible .nav-section-title.collapsible-toggle { padding-right: 10px; }
     /* Sidebar main connect links become icon-only row on mobile */
     .sidebar nav ul.main-connect-links {
-        display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;
+        display: flex; flex-wrap: wrap; justify-content: space-around; gap: 10px; padding-bottom: 10px;
     }
     .sidebar nav ul.main-connect-links li a {
-        padding: 10px; font-size: 0.9em; justify-content: center; 
-        min-width: 44px; min-height: 44px;
+        padding: 12px; justify-content: center; 
+        min-width: 48px; min-height: 48px;
+        border: 1px solid #e0e0e0; background-color: #f9faff;
     }
-    .sidebar nav ul.main-connect-links li a i { margin-right: 0; font-size: 1.5em; color: #4a47a3; }
+    .sidebar nav ul.main-connect-links li a i { margin-right: 0; font-size: 1.6em; color: #4a47a3; }
     .sidebar nav ul.main-connect-links li a .link-text { display: none !important; }
-    /* Collapsible sections still show text by default but can be smaller */
-    .sidebar nav ul.collapsible-content-sidebar a { padding: 10px 10px; font-size: 0.95em; }
-    .sidebar nav ul.collapsible-content-sidebar a i { margin-right: 8px; }
+    /* Collapsible sections text links for mobile */
+    .sidebar nav ul.collapsible-content-sidebar { padding-left: 10px; margin-left: 0; border-left: none; }
+    .sidebar nav ul.collapsible-content-sidebar a { padding: 10px 5px; font-size: 0.9em; }
+    .sidebar nav ul.collapsible-content-sidebar a i { margin-right: 8px; font-size: 1em; }
+    .toggle-icon-sidebar { font-size: 0.9em; }
 
     .main-content { padding: 20px 15px; }
     .main-content > header { flex-direction: column; gap: 10px; align-items: flex-start; margin-bottom: 20px; }
@@ -420,21 +424,31 @@ body {
         flex-direction: row; align-items: center; text-align: left;
     }
     .card-icon { font-size: 1.8em; margin-bottom: 0; margin-right: 15px; flex-shrink: 0; }
-    .card-content-wrapper { display: flex; flex-direction: column; flex-grow: 1; align-items: flex-start; } /* Align text left */
+    .card-content-wrapper { display: flex; flex-direction: column; flex-grow: 1; align-items: flex-start; } 
     .card h3 { font-size: 1em; margin-bottom: 5px; }
     .card p { font-size: 0.85em; margin-bottom: 10px; }
     .card-button { padding: 8px 15px; font-size: 0.9em; width: 100%; margin-top: 10px;}
-    .right-sidebar { padding: 15px; border-top: 1px solid #e0e0e0; background-color: #f8f9fe; }
+    .right-sidebar { padding: 15px 10px; border-top: 1px solid #e0e0e0; background-color: #f8f9fe; }
     .registration-forms-widget { padding: 15px; }
+    .widget-header { margin-bottom: 10px; padding-bottom: 8px;}
+    .widget-header i { font-size: 1.2em; }
     .widget-header h3 { font-size: 1.1em; }
-    .form-group-title { font-size: 0.95em; }
-    .widget-links-list a { font-size: 0.88em; padding: 6px 8px; }
+    .form-group { margin-bottom: 15px; }
+    .form-group-title { font-size: 1em; margin-bottom: 8px; padding-bottom: 6px;}
+    .form-group-title i { font-size: 0.9em; }
+    .widget-links-list li { margin-bottom: 6px; }
+    .widget-links-list a {
+        font-size: 0.9em; padding: 10px 8px; 
+        background-color: #fff; border: 1px solid #eef2ff;
+    }
+    .widget-links-list a:hover { background-color: #eef2ff; }
+    .form-link-icon { font-size: 1em; margin-right: 8px;}
 }
 @media (max-width: 576px) {
     .sidebar .logo span { font-size: 1.2em; }
     .sidebar .logo i { font-size: 1.4em; }
-    .sidebar nav ul.main-connect-links li a i { font-size: 1.4em; }
-    .sidebar nav ul.collapsible-content-sidebar a { font-size: 0.9em; }
+    .sidebar nav ul.main-connect-links li a i { font-size: 1.5em; }
+    .sidebar nav ul.collapsible-content-sidebar a { font-size: 0.88em; }
     .nav-section-title { font-size: 0.8em; }
 
     .main-content > header { margin-bottom: 15px; }
@@ -446,7 +460,7 @@ body {
     .card h3 { font-size: 0.95em; }
     .card p { font-size: 0.8em; }
     .widget-header i { font-size: 1.1em; }
-    .widget-header h3 { font-size: 1em; }
-    .form-group-title { font-size: 0.9em; }
-    .widget-links-list a { font-size: 0.85em; padding: 7px; }
+    .widget-header h3 { font-size: 1.05em; }
+    .form-group-title { font-size: 0.95em; }
+    .widget-links-list a { font-size: 0.85em; padding: 9px 8px; }
 }
