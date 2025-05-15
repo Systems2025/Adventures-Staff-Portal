@@ -9,36 +9,62 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeUIElements();
     // --- End of simplified visibility ---
 
-    /* --- Optional Login Page Auth Block (Keep commented or uncomment as needed) --- */
+    /* 
+    // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE ---
+    const pageContentWrapper = document.getElementById('pageContentWrapper');
+    const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
+    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; 
+
+    function isPortalAuthenticated() {
+        const authenticated = sessionStorage.getItem(PORTAL_UNLOCKED_KEY) === 'true';
+        return authenticated;
+    }
+
+    if (isPortalAuthenticated()) {
+        if (pageContentWrapper) pageContentWrapper.style.display = 'block';
+        if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block'; 
+        initializeUIElements();
+    } else {
+        window.location.href = 'login.html'; 
+        return; 
+    }
+    // --- END OF LOGIN PAGE AUTHENTICATION BLOCK ---
+    */
+
 
     function initializeUIElements() {
         console.log("Initializing UI elements...");
-        initializeDepartmentToggles(); // For main content filters
-        initializeSidebarCollapsibles(); // For left sidebar social links
-        initializeWidgetCollapsibles(); // NEW: For right sidebar registration forms
-        setupResponsiveCollapsibles(); // NEW: To manage mobile-only behavior
+        initializeDepartmentToggles();
+        initializeSidebarCollapsibles(); 
+        setupResponsiveWidgetCollapsibles(); // Use the responsive setup for widget
     }
 
-    // --- Sidebar Collapsible Logic (Keep as is from previous full code) ---
+    // --- Sidebar Collapsible Logic (for social links) ---
     function initializeSidebarCollapsibles() {
         const collapsibleToggles = document.querySelectorAll('.sidebar-navigation .collapsible-toggle');
+        
         collapsibleToggles.forEach(toggle => {
             if (toggle.dataset.listenerAttached === 'true') return;
+
             toggle.addEventListener('click', function(event) {
                 event.preventDefault(); 
                 const parentNavSection = this.closest('.nav-section.collapsible');
                 const content = this.nextElementSibling; 
                 const icon = this.querySelector('.toggle-icon-sidebar');
+
                 if (content && parentNavSection && icon) {
                     parentNavSection.classList.toggle('open');
+
                     if (content.classList.contains('open')) { 
                         content.style.maxHeight = null; 
                         content.classList.remove('open');
-                        icon.classList.remove('fa-chevron-up'); icon.classList.add('fa-chevron-down');
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
                     } else { 
                         content.classList.add('open');
                         content.style.maxHeight = content.scrollHeight + "px"; 
-                        icon.classList.remove('fa-chevron-down'); icon.classList.add('fa-chevron-up');
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
                     }
                 }
             });
@@ -47,93 +73,83 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- Registration Forms Widget Collapsible Logic (Mobile Only) ---
-    let widgetCollapsibleListeners = []; // To store references for removal
+    let widgetCollapsibleHandlers = []; 
 
-    function initializeWidgetCollapsibles() {
-        removeWidgetCollapsibleListeners(); // Remove any existing listeners first
+    function applyWidgetCollapsibleBehavior() {
+        removeWidgetCollapsibleListeners(); // Clear existing listeners
 
         const widgetCollapsibleToggles = document.querySelectorAll('.registration-forms-widget .collapsible-widget-toggle');
-        const mobileBreakpoint = 768; // Define your mobile breakpoint
+        const mobileBreakpoint = 768;
 
         widgetCollapsibleToggles.forEach(toggle => {
             const parentGroup = toggle.closest('.collapsible-widget-group');
-            const content = toggle.nextElementSibling; // Assumes ul is direct sibling of h4
+            const content = toggle.nextElementSibling; // ul.widget-links-list.collapsible-widget-content
+            const icon = toggle.querySelector('.toggle-icon-widget');
 
-            if (!content || !parentGroup) {
-                console.warn("Widget collapsible content or parent group not found for toggle:", toggle);
-                return;
-            }
+            if (!content || !parentGroup || !icon) return;
 
-            // Default state for desktop: expanded, no toggle icon functionality needed by JS here
-            // (CSS hides the icon on desktop)
             if (window.innerWidth > mobileBreakpoint) {
-                content.style.maxHeight = content.scrollHeight + "px"; // Ensure expanded on desktop
-                content.classList.add('open');
-                parentGroup.classList.add('open'); // For icon rotation if any
-                // Toggle icon is hidden by CSS on desktop, so no JS needed to manage it here
+                // DESKTOP: Ensure content is expanded, no click listener on toggle
+                content.style.maxHeight = content.scrollHeight + "px"; // Expand fully
+                content.classList.remove('collapsed-mobile');
+                content.classList.add('open-mobile'); // Use open-mobile for consistency if needed, or just rely on scrollHeight
+                parentGroup.classList.add('open'); // For icon rotation if CSS uses this
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down'); // Default to down arrow on desktop (non-interactive)
             } else {
-                // Mobile state: collapsed by default (max-height: 0 from CSS)
-                content.style.maxHeight = null;
-                content.classList.remove('open');
+                // MOBILE: Set up for collapsing, add click listener
+                content.classList.add('collapsed-mobile'); // Ensure it's initially collapsed by CSS
+                content.classList.remove('open-mobile');
+                content.style.maxHeight = null; // Let CSS .collapsed-mobile handle it
                 parentGroup.classList.remove('open');
-                const icon = toggle.querySelector('.toggle-icon-widget');
-                if(icon) {
-                    icon.classList.remove('fa-chevron-up');
-                    icon.classList.add('fa-chevron-down');
-                }
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
 
-                // Add listener only for mobile
                 const clickHandler = function(event) {
                     event.preventDefault();
                     parentGroup.classList.toggle('open');
-                    const currentIcon = this.querySelector('.toggle-icon-widget');
-
-                    if (content.classList.contains('open')) {
+                    
+                    if (content.classList.contains('open-mobile')) {
                         content.style.maxHeight = null;
-                        content.classList.remove('open');
-                        if (currentIcon) {
-                            currentIcon.classList.remove('fa-chevron-up');
-                            currentIcon.classList.add('fa-chevron-down');
-                        }
+                        content.classList.remove('open-mobile');
+                        content.classList.add('collapsed-mobile');
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
                     } else {
-                        content.classList.add('open');
+                        content.classList.add('open-mobile');
+                        content.classList.remove('collapsed-mobile');
                         content.style.maxHeight = content.scrollHeight + "px";
-                        if (currentIcon) {
-                            currentIcon.classList.remove('fa-chevron-down');
-                            currentIcon.classList.add('fa-chevron-up');
-                        }
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
                     }
                 };
-                
                 toggle.addEventListener('click', clickHandler);
-                widgetCollapsibleListeners.push({ element: toggle, type: 'click', handler: clickHandler });
+                widgetCollapsibleHandlers.push({ element: toggle, type: 'click', handler: clickHandler });
             }
         });
     }
 
     function removeWidgetCollapsibleListeners() {
-        widgetCollapsibleListeners.forEach(listener => {
-            listener.element.removeEventListener(listener.type, listener.handler);
+        widgetCollapsibleHandlers.forEach(item => {
+            item.element.removeEventListener(item.type, item.handler);
         });
-        widgetCollapsibleListeners = []; // Clear the array
+        widgetCollapsibleHandlers = [];
     }
 
-    function setupResponsiveCollapsibles() {
-        initializeWidgetCollapsibles(); // Initial setup
+    function setupResponsiveWidgetCollapsibles() {
+        applyWidgetCollapsibleBehavior(); // Initial setup
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
-                console.log("Resizing, re-initializing widget collapsibles");
-                initializeWidgetCollapsibles(); // Re-evaluate on resize
-            }, 250); // Debounce resize event
+                console.log("Resizing, re-applying widget collapsible behavior");
+                applyWidgetCollapsibleBehavior(); 
+            }, 250); 
         });
     }
 
-
-    // --- Department Filter Logic (Keep as is from previous) ---
+    // --- Department Filter Logic ---
     function initializeDepartmentToggles() {
-        // ... (existing department filter logic) ...
         const filterButtons = document.querySelectorAll('.department-filter-controls .filter-btn');
         const categorySections = document.querySelectorAll('.categories-container .category-section');
 
