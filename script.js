@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Main portal (index.html) DOM loaded.");
 
     // --- Simplified visibility for non-login page setup ---
-    // If using a separate login page, comment out these lines and uncomment the auth block below.
     const pageContentWrapper = document.getElementById('pageContentWrapper');
     const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
     if (pageContentWrapper) pageContentWrapper.style.display = 'block';
@@ -46,8 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Sidebar Collapsible Logic ---
     function initializeSidebarCollapsibles() {
         const collapsibleToggles = document.querySelectorAll('.sidebar-navigation .collapsible-toggle');
-        // console.log("Found sidebar collapsible toggles:", collapsibleToggles.length);
-
+        
         collapsibleToggles.forEach(toggle => {
             if (toggle.dataset.listenerAttached === 'true') return;
 
@@ -55,13 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.preventDefault(); 
                 
                 const parentNavSection = this.closest('.nav-section.collapsible');
-                const content = this.nextElementSibling; // Assumes ul is direct sibling of h4
+                const content = this.nextElementSibling; // Assumes ul.collapsible-content-sidebar is next sibling of h4
                 const icon = this.querySelector('.toggle-icon-sidebar');
 
                 if (content && parentNavSection) {
                     parentNavSection.classList.toggle('open'); // For CSS to rotate icon
 
-                    // Use CSS transitions for max-height for smooth animation
                     if (content.classList.contains('open')) { 
                         content.style.maxHeight = null; 
                         content.classList.remove('open');
@@ -70,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             icon.classList.remove('fa-chevron-up');
                             icon.classList.add('fa-chevron-down');
                         }
-                    } else {
+                    } else { 
                         content.classList.add('open');
                         content.style.maxHeight = content.scrollHeight + "px"; 
                          if (icon) {
