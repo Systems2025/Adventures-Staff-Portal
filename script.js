@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("pageContentWrapper not found!");
         }
         if (rightSidebarContentWrapper) {
-            rightSidebarContentWrapper.style.display = 'block'; 
+            rightSidebarContentWrapper.style.display = 'block'; // Or 'flex' if it's a flex container
         } else {
             console.error("rightSidebarContentWrapper not found!");
         }
