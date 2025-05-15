@@ -54,7 +54,8 @@
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <div id="pageContentWrapper">
+            <!-- Set display:none; here and on rightSidebarContentWrapper if using login page logic -->
+            <div id="pageContentWrapper" style="display: block;"> 
                 <header>
                     <div class="search-bar">
                         <i class="fas fa-search"></i>
@@ -246,7 +247,7 @@
 
         <!-- Right Sidebar -->
         <aside class="right-sidebar">
-            <div id="rightSidebarContentWrapper" style="display: block;"> {/* Assuming no separate login for this version */}
+            <div id="rightSidebarContentWrapper" style="display: block;"> 
                 <div class="registration-forms-widget">
                     <div class="widget-header">
                         <i class="fas fa-clipboard-list"></i>
