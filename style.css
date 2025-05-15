@@ -83,7 +83,7 @@ body {
 .nav-section.collapsible .nav-section-title.collapsible-toggle:hover {
     color: #4a47a3;
 }
-.toggle-icon-sidebar { /* Chevron for sidebar social links */
+.toggle-icon-sidebar { 
     transition: transform 0.3s ease-in-out;
     font-size: 0.8em;
 }
@@ -98,13 +98,13 @@ body {
     margin-left: 5px; 
     margin-top: 5px; 
     overflow: hidden; 
-    max-height: 0; /* CRITICAL: Start collapsed */
-    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out;
+    max-height: 0; 
+    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out; 
     padding-top: 0; 
     padding-bottom: 0; 
 }
 .sidebar nav ul.collapsible-content-sidebar.open {
-    max-height: 500px; /* Adjust if needed */
+    max-height: 500px; 
     padding-top: 5px; 
     padding-bottom: 5px;
 }
@@ -354,7 +354,7 @@ body {
     padding: 10px 8px; 
     display: flex; align-items: center;
     justify-content: space-between; 
-    cursor: default; /* Desktop default */
+    cursor: default; 
     background-color: #f0f4f8; 
     border-radius: 4px;
     transition: background-color 0.2s ease;
@@ -364,11 +364,11 @@ body {
     color: #666; 
     font-size: 0.9em;
 }
-.toggle-icon-widget { /* Chevron for widget groups */
+.toggle-icon-widget { 
     font-size: 0.8em;
     color: #888;
     transition: transform 0.3s ease-in-out;
-    display: none; /* Hidden by default on desktop */
+    display: none; 
 }
 .form-group.collapsible-widget-group.open .form-group-title {
     border-bottom-left-radius: 0;
@@ -383,15 +383,13 @@ body {
     overflow: hidden;
     max-height: 500px; /* Default expanded for desktop */
     padding-left: 5px; 
-    /* border: 1px solid #f0f4f8;  Optional border for open state */
-    /* border-top: none; */
-    /* border-radius: 0 0 4px 4px; */
     background-color: #fff; 
-    /* No transition by default for desktop, JS will handle for mobile */
+    /* Default state for desktop: expanded content */
+    /* JS will add 'collapsed-mobile' for initial mobile state */
+    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out;
 }
-/* This class is ADDED by JS for mobile collapse/expand */
 .widget-links-list.collapsible-widget-content.collapsed-mobile {
-    max-height: 0 !important; /* Important to override desktop default */
+    max-height: 0 !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     border-top: none !important;
@@ -403,7 +401,6 @@ body {
     padding-bottom: 10px !important;
     border-top: 1px solid #e0e6ed !important; 
     margin-top: -1px !important; 
-    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out;
 }
 
 
@@ -505,17 +502,12 @@ body {
         display: inline-block; /* Show toggle icon on mobile */
     }
     .widget-links-list.collapsible-widget-content {
-        /* CSS will set max-height: 0 for collapsed on mobile via JS adding .collapsed-mobile */
+        /* JS will add .collapsed-mobile and .open-mobile as needed */
         background-color: transparent; 
         border:none;
         box-shadow: none;
         padding-left: 0;
-    }
-     .widget-links-list.collapsible-widget-content.open-mobile {
-        padding-top: 8px;
-        padding-bottom: 8px;
-        border-top: 1px solid #e0e6ed; 
-        margin-top: 0; /* Reset from desktop */
+        /* transition is set on .open-mobile */
     }
     .widget-links-list li { margin-bottom: 5px; }
     .widget-links-list a {
