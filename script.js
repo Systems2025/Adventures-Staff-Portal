@@ -1,17 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Main portal (index.html) DOM loaded.");
 
-    // --- Assuming no separate login for this version, otherwise keep authentication check ---
+    // --- Simplified visibility toggle for non-login page setup ---
+    // If using a separate login page, comment out these lines and uncomment the auth block below.
     const pageContentWrapper = document.getElementById('pageContentWrapper');
     const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
-
     if (pageContentWrapper) pageContentWrapper.style.display = 'block';
     if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
     initializeUIElements();
     // --- End of simplified visibility toggle ---
 
     /* 
-    // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE ---
+    // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE (login.html, login.js, login.css) ---
+    // AND ensure pageContentWrapper & rightSidebarContentWrapper are style="display:none;" in index.html
+    const pageContentWrapper = document.getElementById('pageContentWrapper');
+    const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
     const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; // Must match the key used in login.js
 
     function isPortalAuthenticated() {
@@ -37,34 +40,49 @@ document.addEventListener('DOMContentLoaded', function() {
     function initializeUIElements() {
         console.log("Initializing UI elements...");
         initializeDepartmentToggles();
-        initializeSidebarCollapsibles(); // New function call
+        initializeSidebarCollapsibles(); 
     }
 
     // --- Sidebar Collapsible Logic ---
     function initializeSidebarCollapsibles() {
         const collapsibleToggles = document.querySelectorAll('.sidebar-navigation .collapsible-toggle');
+        console.log("Found sidebar collapsible toggles:", collapsibleToggles.length);
+
         collapsibleToggles.forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                this.parentElement.classList.toggle('open'); // Optional: for styling the whole section
-                const content = this.nextElementSibling; // Assumes ul.collapsible-content-sidebar is next
+            // Check if listener already attached to prevent duplicates if initializeUIElements is called multiple times
+            if (toggle.dataset.listenerAttached === 'true') return;
+
+            toggle.addEventListener('click', function(event) {
+                event.preventDefault(); 
+                
+                const content = this.nextElementSibling; 
                 const icon = this.querySelector('.toggle-icon-sidebar');
 
-                if (content.style.display === 'none' || content.style.display === '') {
-                    content.style.display = 'block';
-                    if (icon) {
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
-                        icon.classList.add('rotated'); // For CSS rotation
+                if (content) { // Check if content element exists
+                    if (content.style.display === 'none' || content.style.display === '') {
+                        // content.style.display = 'block'; // Simple show/hide
+                        content.classList.add('open'); // For CSS transition based on max-height
+                        content.style.maxHeight = content.scrollHeight + "px"; // Set max-height for animation
+                        if (icon) {
+                            icon.classList.remove('fa-chevron-down');
+                            icon.classList.add('fa-chevron-up');
+                            // icon.classList.add('rotated'); // Using CSS class for rotation now
+                        }
+                    } else {
+                        // content.style.display = 'none'; // Simple show/hide
+                        content.classList.remove('open');
+                        content.style.maxHeight = null; // Collapse for animation
+                        if (icon) {
+                            icon.classList.remove('fa-chevron-up');
+                            icon.classList.add('fa-chevron-down');
+                            // icon.classList.remove('rotated');
+                        }
                     }
                 } else {
-                    content.style.display = 'none';
-                    if (icon) {
-                        icon.classList.remove('fa-chevron-up');
-                        icon.classList.add('fa-chevron-down');
-                        icon.classList.remove('rotated');
-                    }
+                    console.warn("Collapsible content not found for toggle:", this);
                 }
             });
+            toggle.dataset.listenerAttached = 'true'; // Mark as listener attached
         });
     }
 
