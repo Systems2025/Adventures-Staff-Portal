@@ -70,7 +70,7 @@ body {
     cursor: default; 
 }
 .sidebar .sidebar-navigation ul:first-of-type .nav-section-title,
-.sidebar .sidebar-navigation > .nav-section-title:first-child { /* For first title if not in a .nav-section div */
+.sidebar .sidebar-navigation > .nav-section-title:first-child {
     margin-top: 0;
 }
 .nav-section.collapsible .nav-section-title.collapsible-toggle {
@@ -87,23 +87,26 @@ body {
     transition: transform 0.3s ease-in-out;
     font-size: 0.8em;
 }
-.nav-section.collapsible.open .toggle-icon-sidebar { /* Target when section is open */
+.nav-section.collapsible.open .toggle-icon-sidebar { /* Rotates icon when parent .nav-section has .open */
     transform: rotate(180deg);
 }
 
 
 .sidebar nav ul { list-style: none; padding-left: 0; }
 .sidebar nav ul.collapsible-content-sidebar {
-    padding-left: 10px; /* Less indent for cleaner look */
-    /* border-left: 2px solid #eef2ff; /* Optional border */
+    padding-left: 10px; 
     margin-left: 5px; 
     margin-top: 5px; 
     overflow: hidden; 
-    max-height: 0; /* Initially hidden for JS toggle and animation */
-    transition: max-height 0.3s ease-out; 
+    max-height: 0; /* CRITICAL: Start collapsed */
+    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out; /* Smooth transition */
+    padding-top: 0; /* Start with no padding */
+    padding-bottom: 0; /* Start with no padding */
 }
 .sidebar nav ul.collapsible-content-sidebar.open {
-    max-height: 500px; /* Adjust as needed, large enough for content */
+    max-height: 500px; /* Adjust if you have extremely long lists */
+    padding-top: 5px; /* Add padding when open */
+    padding-bottom: 5px; /* Add padding when open */
 }
 
 .sidebar nav li { margin-bottom: 3px; }
@@ -143,7 +146,7 @@ body {
 }
 
 #pageContentWrapper, #rightSidebarContentWrapper { 
-    /* display: none; /* UNCOMMENT if using separate login page */
+    /* display: none; /* UNCOMMENT if using separate login page and ensure it's also set in HTML */
 }
 
 .main-content > header {
@@ -297,14 +300,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center; 
-    flex-grow: 1; /* Allows h3 and p to take space before button */
+    flex-grow: 1; 
 }
 .card h3 { font-size: 1.1em; margin-bottom: 8px; font-weight: 600; color: #333; }
-.card p { font-size: 0.9em; color: #666; margin-bottom: 15px; } /* Removed flex-grow here */
+.card p { font-size: 0.9em; color: #666; margin-bottom: 15px; } 
 .card-button {
     display: inline-block; background-color: #4a47a3; color: #fff; padding: 8px 18px;
     border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9em;
-    transition: background-color 0.3s ease; margin-top: auto; /* Ensures button is at bottom */
+    transition: background-color 0.3s ease; margin-top: auto; 
 }
 .card-button:hover { background-color: #3a368a; }
 .card.placeholder-card { background-color: #f9f9f9; border-style: dashed; opacity: 0.7; }
@@ -355,11 +358,17 @@ body {
 .widget-links-list li:last-child { margin-bottom: 0; }
 .widget-links-list a {
     display: flex; align-items: center; text-decoration: none; color: #555;
-    padding: 7px 10px; border-radius: 6px;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    padding: 8px 12px; 
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease, border-left 0.2s ease;
     font-weight: 500; font-size: 0.9em; 
+    border-left: 3px solid transparent; 
 }
-.widget-links-list a:hover { background-color: #eef2ff; color: #4a47a3; }
+.widget-links-list a:hover { 
+    background-color: #eef2ff; 
+    color: #4a47a3;
+    border-left-color: #4a47a3; 
+}
 .form-link-icon { margin-right: 10px; width: 16px; text-align: center; color: #6c757d; font-size: 0.95em;}
 .widget-links-list a:hover .form-link-icon { color: #4a47a3; }
 
@@ -389,7 +398,6 @@ body {
     .sidebar .logo { justify-content: center; padding-left: 0; margin-bottom: 15px; }
     .nav-section-title { text-align: left; font-size: 0.85em; padding: 10px 10px 8px 10px; } 
     .nav-section.collapsible .nav-section-title.collapsible-toggle { padding-right: 10px; }
-    /* Sidebar main connect links become icon-only row on mobile */
     .sidebar nav ul.main-connect-links {
         display: flex; flex-wrap: wrap; justify-content: space-around; gap: 10px; padding-bottom: 10px;
     }
@@ -400,7 +408,7 @@ body {
     }
     .sidebar nav ul.main-connect-links li a i { margin-right: 0; font-size: 1.6em; color: #4a47a3; }
     .sidebar nav ul.main-connect-links li a .link-text { display: none !important; }
-    /* Collapsible sections text links for mobile */
+    
     .sidebar nav ul.collapsible-content-sidebar { padding-left: 10px; margin-left: 0; border-left: none; }
     .sidebar nav ul.collapsible-content-sidebar a { padding: 10px 5px; font-size: 0.9em; }
     .sidebar nav ul.collapsible-content-sidebar a i { margin-right: 8px; font-size: 1em; }
@@ -434,12 +442,24 @@ body {
     .widget-header i { font-size: 1.2em; }
     .widget-header h3 { font-size: 1.1em; }
     .form-group { margin-bottom: 15px; }
-    .form-group-title { font-size: 1em; margin-bottom: 8px; padding-bottom: 6px;}
-    .form-group-title i { font-size: 0.9em; }
+    .form-group-title { 
+        font-size: 1em; 
+        margin-bottom: 8px; 
+        padding-bottom: 6px;
+        background-color: #eef2ff; 
+        padding: 8px 10px;
+        border-radius: 4px;
+        border-bottom: none; 
+        color: #4a47a3;
+    }
+    .form-group-title i { font-size: 0.9em; color: #4a47a3; }
     .widget-links-list li { margin-bottom: 6px; }
     .widget-links-list a {
-        font-size: 0.9em; padding: 10px 8px; 
-        background-color: #fff; border: 1px solid #eef2ff;
+        font-size: 0.9em; 
+        padding: 10px 12px; 
+        background-color: #fff; 
+        border: 1px solid #eef2ff;
+        border-left-width: 3px; 
     }
     .widget-links-list a:hover { background-color: #eef2ff; }
     .form-link-icon { font-size: 1em; margin-right: 8px;}
@@ -459,8 +479,9 @@ body {
     .card-icon { font-size: 1.6em; margin-right: 10px;}
     .card h3 { font-size: 0.95em; }
     .card p { font-size: 0.8em; }
+    
     .widget-header i { font-size: 1.1em; }
     .widget-header h3 { font-size: 1.05em; }
-    .form-group-title { font-size: 0.95em; }
-    .widget-links-list a { font-size: 0.85em; padding: 9px 8px; }
+    .form-group-title { font-size: 0.95em; padding: 6px 8px;}
+    .widget-links-list a { font-size: 0.85em; padding: 9px 10px; }
 }
