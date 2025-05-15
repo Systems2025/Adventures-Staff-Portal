@@ -67,13 +67,36 @@ body {
     letter-spacing: 0.5px;
     padding: 10px 15px 5px 15px; 
     margin-top: 15px; 
+    cursor: default; /* Default for non-collapsible */
 }
 .sidebar .sidebar-navigation ul:first-of-type .nav-section-title,
 .sidebar .sidebar-navigation > .nav-section-title:first-child {
     margin-top: 0;
 }
+.nav-section.collapsible .nav-section-title.collapsible-toggle {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-section.collapsible .nav-section-title.collapsible-toggle:hover {
+    color: #4a47a3;
+}
+.toggle-icon-sidebar {
+    transition: transform 0.2s ease-in-out;
+    font-size: 0.8em;
+}
+.toggle-icon-sidebar.rotated {
+    transform: rotate(180deg);
+}
+
 
 .sidebar nav ul { list-style: none; padding-left: 0; }
+.sidebar nav ul.collapsible-content-sidebar {
+    padding-left: 15px; /* Indent for sub-items */
+    border-left: 2px solid #eef2ff;
+    margin-left: 5px;
+}
 .sidebar nav li { margin-bottom: 3px; }
 .sidebar nav a {
     display: flex;
@@ -85,6 +108,9 @@ body {
     border-radius: 6px;
     font-size: 0.9em;
     transition: background-color 0.2s ease, color 0.2s ease;
+}
+.sidebar nav a .link-text { /* Span around text */
+    /* Display handled by media queries */
 }
 .sidebar nav a i {
     margin-right: 12px;
@@ -109,7 +135,6 @@ body {
 
 #pageContentWrapper, #rightSidebarContentWrapper { 
     /* display: none; /* UNCOMMENT if using separate login page */
-    /* If NOT using login page, ensure these are block or default */
 }
 
 .main-content > header {
@@ -268,6 +293,10 @@ body {
 }
 .card-button:hover { background-color: #3a368a; }
 .card.placeholder-card { background-color: #f9f9f9; border-style: dashed; opacity: 0.7; }
+.card-content-wrapper { /* For mobile card layout */
+    /* Styles applied in media query */
+}
+
 
 /* --- Right Sidebar --- */
 .right-sidebar {
@@ -345,7 +374,40 @@ body {
         border-radius: 0; min-height: 100vh; gap: 0;
     }
     .sidebar { border-right: none; border-bottom: 1px solid #e0e0e0; padding: 15px; height: auto; }
-    .main-content { padding: 15px; }
+    .sidebar .logo { justify-content: center; padding-left: 0; margin-bottom: 15px; }
+    .nav-section-title { text-align: center; font-size: 0.75em; padding: 8px 10px 4px 10px; }
+    /* Sidebar main connect links become icon-only row on mobile */
+    .sidebar nav ul.main-connect-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+    .sidebar nav ul.main-connect-links li a {
+        padding: 10px; 
+        font-size: 0.9em; 
+        justify-content: center; 
+        min-width: 44px; /* Good tap target */
+        min-height: 44px;
+    }
+    .sidebar nav ul.main-connect-links li a i {
+        margin-right: 0; 
+        font-size: 1.5em; 
+        color: #4a47a3; 
+    }
+    .sidebar nav ul.main-connect-links li a .link-text {
+        display: none !important; /* Hide text for these main links on mobile */
+    }
+    /* Collapsible sections still show text */
+    .sidebar nav ul.collapsible-content-sidebar a {
+        padding: 10px 10px; /* Adjust padding for links */
+        font-size: 0.95em; /* Ensure readability */
+    }
+     .sidebar nav ul.collapsible-content-sidebar a i {
+        margin-right: 8px; /* Slightly less space for icon */
+    }
+
+    .main-content { padding: 20px 15px; }
     .main-content > header { flex-direction: column; gap: 10px; align-items: flex-start; margin-bottom: 20px; }
     .search-bar { width: 100%; max-width: none; padding: 10px 15px; }
     .search-bar input { font-size: 1em; }
@@ -360,7 +422,7 @@ body {
     .link-cards-grid { grid-template-columns: 1fr; gap: 15px; }
     .card {
         min-height: auto; padding: 15px;
-        flex-direction: row; /* Mobile Card Layout: Icon Left, Text Right */
+        flex-direction: row; 
         align-items: center;
         text-align: left;
     }
@@ -378,8 +440,12 @@ body {
 @media (max-width: 576px) {
     .sidebar .logo span { font-size: 1.2em; }
     .sidebar .logo i { font-size: 1.4em; }
-    .sidebar nav a { padding: 10px 10px; font-size: 0.9em; } 
-    .nav-section-title { font-size: 0.8em; }
+    /* Main connect links icons might need slight adjustment */
+    .sidebar nav ul.main-connect-links li a i { font-size: 1.4em; }
+    /* Collapsible section text */
+    .sidebar nav ul.collapsible-content-sidebar a { font-size: 0.9em; }
+    .nav-section-title { font-size: 0.8em; } /* For the collapsible toggles themselves */
+
     .main-content > header { margin-bottom: 15px; }
     .search-bar { padding: 8px 12px; }
     .welcome-banner h2 { font-size: 1.1em; }
