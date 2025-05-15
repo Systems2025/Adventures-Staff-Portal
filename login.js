@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorParagraph = document.getElementById('loginError');
 
     const PORTAL_PASSWORD = "BSK@2025#"; // The global password
-    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; // Use a consistent key, v3 for fresh test
+    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; // Use a consistent key
 
     if (!passwordInput || !submitButton || !errorParagraph) {
         console.error("Login page elements not found!");
@@ -14,13 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // If already unlocked, redirect immediately (e.g., user hits back button)
+    // If already unlocked, redirect immediately (e.g., user hits back button to login page)
     if (sessionStorage.getItem(PORTAL_UNLOCKED_KEY) === 'true') {
         console.log("Already unlocked, redirecting to portal...");
-        window.location.href = 'index.html'; // Adjust if your main portal page has a different name
-        return; // Stop further execution on this page
+        window.location.href = 'index.html'; // Main portal page
+        return; 
     }
-
 
     function attemptLogin() {
         console.log("Attempting login...");
@@ -30,11 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Password correct. Setting unlock flag and redirecting.");
             errorParagraph.textContent = '';
             sessionStorage.setItem(PORTAL_UNLOCKED_KEY, 'true');
-            window.location.href = 'index.html'; // Adjust if your main portal page has a different name
+            window.location.href = 'index.html'; // Main portal page
         } else {
             console.log("Password incorrect.");
             errorParagraph.textContent = 'Incorrect password. Please try again.';
-            passwordInput.value = ''; // Clear input
+            passwordInput.value = ''; 
             passwordInput.focus();
         }
     }
@@ -43,11 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     passwordInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); // Prevent default form submission if it were in a form
+            event.preventDefault(); 
             attemptLogin();
         }
     });
 
-    // Optional: Autofocus on the password field
     passwordInput.focus();
 });
