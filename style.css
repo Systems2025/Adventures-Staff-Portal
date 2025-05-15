@@ -107,9 +107,9 @@ body {
     overflow-y: auto;
 }
 
-#pageContentWrapper, #rightSidebarContentWrapper { /* For password protection setup */
-    /* display: none; Will be controlled by JS if using login page */
-    /* If NOT using login page, comment out or remove the display:none from here */
+#pageContentWrapper, #rightSidebarContentWrapper { 
+    /* display: none; /* UNCOMMENT if using separate login page */
+    /* If NOT using login page, ensure these are block or default */
 }
 
 .main-content > header {
@@ -346,34 +346,50 @@ body {
     }
     .sidebar { border-right: none; border-bottom: 1px solid #e0e0e0; padding: 15px; height: auto; }
     .main-content { padding: 15px; }
-    .main-content > header { flex-direction: row; align-items: center; margin-bottom: 20px; }
-    .search-bar { width: 100%; max-width: none; padding: 6px 12px; }
-    .welcome-banner { padding: 15px 20px; }
+    .main-content > header { flex-direction: column; gap: 10px; align-items: flex-start; margin-bottom: 20px; }
+    .search-bar { width: 100%; max-width: none; padding: 10px 15px; }
+    .search-bar input { font-size: 1em; }
+    .welcome-banner { padding: 15px; text-align: center;}
+    .welcome-banner h2 { font-size: 1.2em; margin-bottom: 8px; }
+    .welcome-banner p { font-size: 0.9em; }
+    .department-filter-controls { gap: 8px; justify-content: center; }
+    .filter-btn { padding: 8px 12px; font-size: 0.85em; }
+    .category-section { padding: 15px; }
     .category-header h2 { font-size: 1.3em; }
+    .category-description { font-size: 0.9em; margin-bottom: 15px; }
     .link-cards-grid { grid-template-columns: 1fr; gap: 15px; }
-    .card { min-height: auto; padding: 15px; }
-    .card-icon { font-size: 2em; margin-bottom: 10px; }
-    .card h3 { font-size: 1em; }
-    .card p { font-size: 0.85em; margin-bottom: 12px; }
-    .card-button { padding: 7px 15px; font-size: 0.85em; }
-    .right-sidebar { padding: 15px; border-top: 1px solid #e0e0e0; }
+    .card {
+        min-height: auto; padding: 15px;
+        flex-direction: row; /* Mobile Card Layout: Icon Left, Text Right */
+        align-items: center;
+        text-align: left;
+    }
+    .card-icon { font-size: 1.8em; margin-bottom: 0; margin-right: 15px; flex-shrink: 0; }
+    .card-content-wrapper { display: flex; flex-direction: column; flex-grow: 1; }
+    .card h3 { font-size: 1em; margin-bottom: 5px; }
+    .card p { font-size: 0.85em; margin-bottom: 10px; }
+    .card-button { padding: 8px 15px; font-size: 0.9em; width: 100%; margin-top: 10px;}
+    .right-sidebar { padding: 15px; border-top: 1px solid #e0e0e0; background-color: #f8f9fe; }
     .registration-forms-widget { padding: 15px; }
     .widget-header h3 { font-size: 1.1em; }
     .form-group-title { font-size: 0.95em; }
     .widget-links-list a { font-size: 0.88em; padding: 6px 8px; }
-    .filter-btn { font-size: 0.85em; padding: 6px 12px; }
 }
 @media (max-width: 576px) {
-    .sidebar .logo span { font-size: 1.1em; }
-    .sidebar nav a { padding: 10px 12px; font-size: 0.9em; } 
-    .nav-section-title { font-size: 0.75em; padding: 8px 15px 4px 15px; }
-    .category-header h2 { font-size: 1.2em; }
-    .welcome-banner { padding: 12px 15px; }
+    .sidebar .logo span { font-size: 1.2em; }
+    .sidebar .logo i { font-size: 1.4em; }
+    .sidebar nav a { padding: 10px 10px; font-size: 0.9em; } 
+    .nav-section-title { font-size: 0.8em; }
+    .main-content > header { margin-bottom: 15px; }
+    .search-bar { padding: 8px 12px; }
     .welcome-banner h2 { font-size: 1.1em; }
-    .welcome-banner p { font-size: 0.9em; }
-    .department-filter-controls { justify-content: center; }
-    .category-description { font-size: 0.9em; margin-bottom: 15px; }
-    .widget-header i { font-size: 1.2em; }
+    .filter-btn { font-size: 0.8em; }
+    .category-header h2 { font-size: 1.2em; }
+    .card-icon { font-size: 1.6em; margin-right: 10px;}
+    .card h3 { font-size: 0.95em; }
+    .card p { font-size: 0.8em; }
+    .widget-header i { font-size: 1.1em; }
     .widget-header h3 { font-size: 1em; }
     .form-group-title { font-size: 0.9em; }
+    .widget-links-list a { font-size: 0.85em; padding: 7px; }
 }
