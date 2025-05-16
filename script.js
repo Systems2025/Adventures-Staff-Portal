@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Main portal (index.html) DOM loaded.");
 
     // --- Simplified visibility for non-login page setup ---
-    // If using a separate login page, comment out these lines and uncomment the auth block below.
     const pageContentWrapper = document.getElementById('pageContentWrapper');
     const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
     if (pageContentWrapper) pageContentWrapper.style.display = 'block';
@@ -11,25 +10,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- End of simplified visibility ---
 
     /* 
-    // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE (login.html, login.js, login.css) ---
-    // AND ensure pageContentWrapper & rightSidebarContentWrapper are style="display:none;" in index.html or style.css
+    // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE ---
     const pageContentWrapper = document.getElementById('pageContentWrapper');
     const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
-    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; // Must match the key used in login.js
+    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; 
 
     function isPortalAuthenticated() {
         const authenticated = sessionStorage.getItem(PORTAL_UNLOCKED_KEY) === 'true';
-        // console.log("Is portal authenticated (from session)?", authenticated);
         return authenticated;
     }
 
     if (isPortalAuthenticated()) {
-        // console.log("Portal is authenticated. Displaying content.");
         if (pageContentWrapper) pageContentWrapper.style.display = 'block';
         if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block'; 
         initializeUIElements();
     } else {
-        // console.log("Portal not authenticated. Redirecting to login page.");
         window.location.href = 'login.html'; 
         return; 
     }
@@ -58,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const icon = this.querySelector('.toggle-icon-sidebar');
 
                 if (content && parentNavSection && icon) {
-                    parentNavSection.classList.toggle('open'); // For CSS to rotate icon
+                    parentNavSection.classList.toggle('open');
 
                     if (content.classList.contains('open')) { 
                         content.style.maxHeight = null; 
@@ -84,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
         removeWidgetCollapsibleListeners(); 
 
         const widgetCollapsibleToggles = document.querySelectorAll('.registration-forms-widget .collapsible-widget-toggle');
-        const mobileBreakpoint = 768;
+        const mobileBreakpoint = 768; // Width in pixels
 
         widgetCollapsibleToggles.forEach(toggle => {
             const parentGroup = toggle.closest('.collapsible-widget-group');
@@ -92,25 +87,24 @@ document.addEventListener('DOMContentLoaded', function() {
             const icon = toggle.querySelector('.toggle-icon-widget');
 
             if (!content || !parentGroup || !icon) {
-                console.warn("Widget collapsible elements not found for a toggle.");
+                console.warn("Widget collapsible elements not found for a toggle (content, parentGroup, or icon).");
                 return;
             }
             
-            // Reset classes for accurate state detection
+            // Reset classes and styles for accurate state detection before applying new ones
             content.classList.remove('open-mobile', 'collapsed-mobile');
             parentGroup.classList.remove('open');
             icon.classList.remove('fa-chevron-up');
             icon.classList.add('fa-chevron-down');
-
+            content.style.maxHeight = ""; // Clear any inline maxHeight
 
             if (window.innerWidth > mobileBreakpoint) {
-                // DESKTOP: Ensure content is expanded
+                // DESKTOP: Ensure content is expanded and no click listener
                 content.style.maxHeight = content.scrollHeight + "px"; 
-                content.classList.add('open-mobile'); // Use distinct class for JS logic if needed
-                parentGroup.classList.add('open'); // For icon rotation via CSS if any
+                content.classList.add('open-mobile'); // Use open-mobile for consistency or just rely on scrollHeight
+                parentGroup.classList.add('open'); 
             } else {
-                // MOBILE: Set up for collapsing
-                content.style.maxHeight = null; // Will be handled by .collapsed-mobile or set on open
+                // MOBILE: Set up for collapsing, ensure initially collapsed
                 content.classList.add('collapsed-mobile'); 
                 parentGroup.classList.remove('open');
 
@@ -119,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     parentGroup.classList.toggle('open'); // For icon rotation
                     
                     if (content.classList.contains('open-mobile')) {
-                        content.style.maxHeight = null;
+                        content.style.maxHeight = null; // Collapse
                         content.classList.remove('open-mobile');
                         content.classList.add('collapsed-mobile');
                         icon.classList.remove('fa-chevron-up');
@@ -127,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         content.classList.remove('collapsed-mobile');
                         content.classList.add('open-mobile');
-                        content.style.maxHeight = content.scrollHeight + "px";
+                        content.style.maxHeight = content.scrollHeight + "px"; // Expand
                         icon.classList.remove('fa-chevron-down');
                         icon.classList.add('fa-chevron-up');
                     }
