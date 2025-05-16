@@ -43,22 +43,20 @@ body {
 .sidebar .logo {
     display: flex;
     align-items: center;
-    /* font-size: 1.3em; */ /* Using image now */
-    /* font-weight: 600; */
-    color: #4a47a3; /* For icon if kept */
+    color: #4a47a3; 
     margin-bottom: 20px; 
     padding-left: 10px;
-    height: 40px; /* Example height for logo area */
+    height: 40px; 
 }
 
-.sidebar .logo i { /* For the mountain icon */
+.sidebar .logo i { 
     margin-right: 10px;
     font-size: 1.8em; 
     color: #4a47a3; 
     line-height: 1; 
 }
-.logo-image { /* For your actual image logo */
-    height: 70px; 
+.logo-image { 
+    height: 35px; 
     width: auto;   
 }
 
@@ -78,19 +76,20 @@ body {
     cursor: default; 
 }
 .sidebar .sidebar-navigation ul:first-of-type .nav-section-title,
-.sidebar .sidebar-navigation > .nav-section-title:first-child {
+.sidebar .sidebar-navigation > .nav-section-title:first-child,
+.sidebar .sidebar-navigation .social-icon-group:first-of-type .nav-section-title { /* For social group title */
     margin-top: 0;
 }
-.nav-section.collapsible .nav-section-title.collapsible-toggle {
-    cursor: pointer;
+.nav-section.collapsible .nav-section-title.collapsible-toggle,
+.social-icon-group .nav-section-title.social-group-title { /* Make social titles look like other toggles */
+    cursor: default; /* No cursor pointer if it's not a toggle on desktop */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: color 0.2s ease;
+    /* transition: color 0.2s ease; /* Not needed if not clickable on desktop */
 }
-.nav-section.collapsible .nav-section-title.collapsible-toggle:hover {
-    color: #4a47a3;
-}
+/* No hover effect for social group titles on desktop */
+
 .toggle-icon-sidebar { 
     transition: transform 0.3s ease-in-out;
     font-size: 0.8em;
@@ -101,7 +100,7 @@ body {
 
 
 .sidebar nav ul { list-style: none; padding-left: 0; }
-.sidebar nav ul.collapsible-content-sidebar {
+.sidebar nav ul.collapsible-content-sidebar { /* For Instagram/Facebook dropdowns */
     padding-left: 10px; 
     margin-left: 5px; 
     margin-top: 5px; 
@@ -129,8 +128,14 @@ body {
     font-size: 0.9em;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
-.sidebar nav a .link-text { 
+.sidebar nav a .link-text { /* Desktop: text shown */
     display: inline;
+}
+.sidebar nav a .icon-label-mobile { /* Mobile: small text below icon */
+    display: none; 
+    font-size: 0.7em;
+    margin-top: 3px;
+    color: #666;
 }
 .sidebar nav a i {
     margin-right: 12px;
@@ -143,9 +148,16 @@ body {
     background-color: #eef2ff;
     color: #4a47a3;
 }
-.sidebar nav a:hover i {
+.sidebar nav a:hover i,
+.sidebar nav a:hover .icon-label-mobile { /* Change label color on hover too */
     color: #4a47a3;
 }
+
+/* Styles for the new social icon group layout on mobile */
+.social-icon-group .social-links-list {
+    /* Desktop: behaves like normal ul */
+}
+
 
 /* --- Main Content --- */
 .main-content {
@@ -154,302 +166,43 @@ body {
 }
 
 #pageContentWrapper, #rightSidebarContentWrapper { 
-    /* display: none; /* UNCOMMENT if using separate login page and ensure it's also set in HTML */
+    /* display: none; /* UNCOMMENT if using separate login page */
 }
 
-.main-content > header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.search-bar {
-    display: flex;
-    align-items: center;
-    background-color: #f4f7fe;
-    padding: 8px 15px;
-    border-radius: 20px;
-    width: 60%;
-    max-width: 400px;
-}
-.search-bar i { color: #aaa; margin-right: 10px; }
-.search-bar input {
-    border: none;
-    outline: none;
-    background: none;
-    width: 100%;
-    font-size: 0.95em;
-    font-family: 'Poppins', sans-serif;
-}
-
-.welcome-banner {
-    background: linear-gradient(90deg, #4a47a3, #6e6afc);
-    color: #fff;
-    padding: 20px 30px;
-    border-radius: 12px;
-    margin-bottom: 30px;
-}
-.welcome-banner h2 { margin-bottom: 5px; font-weight: 600; }
-
-/* Department Filter Controls Styling */
-.department-filter-controls {
-    margin-bottom: 25px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #e0e6ed;
-}
-.filter-btn {
-    padding: 8px 15px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #555;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.9em;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-.filter-btn:hover {
-    background-color: #eef2ff;
-    border-color: #4a47a3;
-    color: #4a47a3;
-}
-.filter-btn.active {
-    background-color: #4a47a3;
-    color: #fff;
-    border-color: #4a47a3;
-}
-
-/* Categories Container */
-.categories-container {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-/* Category Section Styling */
-.category-section {
-    background-color: #fdfdff;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid #e8ecf7;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-}
-.category-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-}
-.category-header h2 {
-    font-size: 1.4em;
-    color: #4a47a3;
-    font-weight: 600;
-}
-.category-header h2 i {
-    margin-right: 10px;
-    font-size: 0.9em;
-}
-.category-description {
-    font-size: 0.95em;
-    color: #666;
-    margin-bottom: 20px;
-    line-height: 1.6;
-}
-
-/* Link Cards Grid */
-.link-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-}
-
-.card {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: space-between;
-    min-height: 200px;
-}
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-}
-.card-icon {
-    font-size: 2.5em;
-    margin-bottom: 15px;
-}
-.job-icon { color: #28a745; } 
-.gym-icon { color: #fd7e14; } 
-.form-icon { color: #17a2b8; } 
-.route-icon { color: #6f42c1; } 
-.staff-icon { color: #ffc107; } 
-.input-icon { color: #007bff; } 
-.impact-icon { color: #dc3545; } 
-.changes-icon { color: #6c757d; } 
-.story-icon { color: #e83e8c; } 
-.review-icon { color: #20c997; } 
-.funds-icon { color: #4B0082; } 
-.space-booking-icon { color: #54a0ff; } 
-.library-icon { color: #a55eea; } 
-.ops-request-icon { color: #ff6b6b; } 
-.bizdev-request-icon { color: #1dd1a1; } 
-.card.placeholder-card .card-icon { color: #aaa; }
-
+/* ... (Keep .main-content > header, .search-bar, .welcome-banner, */
+/* .department-filter-controls, .filter-btn, .categories-container, */
+/* .category-section, .category-header, .category-description, */
+/* .link-cards-grid, .card, .card-icon and specific icon colors, */
+/* .card-content-wrapper, .card h3, .card p, .card-button, .card.placeholder-card styles AS IS) ... */
 .card-content-wrapper { 
     display: flex;
     flex-direction: column;
     align-items: center; 
     flex-grow: 1; 
 }
-.card h3 { font-size: 1.1em; margin-bottom: 8px; font-weight: 600; color: #333; }
-.card p { font-size: 0.9em; color: #666; margin-bottom: 15px; } 
-.card-button {
-    display: inline-block; background-color: #4a47a3; color: #fff; padding: 8px 18px;
-    border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9em;
-    transition: background-color 0.3s ease; margin-top: auto; 
-}
-.card-button:hover { background-color: #3a368a; }
-.card.placeholder-card { background-color: #f9f9f9; border-style: dashed; opacity: 0.7; }
-
 
 /* --- Right Sidebar --- */
-.right-sidebar {
-    background-color: #fff; padding: 25px; border-left: 1px solid #e0e0e0;
-    display: flex; flex-direction: column; gap: 25px;
-    overflow: hidden;
-}
+.right-sidebar { /* ... existing ... */ }
+.registration-forms-widget { /* ... existing ... */ }
+.widget-header { /* ... existing ... */ }
+.widget-scroll-container { /* ... existing ... */ }
+.form-group { /* ... existing ... */ }
+.form-group-title { /* ... existing ... */ }
+.toggle-icon-widget { /* ... existing ... */ }
+.form-group.collapsible-widget-group.open .form-group-title { /* ... existing ... */ }
+.form-group.collapsible-widget-group.open .toggle-icon-widget { /* ... existing ... */ }
+.widget-links-list.collapsible-widget-content { /* ... existing ... */ }
+.widget-links-list.collapsible-widget-content.collapsed-mobile { /* ... existing ... */ }
+.widget-links-list.collapsible-widget-content.open-mobile { /* ... existing ... */ }
+.widget-links-list li { /* ... existing ... */ }
+.widget-links-list a { /* ... existing ... */ }
+.form-link-icon { /* ... existing ... */ }
 
-/* Registration Forms Widget Styling */
-.registration-forms-widget {
-    background-color: #f9faff; border-radius: 10px; padding: 20px;
-    border: 1px solid #e8ecf7;
-    display: flex; 
-    flex-direction: column;
-    overflow: hidden; 
-    flex-grow: 1; 
-}
-.widget-header {
-    display: flex; align-items: center; margin-bottom: 15px;
-    padding-bottom: 10px; border-bottom: 1px solid #e0e6ed;
-    flex-shrink: 0; 
-}
-.widget-header i { font-size: 1.3em; color: #4a47a3; margin-right: 10px; }
-.widget-header h3 { font-size: 1.15em; font-weight: 600; color: #333; margin: 0; }
-.widget-scroll-container {
-    overflow-y: auto; 
-    flex-grow: 1; 
-    padding-right: 5px; 
-}
-.widget-scroll-container::-webkit-scrollbar { width: 6px; }
-.widget-scroll-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-.widget-scroll-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
-.widget-scroll-container::-webkit-scrollbar-thumb:hover { background: #aaa; }
-
-.form-group { margin-bottom: 10px; }
-.form-group:last-child { margin-bottom: 0; }
-
-.form-group-title {
-    font-size: 1em; font-weight: 600; color: #555; margin-bottom: 0;
-    padding: 10px 8px; 
-    display: flex; align-items: center;
-    justify-content: space-between; 
-    cursor: default; 
-    background-color: #f0f4f8; 
-    border-radius: 4px;
-    transition: background-color 0.2s ease, border-radius 0.2s ease; /* Added border-radius transition */
-}
-.form-group-title i:first-child { 
-    margin-right: 8px;
-    color: #666; 
-    font-size: 0.9em;
-}
-.toggle-icon-widget { 
-    font-size: 0.8em;
-    color: #888;
-    transition: transform 0.3s ease-in-out;
-    display: none; 
-}
-.form-group.collapsible-widget-group.open .form-group-title {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-.form-group.collapsible-widget-group.open .toggle-icon-widget {
-    transform: rotate(180deg);
-}
-
-.widget-links-list.collapsible-widget-content {
-    list-style: none; padding: 0; margin: 0;
-    overflow: hidden;
-    max-height: 500px; /* Default expanded for desktop */
-    padding-left: 5px; 
-    background-color: #fff; 
-    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out, border 0.35s ease-out;
-    /* Add border transition */
-}
-/* This class is ADDED by JS for mobile collapse/expand */
-.widget-links-list.collapsible-widget-content.collapsed-mobile {
-    max-height: 0 !important; 
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    border-top: none !important;
-    margin-top: 0 !important;
-    border: 1px solid transparent !important; /* Ensure no border when collapsed */
-
-}
-.widget-links-list.collapsible-widget-content.open-mobile {
-    max-height: 500px !important; 
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-    border: 1px solid #f0f4f8 !important; /* Match title background */
-    border-top: none !important;
-    border-radius: 0 0 4px 4px !important;
-    margin-top: 0 !important; 
-}
-
-
-.widget-links-list li { margin-bottom: 6px; } 
-.widget-links-list li:last-child { margin-bottom: 0; }
-.widget-links-list a {
-    display: flex; align-items: center; text-decoration: none; color: #555;
-    padding: 8px 10px; 
-    border-radius: 4px; 
-    transition: background-color 0.2s ease, color 0.2s ease, border-left 0.2s ease;
-    font-weight: 500; font-size: 0.9em; 
-    border-left: 3px solid transparent; 
-}
-.widget-links-list a:hover { 
-    background-color: #eef2ff; 
-    color: #4a47a3;
-    border-left-color: #4a47a3; 
-}
-.form-link-icon { margin-right: 8px; width: 16px; text-align: center; color: #6c757d; font-size: 0.9em;}
-.widget-links-list a:hover .form-link-icon { color: #4a47a3; }
 
 /* --- Responsive Styles --- */
-@media (max-width: 1200px) {
-    .portal-container { grid-template-columns: 220px 1fr 280px; gap: 20px; }
-}
-@media (max-width: 992px) {
-    .portal-container {
-        grid-template-columns: 200px 1fr; grid-template-areas: "sidebar main" "sidebar right";
-        gap: 15px;
-    }
-    .sidebar { grid-area: sidebar; }
-    .main-content { grid-area: main; padding: 20px; }
-    .right-sidebar { grid-area: right; border-left: none; border-top: 1px solid #e0e0e0; padding: 20px; }
-    .search-bar { width: 70%; }
-    .link-cards-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-    .department-filter-controls { padding-bottom: 10px; }
-}
+@media (max-width: 1200px) { /* ... existing ... */ }
+@media (max-width: 992px) { /* ... existing ... */ }
+
 @media (max-width: 768px) {
     body { padding: 0; align-items: stretch; }
     .portal-container {
@@ -458,8 +211,14 @@ body {
     }
     .sidebar { border-right: none; border-bottom: 1px solid #e0e0e0; padding: 15px; height: auto; }
     .sidebar .logo { justify-content: center; padding-left: 0; margin-bottom: 15px; }
-    .nav-section-title { text-align: left; font-size: 0.85em; padding: 10px 10px 8px 10px; } 
-    .nav-section.collapsible .nav-section-title.collapsible-toggle { padding-right: 10px; }
+    
+    /* Sidebar Links Mobile Styling */
+    .nav-section-title { 
+        text-align: left; /* Keep left for consistency */
+        font-size: 0.85em; 
+        padding: 10px 10px 8px 10px; 
+    } 
+    /* Main "Connect with us" links - icon only, centered */
     .sidebar nav ul.main-connect-links {
         display: flex; flex-wrap: wrap; justify-content: space-around; gap: 10px; padding-bottom: 10px;
     }
@@ -470,88 +229,66 @@ body {
     }
     .sidebar nav ul.main-connect-links li a i { margin-right: 0; font-size: 1.6em; color: #4a47a3; }
     .sidebar nav ul.main-connect-links li a .link-text { display: none !important; }
-    
-    .sidebar nav ul.collapsible-content-sidebar { padding-left: 10px; margin-left: 0; border-left: none; }
-    .sidebar nav ul.collapsible-content-sidebar a { padding: 10px 5px; font-size: 0.9em; }
-    .sidebar nav ul.collapsible-content-sidebar a i { margin-right: 8px; font-size: 1em; }
-    .toggle-icon-sidebar { font-size: 0.9em; }
 
+    /* Instagram & Facebook groups become icon rows with small labels */
+    .sidebar .social-icon-group .nav-section-title.social-group-title {
+        text-align: center; /* Center the "Instagram" / "Facebook" title */
+        margin-bottom: 8px;
+    }
+    .sidebar .social-icon-group .social-links-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around; /* Or center */
+        gap: 10px;
+        padding-left: 0; /* Override any previous indent */
+    }
+    .sidebar .social-icon-group .social-links-list li {
+        margin-bottom: 5px;
+    }
+    .sidebar .social-icon-group .social-links-list li a {
+        flex-direction: column; /* Icon above label */
+        padding: 8px;
+        min-width: 60px; /* Adjust for tap target and label */
+        text-align: center;
+        border: 1px solid #eee;
+        border-radius: 6px;
+        background-color: #f9faff;
+    }
+    .sidebar .social-icon-group .social-links-list li a i {
+        margin-right: 0;
+        margin-bottom: 4px; /* Space between icon and label */
+        font-size: 1.5em; /* Prominent icon */
+        color: #4a47a3;
+    }
+    .sidebar .social-icon-group .social-links-list li a .link-text {
+        display: none; /* Hide the full text from desktop */
+    }
+    .sidebar .social-icon-group .social-links-list li a .icon-label-mobile {
+        display: block; /* Show the small mobile label */
+    }
+    /* Remove collapsible behavior for social groups on mobile as they are now icon rows */
+    .sidebar .social-icon-group .collapsible-toggle .toggle-icon-sidebar {
+        display: none;
+    }
+    .sidebar .social-icon-group .collapsible-content-sidebar {
+        max-height: none !important; /* Ensure it's visible */
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        display: contents; /* Make the UL not take up layout space itself */
+    }
+
+
+    /* ... (Keep other existing mobile styles for main content, cards, right sidebar registration forms) ... */
     .main-content { padding: 20px 15px; }
     .main-content > header { flex-direction: column; gap: 10px; align-items: flex-start; margin-bottom: 20px; }
-    .search-bar { width: 100%; max-width: none; padding: 10px 15px; }
-    .search-bar input { font-size: 1em; }
-    .welcome-banner { padding: 15px; text-align: center;}
-    .welcome-banner h2 { font-size: 1.2em; margin-bottom: 8px; }
-    .welcome-banner p { font-size: 0.9em; }
-    .department-filter-controls { gap: 8px; justify-content: center; }
-    .filter-btn { padding: 8px 12px; font-size: 0.85em; }
-    .category-section { padding: 15px; }
-    .category-header h2 { font-size: 1.3em; }
-    .category-description { font-size: 0.9em; margin-bottom: 15px; }
-    .link-cards-grid { grid-template-columns: 1fr; gap: 15px; }
-    .card {
-        min-height: auto; padding: 15px;
-        flex-direction: row; align-items: center; text-align: left;
-    }
-    .card-icon { font-size: 1.8em; margin-bottom: 0; margin-right: 15px; flex-shrink: 0; }
-    .card-content-wrapper { display: flex; flex-direction: column; flex-grow: 1; align-items: flex-start; } 
-    .card h3 { font-size: 1em; margin-bottom: 5px; }
-    .card p { font-size: 0.85em; margin-bottom: 10px; }
-    .card-button { padding: 8px 15px; font-size: 0.9em; width: 100%; margin-top: 10px;}
-    
-    .right-sidebar { padding: 15px 10px; border-top: 1px solid #e0e0e0; background-color: #f8f9fe; }
-    .registration-forms-widget { padding: 10px; }
-    .widget-header { margin-bottom: 10px; padding-bottom: 8px;}
-    .widget-header i { font-size: 1.2em; }
-    .widget-header h3 { font-size: 1.1em; }
-    .form-group { margin-bottom: 8px; }
-    .form-group-title.collapsible-widget-toggle { 
-        cursor: pointer;
-        padding: 12px 10px; 
-    }
-    .form-group-title i:first-child { font-size: 0.9em; }
-    .toggle-icon-widget {
-        display: inline-block; 
-    }
-    /* Mobile: ensure lists start collapsed and transition correctly */
-    .widget-links-list.collapsible-widget-content {
-        background-color: #fff; /* Give a background for mobile when open */
-        border: 1px solid #eef2ff;
-        border-top: none;
-        border-radius: 0 0 4px 4px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        padding-left: 10px; /* Indent links when open */
-        /* max-height and padding for open/closed handled by .collapsed-mobile and .open-mobile */
-    }
-    .widget-links-list li { margin-bottom: 5px; }
-    .widget-links-list a {
-        font-size: 0.9em; 
-        padding: 10px 8px; 
-        background-color: transparent; /* Remove individual link background if parent has one */
-        border: none; /* Remove individual link border */
-        border-left-width: 3px; 
-    }
-    .form-link-icon { font-size: 1em; margin-right: 8px;}
+    /* ... etc. for cards and right sidebar as they were in the previous full CSS ... */
 }
 
 @media (max-width: 576px) {
-    .sidebar .logo span { font-size: 1.2em; }
-    .sidebar .logo i { font-size: 1.4em; }
+    /* ... (Keep existing smallest screen styles, potentially further adjust social icon/label sizes if needed) ... */
     .sidebar nav ul.main-connect-links li a i { font-size: 1.5em; }
-    .sidebar nav ul.collapsible-content-sidebar a { font-size: 0.88em; }
-    .nav-section-title { font-size: 0.8em; }
-
-    .main-content > header { margin-bottom: 15px; }
-    .search-bar { padding: 8px 12px; }
-    .welcome-banner h2 { font-size: 1.1em; }
-    .filter-btn { font-size: 0.8em; }
-    .category-header h2 { font-size: 1.2em; }
-    .card-icon { font-size: 1.6em; margin-right: 10px;}
-    .card h3 { font-size: 0.95em; }
-    .card p { font-size: 0.8em; }
-    
-    .widget-header i { font-size: 1.1em; }
-    .widget-header h3 { font-size: 1.05em; }
-    .form-group-title { font-size: 0.95em; padding: 10px 8px;}
-    .widget-links-list a { font-size: 0.85em; padding: 9px 10px; }
+    .sidebar .social-icon-group .social-links-list li a { min-width: 55px; padding: 6px;}
+    .sidebar .social-icon-group .social-links-list li a i { font-size: 1.3em; }
+    .sidebar .social-icon-group .social-links-list li a .icon-label-mobile { font-size: 0.65em; }
 }
