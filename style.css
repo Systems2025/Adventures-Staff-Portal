@@ -27,7 +27,7 @@ body {
     width: 100%;
     max-width: 1400px;
     min-height: 80vh;
-    overflow: hidden;
+    overflow: hidden; /* Important for border-radius and potential overflow issues */
 }
 
 /* --- Sidebar --- */
@@ -37,46 +37,46 @@ body {
     display: flex;
     flex-direction: column;
     border-right: 1px solid #e0e0e0;
-    overflow-y: auto; 
+    overflow-y: auto;
+    height: calc(80vh - 50px); /* Adjust based on portal-container min-height and padding */
 }
 
 .sidebar .logo {
     display: flex;
     align-items: center;
-    color: #4a47a3; 
-    margin-bottom: 20px; 
+    color: #4a47a3;
+    margin-bottom: 20px;
     padding-left: 10px;
-    height: 40px; 
+    height: 40px;
 }
 
-.sidebar .logo i { 
+.sidebar .logo i {
     margin-right: 10px;
-    font-size: 1.8em; 
-    color: #4a47a3; 
-    line-height: 1; 
+    font-size: 1.8em;
+    color: #4a47a3;
+    line-height: 1;
 }
-.logo-image { 
-    height: 35px; 
-    width: auto;   
+.logo-image {
+    height: 35px;
+    width: auto;
 }
 
 .sidebar .sidebar-navigation {
-    margin-top: 0; 
+    margin-top: 0;
 }
 
 .nav-section-title {
     font-size: 0.8em;
     font-weight: 600;
-    color: #777; 
+    color: #777;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    padding: 10px 15px 5px 15px; 
-    margin-top: 15px; 
-    cursor: default; 
+    padding: 10px 15px 5px 15px;
+    margin-top: 15px;
+    cursor: default;
 }
 .sidebar .sidebar-navigation ul:first-of-type .nav-section-title,
-.sidebar .sidebar-navigation > .nav-section-title:first-child,
-.sidebar .sidebar-navigation .social-icon-group:first-of-type .nav-section-title {
+.sidebar .sidebar-navigation > .nav-section-title:first-child {
     margin-top: 0;
 }
 .nav-section.collapsible .nav-section-title.collapsible-toggle {
@@ -89,32 +89,32 @@ body {
 .nav-section.collapsible .nav-section-title.collapsible-toggle:hover {
     color: #4a47a3;
 }
-.toggle-icon-sidebar { 
+.toggle-icon-sidebar {
     transition: transform 0.3s ease-in-out;
     font-size: 0.8em;
 }
-.nav-section.collapsible.open .toggle-icon-sidebar { 
+.nav-section.collapsible.open .toggle-icon-sidebar { /* Handles icon rotation */
     transform: rotate(180deg);
 }
 
 .sidebar nav ul { list-style: none; padding-left: 0; }
-.sidebar nav ul.collapsible-content-sidebar { /* For Instagram/Facebook dropdowns */
-    padding-left: 10px; 
-    margin-left: 5px; 
-    margin-top: 5px; 
-    overflow: hidden; 
-    /* display: none; /* Initial state set in HTML, JS toggles to block/none */
-    /* max-height: 0; /* Removed, JS handles display property now */
-    /* transition: max-height 0.35s ease-out... /* Removed if not using max-height animation */
-}
-/* NO .open class needed here if JS directly manipulates display */
 
+/* CORRECTED: Added max-height and transition for sidebar collapsibles */
+.sidebar nav ul.collapsible-content-sidebar {
+    padding-left: 10px;
+    margin-left: 5px;
+    margin-top: 5px;
+    overflow: hidden;
+    max-height: 0; /* Initial state for animation */
+    transition: max-height 0.35s ease-out;
+    /* display: none; is initially set in HTML and managed by JS post-transition */
+}
 
 .sidebar nav li { margin-bottom: 3px; }
 .sidebar nav a {
     display: flex;
     align-items: center;
-    padding: 9px 15px; 
+    padding: 9px 15px;
     text-decoration: none;
     color: #555;
     font-weight: 500;
@@ -122,11 +122,11 @@ body {
     font-size: 0.9em;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
-.sidebar nav a .link-text { 
+.sidebar nav a .link-text {
     display: inline;
 }
-.sidebar nav a .icon-label-mobile { 
-    display: none; 
+.sidebar nav a .icon-label-mobile { /* For potential future use, not currently in HTML */
+    display: none;
     font-size: 0.7em;
     margin-top: 3px;
     color: #666;
@@ -143,150 +143,549 @@ body {
     color: #4a47a3;
 }
 .sidebar nav a:hover i,
-.sidebar nav a:hover .icon-label-mobile { 
+.sidebar nav a:hover .icon-label-mobile {
     color: #4a47a3;
-}
-.social-icon-group .social-links-list {
-    /* Desktop: behaves like normal ul */
 }
 
 /* --- Main Content --- */
 .main-content {
     padding: 25px;
     overflow-y: auto;
+    height: calc(80vh - 50px); /* Adjust based on portal-container min-height and padding */
 }
 
-#pageContentWrapper, #rightSidebarContentWrapper { 
+#pageContentWrapper, #rightSidebarContentWrapper {
     /* display: none; /* UNCOMMENT if using separate login page */
 }
 
-.main-content > header { /* ... existing ... */ }
-.search-bar { /* ... existing ... */ }
-.welcome-banner { /* ... existing ... */ }
-.department-filter-controls { /* ... existing ... */ }
-.filter-btn { /* ... existing ... */ }
-.categories-container { /* ... existing ... */ }
-.category-section { /* ... existing ... */ }
-.category-header { /* ... existing ... */ }
-.category-description { /* ... existing ... */ }
-.link-cards-grid { /* ... existing ... */ }
-.card { /* ... existing ... */ }
-.card-icon { /* ... existing ... */ }
-/* Card specific icon colors (job-icon, gym-icon etc. as before) */
-.job-icon { color: #28a745; } .gym-icon { color: #fd7e14; } .form-icon { color: #17a2b8; } 
-.route-icon { color: #6f42c1; } .staff-icon { color: #ffc107; } .input-icon { color: #007bff; } 
-.impact-icon { color: #dc3545; } .changes-icon { color: #6c757d; } .story-icon { color: #e83e8c; } 
-.review-icon { color: #20c997; } .funds-icon { color: #4B0082; } 
-.space-booking-icon { color: #54a0ff; } .library-icon { color: #a55eea; } 
-.ops-request-icon { color: #ff6b6b; } .bizdev-request-icon { color: #1dd1a1; } 
-.card.placeholder-card .card-icon { color: #aaa; }
+.main-content > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #f0f4f8;
+    padding: 8px 15px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px; /* Or adjust as needed */
+}
+.search-bar i {
+    margin-right: 10px;
+    color: #888;
+}
+.search-bar input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9em;
+}
 
-.card-content-wrapper { /* ... existing ... */ }
-.card h3 { /* ... existing ... */ }
-.card p { /* ... existing ... */ }
-.card-button { /* ... existing ... */ }
-.card.placeholder-card { /* ... existing ... */ }
+.welcome-banner {
+    background: linear-gradient(135deg, #4a47a3 0%, #6e6cd0 100%);
+    color: white;
+    padding: 20px 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(74, 71, 163, 0.2);
+}
+.welcome-banner h2 {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.welcome-banner p {
+    font-size: 0.95em;
+    opacity: 0.9;
+}
 
+.department-filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+.filter-btn {
+    background-color: #eef2ff;
+    color: #4a47a3;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 0.85em;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.filter-btn:hover {
+    background-color: #dcdcff;
+}
+.filter-btn.active {
+    background-color: #4a47a3;
+    color: white;
+}
+
+.categories-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+.category-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e8eaf3;
+    /* display: none; /* JS will manage this for filtering */
+}
+.category-header {
+    display: flex;
+    align-items: center;
+    color: #333;
+    margin-bottom: 8px;
+}
+.category-header i {
+    font-size: 1.3em;
+    margin-right: 10px;
+    color: #4a47a3;
+}
+.category-header h2 {
+    font-size: 1.4em;
+    font-weight: 600;
+}
+.category-description {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.link-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+.card {
+    background-color: #f8f9fe;
+    border: 1px solid #e8eaf3;
+    border-radius: 8px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
+}
+.card-icon {
+    font-size: 1.8em;
+    margin-bottom: 12px;
+    width: 40px; /* For alignment */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #eef2ff; /* Default background for icons */
+}
+/* Card specific icon colors */
+.job-icon { color: #28a745; } .gym-icon { color: #fd7e14; } .form-icon { color: #17a2b8; }
+.route-icon { color: #6f42c1; } .staff-icon { color: #ffc107; } .input-icon { color: #007bff; }
+.impact-icon { color: #dc3545; } .changes-icon { color: #6c757d; } .story-icon { color: #e83e8c; }
+.review-icon { color: #20c997; } .funds-icon { color: #4B0082; }
+.space-booking-icon { color: #54a0ff; } .library-icon { color: #a55eea; }
+.ops-request-icon { color: #ff6b6b; } .bizdev-request-icon { color: #1dd1a1; }
+.card.placeholder-card .card-icon { color: #aaa; background-color: #f0f0f0; }
+
+
+.card-content-wrapper { flex-grow: 1; }
+.card h3 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+.card p {
+    font-size: 0.85em;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+.card-button {
+    display: inline-block;
+    background-color: #4a47a3;
+    color: white;
+    text-decoration: none;
+    padding: 9px 15px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s ease;
+    margin-top: auto; /* Pushes button to the bottom */
+}
+.card-button:hover {
+    background-color: #3b3882;
+}
+.card.placeholder-card .card-button {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.card.placeholder-card .card-button:hover {
+    background-color: #bbb;
+}
 
 /* --- Right Sidebar --- */
-.right-sidebar { /* ... existing ... */ }
-.registration-forms-widget { /* ... existing ... */ }
-.widget-header { /* ... existing ... */ }
-.widget-scroll-container { /* ... existing ... */ }
-.form-group { /* ... existing ... */ }
-.form-group-title { /* ... existing ... */ }
-.toggle-icon-widget { /* ... existing ... */ }
-.form-group.collapsible-widget-group.open .form-group-title { /* ... existing ... */ }
-.form-group.collapsible-widget-group.open .toggle-icon-widget { /* ... existing ... */ }
+.right-sidebar {
+    background-color: #f8f9fe; /* Slightly different from main bg for distinction */
+    padding: 25px 20px;
+    border-left: 1px solid #e0e0e0;
+    overflow-y: auto;
+    height: calc(80vh - 50px); /* Adjust based on portal-container min-height and padding */
+}
+.registration-forms-widget {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.widget-header {
+    display: flex;
+    align-items: center;
+    color: #4a47a3;
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eef2ff;
+}
+.widget-header i {
+    font-size: 1.3em;
+    margin-right: 10px;
+}
+.widget-header h3 {
+    font-size: 1.15em;
+    font-weight: 600;
+}
+.widget-scroll-container {
+    /* Max height if needed for very long lists, otherwise relies on .right-sidebar overflow */
+    /* max-height: calc(80vh - 150px); /* Example adjustment */
+    /* overflow-y: auto; */
+}
+.form-group {
+    margin-bottom: 10px;
+}
+.form-group-title.collapsible-widget-toggle {
+    background-color: #f7f8fc;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 0.95em;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+.form-group-title.collapsible-widget-toggle:hover {
+    background-color: #eef2ff;
+}
+.form-group-title i:first-child { /* Icon for the category like fas fa-campground */
+    margin-right: 8px;
+    color: #5c5aae;
+    font-size: 1em;
+}
+.toggle-icon-widget { /* Chevron icon */
+    font-size: 0.8em;
+    color: #777;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Styles for when the widget group is open */
+.form-group.collapsible-widget-group.open .form-group-title.collapsible-widget-toggle {
+    background-color: #eef2ff; /* Highlight open toggle */
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.form-group.collapsible-widget-group.open .toggle-icon-widget {
+    transform: rotate(180deg);
+}
 
 .widget-links-list.collapsible-widget-content {
     list-style: none; padding: 0; margin: 0;
     overflow: hidden;
-    /* display: none; /* Controlled by JS for mobile, expanded for desktop */
-    /* max-height: 500px; /* Default for desktop, JS will manage for mobile */
-    padding-left: 5px; 
-    background-color: #fff; 
-    /* No transition by default for desktop to avoid FOUC, JS will handle mobile transition */
-}
-.widget-links-list.collapsible-widget-content.collapsed-mobile {
-    max-height: 0 !important; 
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    border-top: none !important;
-    margin-top: 0 !important;
-    border: 1px solid transparent !important; 
-    display: none !important; /* Ensure hidden */
-}
-.widget-links-list.collapsible-widget-content.open-mobile {
-    display: block !important; /* Ensure shown */
-    max-height: 500px !important; 
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-    border: 1px solid #f0f4f8 !important; 
-    border-top: none !important;
-    border-radius: 0 0 4px 4px !important;
-    margin-top: 0 !important; 
-    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out;
+    max-height: 0; /* Initial state for animation, JS sets display:none */
+    background-color: #fff;
+    padding-left: 5px;
+    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out, border-color 0.35s ease-out;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: 1px solid transparent;
+    border-top: none;
+    border-radius: 0 0 6px 6px; /* Match toggle's border-radius */
 }
 
-.widget-links-list li { /* ... existing ... */ }
-.widget-links-list a { /* ... existing ... */ }
-.form-link-icon { /* ... existing ... */ }
+.form-group.collapsible-widget-group.open .widget-links-list.collapsible-widget-content {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-color: #eef2ff; /* Match toggle's hover/open background */
+}
+
+
+.widget-links-list li { margin-bottom: 6px; }
+.widget-links-list li:last-child { margin-bottom: 0; }
+.widget-links-list a {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    text-decoration: none;
+    color: #444;
+    font-size: 0.9em;
+    border-radius: 4px;
+    background-color: #f9faff;
+    border: 1px solid transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.widget-links-list a:hover {
+    background-color: #eef2ff;
+    border-color: #dcdcff;
+    color: #4a47a3;
+}
+.form-link-icon {
+    margin-right: 10px;
+    color: #6e6cd0;
+    font-size: 1.05em;
+    width: 18px;
+    text-align: center;
+}
+.widget-links-list a:hover .form-link-icon {
+    color: #4a47a3;
+}
 
 
 /* --- Responsive Styles --- */
-@media (max-width: 1200px) { /* ... existing ... */ }
-@media (max-width: 992px) { /* ... existing ... */ }
+@media (max-width: 1200px) {
+    .portal-container {
+        grid-template-columns: 220px 1fr 280px;
+        gap: 20px;
+    }
+    .link-cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .portal-container {
+        grid-template-columns: 70px 1fr; /* Icon-only sidebar, right sidebar removed or stacked */
+        /* display: flex; flex-direction: column; /* Alternative: Stack all sections */
+        padding: 0;
+        border-radius: 0;
+        min-height: 100vh;
+        height: 100vh;
+    }
+    .sidebar {
+        padding: 20px 10px;
+        height: 100vh; /* Full height for fixed sidebar */
+    }
+    .sidebar .logo {
+        padding-left: 0;
+        justify-content: center;
+        margin-bottom: 25px;
+    }
+    .sidebar .logo .logo-image { display: none; } /* Hide text logo, keep icon */
+    .sidebar .logo i { font-size: 1.8em; margin-right: 0; }
+
+    .nav-section-title { font-size: 0.75em; padding: 8px 5px 4px 5px; text-align: center; }
+    .sidebar nav a {
+        padding: 10px 5px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: auto; /* adjust as needed */
+        font-size: 0.8em;
+    }
+    .sidebar nav a i {
+        margin-right: 0;
+        margin-bottom: 5px;
+        font-size: 1.3em;
+    }
+    .sidebar nav a .link-text { display: none; } /* Hide text for main links */
+    .sidebar nav a .icon-label-mobile { display: block; font-size: 0.7em; } /* Show mobile label if used */
+
+    /* For Collapsible Instagram/Facebook titles on mobile */
+    .nav-section.collapsible .nav-section-title.collapsible-toggle {
+        font-size: 0.75em; /* Smaller title */
+        padding: 8px 5px;
+        justify-content: center; /* Center title, icon will be via flex properties */
+    }
+    .nav-section.collapsible .nav-section-title.collapsible-toggle .toggle-icon-sidebar {
+        display: none; /* Hide chevron on icon-only sidebar to save space, or make it very small */
+    }
+     /* Keep text for dropdown items */
+    .sidebar nav ul.collapsible-content-sidebar a .link-text { display: inline; }
+    .sidebar nav ul.collapsible-content-sidebar a {
+        flex-direction: row; /* Revert to row for items in dropdown */
+        padding: 8px 10px;
+        font-size: 0.85em;
+        justify-content: flex-start;
+    }
+    .sidebar nav ul.collapsible-content-sidebar a i { margin-bottom: 0; margin-right: 8px; font-size: 1em;}
+
+
+    .main-content, .right-sidebar {
+        padding: 20px;
+        height: 100vh; /* Full height for scrollable content area */
+    }
+    .right-sidebar {
+        /* Stack or hide: For this example, let's assume it's removed or handled by JS to be a modal/off-canvas */
+        display: none; /* Hide right sidebar by default on smaller screens */
+        /* If you want to stack it:
+           position: fixed; top: 0; right: -300px; width: 300px; height: 100%; z-index: 1000; transition: right 0.3s ease;
+           &.open { right: 0; }
+        */
+    }
+    .department-filter-controls { flex-direction: column; align-items: stretch; }
+    .filter-btn { width: 100%; text-align: center; }
+    .link-cards-grid { grid-template-columns: 1fr; } /* Stack cards */
+}
+
 
 @media (max-width: 768px) {
-    /* ... (Keep existing general mobile styles for .sidebar, .logo, main content, cards etc.) ... */
-
-    /* Sidebar Social Links Mobile Styling */
-    .nav-section-title { text-align: left; font-size: 0.85em; padding: 10px 10px 8px 10px; } 
-    .nav-section.collapsible .nav-section-title.collapsible-toggle { padding-right: 10px; }
-    .sidebar nav ul.main-connect-links { /* ... existing icon-only styles ... */ }
-    .sidebar nav ul.main-connect-links li a .link-text { display: none !important; }
-    
-    /* For Collapsible Instagram/Facebook titles */
-    .nav-section.collapsible .nav-section-title.collapsible-toggle {
-         /* Ensure it remains clickable and styled correctly */
+    body { padding: 0; }
+    .portal-container {
+        grid-template-columns: 1fr; /* Single column layout */
+        /* display: flex; flex-direction: column; */
+        min-height: 100vh;
+        height: auto; /* Allow content to dictate height */
+        gap: 0;
     }
-    /* For links inside sidebar collapsibles on mobile */
-    .sidebar nav ul.collapsible-content-sidebar { padding-left: 10px; margin-left: 0; border-left: none; }
-    .sidebar nav ul.collapsible-content-sidebar a { padding: 10px 5px; font-size: 0.9em; }
-    .sidebar nav ul.collapsible-content-sidebar a i { margin-right: 8px; font-size: 1em; }
-    .toggle-icon-sidebar { font-size: 0.9em; }
+    .sidebar {
+        grid-row: 1; /* Ensure sidebar is first if stacking */
+        position: sticky; /* Or fixed if you prefer */
+        top: 0;
+        z-index: 100;
+        flex-direction: row; /* Horizontal sidebar items */
+        align-items: center;
+        padding: 10px 15px;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        overflow-x: auto; /* Allow horizontal scrolling for many items */
+        overflow-y: hidden;
+        white-space: nowrap; /* Prevent wrapping of sidebar items */
+        height: auto; /* Adjust height for horizontal layout */
+    }
+    .sidebar .logo { display: none; } /* Hide logo on very small screens or make it very small */
 
-    /* Card layout for mobile */
-    .card { flex-direction: row; align-items: center; text-align: left; }
-    .card-icon { margin-bottom: 0; margin-right: 15px; }
-    .card-content-wrapper { align-items: flex-start; } 
-    .card-button { width: 100%; margin-top: 10px;}
-    
-    /* Right Sidebar Registration Forms Mobile Enhancements */
-    .right-sidebar { padding: 15px 10px; background-color: #f8f9fe; }
-    .registration-forms-widget { padding: 10px; }
-    .widget-header { margin-bottom: 10px; padding-bottom: 8px;}
-    .widget-header i { font-size: 1.2em; }
-    .widget-header h3 { font-size: 1.1em; }
+    .sidebar .sidebar-navigation {
+        display: flex;
+        flex-direction: row; /* Align nav sections horizontally */
+        align-items: center;
+        width: 100%;
+    }
+    .sidebar .sidebar-navigation .nav-section-title,
+    .sidebar .sidebar-navigation ul.main-connect-links {
+        margin-top: 0; /* Remove top margin for horizontal layout */
+        margin-right: 15px; /* Spacing between sections/items */
+    }
+     .sidebar .sidebar-navigation ul.main-connect-links {
+        display: flex; /* Align main links horizontally */
+    }
+    .sidebar nav a,
+    .nav-section.collapsible .nav-section-title.collapsible-toggle {
+        flex-direction: row; /* Ensure text and icon are side-by-side */
+        padding: 8px 10px;
+        height: auto;
+        font-size: 0.85em;
+    }
+    .sidebar nav a i {
+        margin-bottom: 0;
+        margin-right: 8px;
+        font-size: 1.1em;
+    }
+    .sidebar nav a .link-text { display: inline; } /* Show text again */
+    .sidebar nav a .icon-label-mobile { display: none; }
+
+    /* Collapsible dropdowns on mobile become more like popups or need careful styling */
+    .nav-section.collapsible { position: relative; } /* For absolute positioning of dropdown */
+    .sidebar nav ul.collapsible-content-sidebar {
+        position: absolute;
+        top: 100%; /* Position below the toggle */
+        left: 0;
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        z-index: 101; /* Above other sidebar content */
+        min-width: 180px; /* Ensure readable width */
+        margin-left: 0;
+    }
+    .nav-section.collapsible .nav-section-title.collapsible-toggle .toggle-icon-sidebar {
+        display: inline-block; /* Show chevron again */
+        margin-left: 5px;
+    }
+
+    .main-content {
+        padding: 15px;
+        height: auto; /* Allow content to flow */
+        /* min-height: calc(100vh - 60px); Adjust based on sidebar height */
+    }
+    .right-sidebar {
+        /* Completely hide or implement as an off-canvas menu triggered by a button */
+        display: block; /* Show it again for stacking */
+        width: 100%;
+        border-left: none;
+        padding: 15px 10px;
+        height: auto;
+        background-color: #f8f9fe;
+    }
+    .registration-forms-widget { padding: 15px; }
+    .widget-header { margin-bottom: 12px; padding-bottom: 10px;}
+    .widget-header i { font-size: 1.2em; } .widget-header h3 { font-size: 1.1em; }
     .form-group { margin-bottom: 8px; }
-    .form-group-title.collapsible-widget-toggle { cursor: pointer; padding: 12px 10px; }
+    .form-group-title.collapsible-widget-toggle { padding: 12px 10px; }
     .form-group-title i:first-child { font-size: 0.9em; }
-    .toggle-icon-widget { display: inline-block; }
-    /* .widget-links-list.collapsible-widget-content styling for mobile handled by .collapsed-mobile & .open-mobile */
+    .toggle-icon-widget { display: inline-block; } /* Ensure it's visible */
+
     .widget-links-list li { margin-bottom: 5px; }
     .widget-links-list a {
-        font-size: 0.9em; padding: 10px 8px; 
+        font-size: 0.9em; padding: 10px 8px;
         background-color: #fff; border: 1px solid #eef2ff;
     }
     .form-link-icon { font-size: 1em; margin-right: 8px;}
+
+    /* Card layout for mobile */
+    .card { flex-direction: row; align-items: center; text-align: left; }
+    .card-icon { margin-bottom: 0; margin-right: 15px; font-size: 1.6em; }
+    .card-content-wrapper { align-items: flex-start; }
+    .card-button { width: auto; margin-top: 0; margin-left: auto; padding: 7px 12px; font-size: 0.8em; }
 }
 
 @media (max-width: 576px) {
-    /* ... (Keep existing smallest screen styles, further fine-tune if needed) ... */
+    .sidebar {
+        padding: 8px 10px;
+    }
+    .sidebar nav a,
+    .nav-section.collapsible .nav-section-title.collapsible-toggle {
+        font-size: 0.8em;
+        padding: 6px 8px;
+    }
+    .sidebar nav a i { font-size: 1em; margin-right: 6px; }
+
     .sidebar nav ul.collapsible-content-sidebar a { font-size: 0.88em; }
     .nav-section-title { font-size: 0.8em; }
     .widget-header h3 { font-size: 1.05em; }
-    .form-group-title { font-size: 0.95em; padding: 10px 8px;}
+    .form-group-title.collapsible-widget-toggle { font-size: 0.95em; padding: 10px 8px;}
     .widget-links-list a { font-size: 0.85em; padding: 9px 10px; }
+
+    .main-content { padding: 10px; }
+    .welcome-banner { padding: 15px; }
+    .welcome-banner h2 { font-size: 1.3em; }
+    .welcome-banner p { font-size: 0.9em; }
+    .category-header i { font-size: 1.1em; }
+    .category-header h2 { font-size: 1.2em; }
+    .card { padding: 12px; }
+    .card h3 { font-size: 1em; }
+    .card p { font-size: 0.8em; }
 }
