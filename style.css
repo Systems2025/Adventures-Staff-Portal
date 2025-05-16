@@ -9,12 +9,15 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: #f4f7fe;
     color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
     min-height: 100vh;
-    padding: 20px;
+    position: relative; /* For positioning mobile toggle and overlay */
+    overflow-x: hidden; /* Prevent horizontal scroll from fixed sidebar animations if body shifts */
 }
+
+body.sidebar-open {
+    overflow: hidden; /* Prevent scrolling of main content when mobile sidebar is open */
+}
+
 
 /* Portal Container Layout */
 .portal-container {
@@ -26,9 +29,57 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     width: 100%;
     max-width: 1400px;
-    min-height: 80vh;
-    overflow: hidden;
+    min-height: calc(100vh - 40px); /* Adjusted to account for margin */
+    overflow: hidden; /* Important for fixed sidebar behavior if needed, but mainly for children */
+    margin: 20px auto; /* Center the portal container on desktop */
 }
+
+/* --- Mobile Menu Toggle Button --- */
+.mobile-menu-toggle {
+    display: none; /* Hidden by default, shown on mobile */
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1005; /* Above sidebar and overlay */
+    background-color: #4a47a3;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+    align-items: center; /* Added for better icon centering */
+    justify-content: center; /* Added for better icon centering */
+}
+.mobile-menu-toggle:hover {
+    background-color: #3a368a;
+}
+.mobile-menu-toggle i.fa-times { /* Style for close icon */
+    font-size: 1.3em;
+}
+
+
+/* --- Mobile Sidebar Overlay --- */
+.mobile-sidebar-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Below sidebar, above main content */
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
+    display: block;
+    opacity: 1;
+}
+
 
 /* --- Sidebar --- */
 .sidebar {
@@ -38,30 +89,23 @@ body {
     flex-direction: column;
     border-right: 1px solid #e0e0e0;
     overflow-y: auto;
-    height: calc(80vh - 50px); /* Adjust based on portal-container min-height and padding */
+    transition: transform 0.3s ease-in-out; /* For slide animation */
 }
 
 .sidebar .logo {
     display: flex;
     align-items: center;
+    font-size: 1.3em;
+    font-weight: 600;
     color: #4a47a3;
     margin-bottom: 20px;
     padding-left: 10px;
-    height: 40px;
-    font-weight: 600; /* For the span text */
-    font-size: 1.1em;   /* For the span text */
 }
 
 .sidebar .logo i {
     margin-right: 10px;
-    font-size: 1.8em;
-    color: #4a47a3;
-    line-height: 1;
+    font-size: 1.5em;
 }
-.sidebar .logo span {
-    color: #4a47a3; /* Ensure span text color matches icon if desired */
-}
-
 
 .sidebar .sidebar-navigation {
     margin-top: 0;
@@ -75,44 +119,13 @@ body {
     letter-spacing: 0.5px;
     padding: 10px 15px 5px 15px;
     margin-top: 15px;
-    cursor: default;
 }
-/* Style for collapsible titles if they are re-introduced */
-.nav-section.collapsible .nav-section-title.collapsible-toggle {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: color 0.2s ease;
-}
-.nav-section.collapsible .nav-section-title.collapsible-toggle:hover {
-    color: #4a47a3;
-}
-.toggle-icon-sidebar {
-    transition: transform 0.3s ease-in-out;
-    font-size: 0.8em;
-}
-.nav-section.collapsible.open .toggle-icon-sidebar {
-    transform: rotate(180deg);
+.sidebar .sidebar-navigation ul:first-of-type .nav-section-title,
+.sidebar .sidebar-navigation > .nav-section-title:first-child {
+    margin-top: 0;
 }
 
-
-.sidebar nav ul {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 10px; /* Space after each list of links */
-}
-/* Style for collapsible content ULs if they are re-introduced */
-.sidebar nav ul.collapsible-content-sidebar {
-    padding-left: 10px;
-    margin-left: 5px;
-    margin-top: 5px;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.35s ease-out;
-}
-
-
+.sidebar nav ul { list-style: none; padding-left: 0; }
 .sidebar nav li { margin-bottom: 3px; }
 .sidebar nav a {
     display: flex;
@@ -125,7 +138,6 @@ body {
     font-size: 0.9em;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
-
 .sidebar nav a i {
     margin-right: 12px;
     width: 18px;
@@ -145,451 +157,363 @@ body {
 .main-content {
     padding: 25px;
     overflow-y: auto;
-    height: calc(80vh - 50px);
+    height: calc(100vh - 40px); /* Match portal container height - margin */
 }
 
 #pageContentWrapper, #rightSidebarContentWrapper {
-    /* display: none; /* Managed by JS, initially hidden in HTML */
+    /* display: none; is set inline in HTML, controlled by JS */
 }
 
 .main-content > header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 25px;
 }
+
 .search-bar {
     display: flex;
     align-items: center;
-    background-color: #f0f4f8;
+    background-color: #f4f7fe;
     padding: 8px 15px;
     border-radius: 20px;
-    width: 100%;
+    width: 60%;
     max-width: 400px;
 }
-.search-bar i {
-    margin-right: 10px;
-    color: #888;
-}
+.search-bar i { color: #aaa; margin-right: 10px; }
 .search-bar input {
     border: none;
     outline: none;
-    background: transparent;
+    background: none;
     width: 100%;
+    font-size: 0.95em;
     font-family: 'Poppins', sans-serif;
-    font-size: 0.9em;
 }
 
 .welcome-banner {
-    background: linear-gradient(135deg, #4a47a3 0%, #6e6cd0 100%);
-    color: white;
-    padding: 20px 25px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 12px rgba(74, 71, 163, 0.2);
+    background: linear-gradient(90deg, #4a47a3, #6e6afc);
+    color: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
 }
-.welcome-banner h2 {
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-.welcome-banner p {
-    font-size: 0.95em;
-    opacity: 0.9;
-}
+.welcome-banner h2 { margin-bottom: 5px; font-weight: 600; }
 
+/* Department Filter Controls Styling */
 .department-filter-controls {
+    margin-bottom: 25px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e6ed;
 }
 .filter-btn {
-    background-color: #eef2ff;
-    color: #4a47a3;
-    border: none;
     padding: 8px 15px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #555;
     border-radius: 20px;
     cursor: pointer;
-    font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    font-size: 0.85em;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 .filter-btn:hover {
-    background-color: #dcdcff;
+    background-color: #eef2ff;
+    border-color: #4a47a3;
+    color: #4a47a3;
 }
 .filter-btn.active {
     background-color: #4a47a3;
-    color: white;
+    color: #fff;
+    border-color: #4a47a3;
 }
 
+/* Categories Container */
 .categories-container {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
 }
+
+/* Category Section Styling */
 .category-section {
-    background-color: #fff;
+    background-color: #fdfdff;
     padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #e8eaf3;
+    border-radius: 12px;
+    border: 1px solid #e8ecf7;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 .category-header {
     display: flex;
     align-items: center;
-    color: #333;
     margin-bottom: 8px;
-}
-.category-header i {
-    font-size: 1.3em;
-    margin-right: 10px;
-    color: #4a47a3;
 }
 .category-header h2 {
     font-size: 1.4em;
+    color: #4a47a3;
     font-weight: 600;
 }
-.category-description {
+.category-header h2 i {
+    margin-right: 10px;
     font-size: 0.9em;
+}
+.category-description {
+    font-size: 0.95em;
     color: #666;
     margin-bottom: 20px;
+    line-height: 1.6;
 }
 
+/* Link Cards Grid */
 .link-cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
 }
+
 .card {
-    background-color: #f8f9fe;
-    border: 1px solid #e8eaf3;
-    border-radius: 8px;
-    padding: 18px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    flex-direction: column; /* Ensures items stack and button can be pushed down */
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 200px;
 }
 .card:hover {
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
 }
 .card-icon {
-    font-size: 1.8em;
-    margin-bottom: 12px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: #eef2ff;
+    font-size: 2.5em;
+    margin-bottom: 15px;
 }
-/* Card specific icon colors */
+/* Specific card icon colors */
 .job-icon { color: #28a745; } .gym-icon { color: #fd7e14; } .form-icon { color: #17a2b8; }
 .route-icon { color: #6f42c1; } .staff-icon { color: #ffc107; } .input-icon { color: #007bff; }
 .impact-icon { color: #dc3545; } .changes-icon { color: #6c757d; } .story-icon { color: #e83e8c; }
-.review-icon { color: #20c997; } .funds-icon { color: #4B0082; }
-.space-booking-icon { color: #54a0ff; } .library-icon { color: #a55eea; }
-.ops-request-icon { color: #ff6b6b; } .bizdev-request-icon { color: #1dd1a1; }
-.card.placeholder-card .card-icon { color: #aaa; background-color: #f0f0f0; }
+.review-icon { color: #20c997; } .funds-icon { color: #4B0082; } .space-booking-icon { color: #54a0ff; }
+.library-icon { color: #a55eea; } .ops-request-icon { color: #ff6b6b; } .bizdev-request-icon { color: #1dd1a1; }
+.card.placeholder-card .card-icon { color: #aaa; } .calendar-icon {color: brown;} .Life-icon{color: blue;}
 
-/* Styles for content directly within the card (since card-content-wrapper was removed) */
-.card h3 {
-    font-size: 1.1em;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: #333;
-}
-.card p {
-    font-size: 0.85em;
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 15px;
-    flex-grow: 1; /* Allows p to take available space pushing button down */
-}
+.card h3 { font-size: 1.1em; margin-bottom: 8px; font-weight: 600; color: #333; }
+.card p { font-size: 0.9em; color: #666; margin-bottom: 15px; flex-grow: 1; }
 .card-button {
-    display: inline-block;
-    background-color: #4a47a3;
-    color: white;
-    text-decoration: none;
-    padding: 9px 15px;
-    border-radius: 6px;
-    font-size: 0.85em;
-    font-weight: 500;
-    text-align: center;
-    transition: background-color 0.2s ease;
-    margin-top: auto; /* Pushes button to the bottom if card is a flex column */
+    display: inline-block; background-color: #4a47a3; color: #fff; padding: 8px 18px;
+    border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9em;
+    transition: background-color 0.3s ease; margin-top: auto;
 }
-.card-button:hover {
-    background-color: #3b3882;
-}
-.card.placeholder-card .card-button {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-.card.placeholder-card .card-button:hover {
-    background-color: #bbb;
-}
+.card-button:hover { background-color: #3a368a; }
+.card.placeholder-card { background-color: #f9f9f9; border-style: dashed; opacity: 0.7; }
 
 /* --- Right Sidebar --- */
 .right-sidebar {
-    background-color: #f8f9fe;
-    padding: 25px 20px;
-    border-left: 1px solid #e0e0e0;
-    overflow-y: auto;
-    height: calc(80vh - 50px);
+    background-color: #fff; padding: 25px; border-left: 1px solid #e0e0e0;
+    display: flex; flex-direction: column; gap: 25px;
+    overflow-y: auto; /* Allow right sidebar to scroll if content exceeds its height */
+    height: calc(100vh - 40px); /* Match portal container height - margin */
 }
+
+/* Registration Forms Widget Styling */
 .registration-forms-widget {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 18px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    background-color: #f9faff; border-radius: 10px; padding: 20px;
+    border: 1px solid #e8ecf7;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Container for scrollable content */
+    flex-grow: 1; /* Allow widget to grow and fill space */
 }
 .widget-header {
-    display: flex;
-    align-items: center;
-    color: #4a47a3;
-    padding-bottom: 12px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eef2ff;
+    display: flex; align-items: center; margin-bottom: 15px;
+    padding-bottom: 10px; border-bottom: 1px solid #e0e6ed;
+    flex-shrink: 0; /* Prevent header from shrinking */
 }
-.widget-header i {
-    font-size: 1.3em;
-    margin-right: 10px;
+.widget-header i { font-size: 1.3em; color: #4a47a3; margin-right: 10px; }
+.widget-header h3 { font-size: 1.15em; font-weight: 600; color: #333; margin: 0; }
+.widget-scroll-container {
+    overflow-y: auto;
+    flex-grow: 1; /* Allow scroll container to take available space */
+    padding-right: 5px; /* Space for scrollbar to not overlap content */
 }
-.widget-header h3 {
-    font-size: 1.15em;
-    font-weight: 600;
+.widget-scroll-container::-webkit-scrollbar { width: 6px; }
+.widget-scroll-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+.widget-scroll-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+.widget-scroll-container::-webkit-scrollbar-thumb:hover { background: #aaa; }
+.form-group { margin-bottom: 20px; }
+.form-group:last-child { margin-bottom: 0; }
+.form-group-title {
+    font-size: 1em; font-weight: 600; color: #555; margin-bottom: 10px;
+    padding-bottom: 5px; border-bottom: 1px dashed #ddd;
+    display: flex; align-items: center;
 }
-
-.form-group {
-    margin-bottom: 15px; /* Increased spacing between static groups */
-}
-.form-group-title { /* Static title styling */
-    background-color: #f7f8fc;
-    padding: 10px 12px;
-    border-radius: 6px;
-    font-size: 0.95em;
-    font-weight: 500;
-    color: #333;
-    display: flex; /* For icon alignment */
-    align-items: center;
-    margin-bottom: 8px; /* Space between title and its list */
-}
-.form-group-title i:first-child {
-    margin-right: 8px;
-    color: #5c5aae;
-    font-size: 1em;
-}
-
-.widget-links-list { /* Static list styling */
-    list-style: none; padding: 0; margin: 0;
-    padding-left: 5px; /* Indent links slightly under title */
-}
-.widget-links-list li { margin-bottom: 6px; }
+.form-group-title i { margin-right: 8px; color: #777; font-size: 0.9em; }
+.widget-links-list { list-style: none; padding: 0; margin: 0; }
+.widget-links-list li { margin-bottom: 8px; }
 .widget-links-list li:last-child { margin-bottom: 0; }
-
 .widget-links-list a {
-    display: flex;
-    align-items: center;
-    padding: 8px 10px;
-    text-decoration: none;
-    color: #444;
-    font-size: 0.9em;
-    border-radius: 4px;
-    background-color: #f9faff;
-    border: 1px solid transparent;
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    display: flex; align-items: center; text-decoration: none; color: #555;
+    padding: 7px 10px; border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-weight: 500; font-size: 0.9em;
 }
-.widget-links-list a:hover {
-    background-color: #eef2ff;
-    border-color: #dcdcff;
-    color: #4a47a3;
-}
-.form-link-icon {
-    margin-right: 10px;
-    color: #6e6cd0;
-    font-size: 1.05em;
-    width: 18px;
-    text-align: center;
-}
-.widget-links-list a:hover .form-link-icon {
-    color: #4a47a3;
-}
+.widget-links-list a:hover { background-color: #eef2ff; color: #4a47a3; }
+.form-link-icon { margin-right: 10px; width: 16px; text-align: center; color: #6c757d; font-size: 0.95em;}
+.widget-links-list a:hover .form-link-icon { color: #4a47a3; }
 
 
 /* --- Responsive Styles --- */
-@media (max-width: 1200px) {
-    .portal-container {
-        grid-template-columns: 220px 1fr 280px;
-        gap: 20px;
-    }
-    .link-cards-grid {
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    }
+@media (max-width: 1199.98px) { /* Large devices */
+    .portal-container { grid-template-columns: 220px 1fr 280px; gap: 20px; }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991.98px) { /* Medium devices (tablets) */
     .portal-container {
-        grid-template-columns: 70px 1fr;
-        padding: 0;
+        grid-template-columns: 200px 1fr;
+        grid-template-areas:
+            "sidebar main"
+            "sidebar right";
+        gap: 15px;
+        margin: 15px auto;
+        max-width: 95%;
+        min-height: calc(100vh - 30px);
+    }
+    .main-content, .right-sidebar {
+        height: auto; /* Allow content to determine height */
+        min-height: calc((100vh - 30px - 15px) / 2); /* Approximate split if stacked */
+    }
+    .main-content { grid-area: main; padding: 20px; }
+    .right-sidebar { grid-area: right; border-left: none; border-top: 1px solid #e0e0e0; padding: 20px; }
+    .search-bar { width: 80%; }
+    .mobile-menu-toggle { display: none; } /* Hide toggle if sidebar is part of grid */
+}
+
+@media (max-width: 767.98px) { /* Small devices (landscape phones, portrait tablets) */
+    body {
+        /* padding: 0; -- Already handled by portal-container margin:0 */
+    }
+    .portal-container {
+        grid-template-columns: 1fr; /* Single column for main and right */
+        grid-template-areas: /* Sidebar is fixed, not in grid flow */
+            "main"
+            "right";
         border-radius: 0;
         min-height: 100vh;
-        height: 100vh;
+        gap: 0;
+        margin: 0; /* Full width */
+        width: 100%;
+        max-width: 100%;
+        /* padding-top: 60px; /* Space if fixed header, our toggle is independent */
     }
+
+    .mobile-menu-toggle {
+        display: flex; /* Show the toggle */
+    }
+
     .sidebar {
-        padding: 20px 10px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
         height: 100vh;
+        z-index: 1000;
+        transform: translateX(-100%);
+        border-right: 1px solid #e0e0e0;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        padding-top: 60px; /* Space for toggle button if it were above */
     }
-    .sidebar .logo {
-        padding-left: 0;
-        justify-content: center;
-        margin-bottom: 25px;
+    body.sidebar-open .sidebar {
+        transform: translateX(0%);
     }
-    .sidebar .logo span { display: none; } /* Hide text logo, keep icon */
-    .sidebar .logo i { font-size: 1.8em; margin-right: 0; }
-
-    .nav-section-title { font-size: 0.70em; padding: 8px 0px 4px 0px; text-align: center; }
-
-    .sidebar nav ul { margin-bottom: 5px;}
-    .sidebar nav a {
-        padding: 10px 5px;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: auto;
-        font-size: 0.75em; /* Text under icon */
-    }
-    .sidebar nav a i {
-        margin-right: 0;
-        margin-bottom: 5px;
-        font-size: 1.3em;
-    }
-     /* Show link text as small label under icon */
-    .sidebar nav a .link-text { display: block; font-size: 0.85em; text-align: center;}
-
 
     .main-content, .right-sidebar {
-        padding: 20px;
-        height: 100vh;
+        height: auto; /* Content dictates height */
+        overflow-y: visible; /* Allow natural scrolling within page flow */
     }
-    .right-sidebar { display: none; }
-    .department-filter-controls { flex-direction: column; align-items: stretch; }
-    .filter-btn { width: 100%; text-align: center; }
-    .link-cards-grid { grid-template-columns: 1fr; }
-}
-
-
-@media (max-width: 768px) {
-    body { padding: 0; }
-    .portal-container {
-        grid-template-columns: 1fr;
-        min-height: 100vh;
-        height: auto;
-        gap: 0;
-    }
-    .sidebar {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        flex-direction: row;
-        align-items: center;
-        padding: 10px 15px;
-        border-right: none;
-        border-bottom: 1px solid #e0e0e0;
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
-        height: auto;
-    }
-    .sidebar .logo { display: none; }
-
-    .sidebar .sidebar-navigation {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start; /* Align titles and lists properly */
-        width: 100%;
-    }
-    .sidebar .sidebar-navigation .nav-section-title {
-        margin-top: 0;
-        margin-right: 5px; /* Reduced space */
-        padding: 5px;
-        white-space: normal; /* Allow title to wrap if needed */
-        font-size: 0.75em;
-        text-align: left;
-    }
-    .sidebar .sidebar-navigation ul {
-        display: flex; /* Align list items horizontally */
-        margin-right: 15px;
-        margin-bottom: 0; /* Remove bottom margin for horizontal layout */
-    }
-    .sidebar nav a {
-        flex-direction: row;
-        padding: 8px 10px;
-        height: auto;
-        font-size: 0.85em;
-    }
-    .sidebar nav a i {
-        margin-bottom: 0;
-        margin-right: 8px;
-        font-size: 1.1em;
-    }
-    .sidebar nav a .link-text { display: inline; }
-
     .main-content {
         padding: 15px;
-        height: auto;
+        /* overflow-x: hidden; -- Body handles this */
+        margin-top: 0; /* Remove top margin for main content if sidebar is fixed */
     }
+     .main-content > header {
+        margin-top: 50px; /* Space for fixed mobile toggle button */
+        margin-bottom: 20px;
+    }
+
+    .search-bar { width: 100%; max-width: none; padding: 8px 12px; }
+    .welcome-banner { padding: 15px 20px; text-align: center; }
+    .welcome-banner h2 { font-size: 1.2em; }
+    .welcome-banner p { font-size: 0.9em; }
+
+    .department-filter-controls {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 15px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+    .department-filter-controls::-webkit-scrollbar { height: 5px; }
+    .department-filter-controls::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+    .filter-btn {
+        flex-shrink: 0;
+        font-size: 0.9em; padding: 8px 16px;
+    }
+
+    .category-header h2 { font-size: 1.3em; }
+    .link-cards-grid { grid-template-columns: 1fr; gap: 15px; }
+    .card { min-height: auto; padding: 20px; }
+    .card:hover { transform: none; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .card-button { padding: 10px 20px; font-size: 0.95em; }
+
     .right-sidebar {
-        display: block;
-        width: 100%;
-        border-left: none;
-        padding: 15px 10px;
-        height: auto;
-        background-color: #f8f9fe;
+        padding: 15px;
+        border-top: 1px solid #e0e0e0;
     }
-    .registration-forms-widget { padding: 15px; }
-    .widget-header { margin-bottom: 12px; padding-bottom: 10px;}
-    .widget-header i { font-size: 1.2em; } .widget-header h3 { font-size: 1.1em; }
-
-    .form-group { margin-bottom: 12px; }
-    .form-group-title { padding: 10px 12px; font-size: 0.9em; }
-
-    .widget-links-list li { margin-bottom: 5px; }
-    .widget-links-list a {
-        font-size: 0.9em; padding: 10px 8px;
-        background-color: #fff; border: 1px solid #eef2ff;
-    }
-    .form-link-icon { font-size: 1em; margin-right: 8px;}
-
-    .card { flex-direction: row; align-items: center; text-align: left; }
-    .card i.card-icon { margin-bottom: 0; margin-right: 15px; font-size: 1.6em; }
-    .card h3, .card p { text-align: left; }
-    .card-button { width: auto; margin-top: 0; margin-left: auto; padding: 7px 12px; font-size: 0.8em; }
+    .widget-header h3 { font-size: 1.1em; }
+    .form-group-title { font-size: 0.95em; }
+    .widget-links-list a { font-size: 0.9em; padding: 8px 10px; }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575.98px) { /* Extra small devices (phones) */
+    .mobile-menu-toggle {
+        top: 10px;
+        left: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.1em;
+    }
+    .main-content > header {
+       margin-top: 55px; /* Space for fixed mobile toggle button */
+    }
+
     .sidebar {
-        padding: 8px 10px;
+        width: 220px;
+        padding-top: 55px; /* Space for toggle */
     }
-    .sidebar .sidebar-navigation .nav-section-title { font-size: 0.7em; margin-right: 3px; padding: 3px; }
-    .sidebar nav a {
-        font-size: 0.8em;
-        padding: 6px 8px;
-    }
-    .sidebar nav a i { font-size: 1em; margin-right: 6px; }
+    .sidebar .logo { padding-left: 5px; margin-bottom: 15px;}
+    .sidebar .logo span { font-size: 1.1em; /* Or display: none; */ }
+    .sidebar .logo i { font-size: 1.3em; }
+    .sidebar nav a { padding: 8px 12px; font-size: 0.85em; }
+    .nav-section-title { font-size: 0.7em; padding: 8px 10px 4px 10px; }
 
-    .widget-header h3 { font-size: 1.05em; }
-    .form-group-title { font-size: 0.9em; padding: 8px 10px;} /* Adjusted from 0.95em */
-    .widget-links-list a { font-size: 0.85em; padding: 9px 10px; }
+    .welcome-banner h2 { font-size: 1.1em; }
+    .welcome-banner p { font-size: 0.85em; }
 
-    .main-content { padding: 10px; }
-    .welcome-banner { padding: 15px; }
-    .welcome-banner h2 { font-size: 1.3em; }
-    .welcome-banner p { font-size: 0.9em; }
-    .category-header i { font-size: 1.1em; }
+    .department-filter-controls { justify-content: flex-start; } /* Align to start for scroll */
+    .filter-btn { font-size: 0.85em; padding: 7px 14px; }
+
     .category-header h2 { font-size: 1.2em; }
-    .card { padding: 12px; }
-    .card h3 { font-size: 1em; }
-    .card p { font-size: 0.8em; }
+    .category-description { font-size: 0.9em; margin-bottom: 15px; }
+    .card p { font-size: 0.85em; }
+    .card-button { padding: 9px 18px; font-size: 0.9em; }
+
+    .widget-header i { font-size: 1.2em; }
+    .widget-header h3 { font-size: 1em; }
+    .form-group-title { font-size: 0.9em; }
+    .widget-links-list a { font-size: 0.88em; padding: 7px 9px; }
 }
