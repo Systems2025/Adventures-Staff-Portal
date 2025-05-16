@@ -3,100 +3,76 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const pageContentWrapper = document.getElementById('pageContentWrapper');
     const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper');
+    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; // Must match the key used in login.js
 
-    // --- Simplified visibility for non-login page setup ---
-    // If using a separate login page, comment out these lines and uncomment the auth block below.
-    if (pageContentWrapper) pageContentWrapper.style.display = 'block';
-    if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
-    initializeUIElements();
-    // --- End of simplified visibility ---
+    // --- Mobile Sidebar Toggle Logic ---
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const leftSidebar = document.getElementById('leftSidebar');
+    const mobileSidebarOverlay = document.getElementById('mobileSidebarOverlay');
+    const body = document.body;
 
-    /*
-    // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE ---
-    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; // Choose a unique key
+    if (mobileMenuToggle && leftSidebar && mobileSidebarOverlay) {
+        mobileMenuToggle.addEventListener('click', function() {
+            body.classList.toggle('sidebar-open');
+            const isOpen = body.classList.contains('sidebar-open');
+            mobileMenuToggle.setAttribute('aria-expanded', isOpen.toString());
+            // Change icon based on state
+            if (isOpen) {
+                mobileMenuToggle.innerHTML = '<i class="fas fa-times"></i>'; // Close icon
+                mobileMenuToggle.setAttribute('aria-label', 'Close menu');
+            } else {
+                mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>'; // Hamburger icon
+                mobileMenuToggle.setAttribute('aria-label', 'Open menu');
+            }
+        });
+
+        mobileSidebarOverlay.addEventListener('click', function() {
+            if (body.classList.contains('sidebar-open')) {
+                body.classList.remove('sidebar-open');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>'; // Reset to Hamburger icon
+                mobileMenuToggle.setAttribute('aria-label', 'Open menu');
+            }
+        });
+    } else {
+        console.warn("Mobile menu elements (toggle, sidebar, or overlay) not found.");
+    }
+    // --- End Mobile Sidebar Toggle Logic ---
+
 
     function isPortalAuthenticated() {
-        // Check sessionStorage for the key
         const authenticated = sessionStorage.getItem(PORTAL_UNLOCKED_KEY) === 'true';
-        // console.log("Is portal authenticated:", authenticated);
+        console.log("Is portal authenticated (from session)?", authenticated);
         return authenticated;
     }
 
     if (isPortalAuthenticated()) {
-        if (pageContentWrapper) pageContentWrapper.style.display = 'block';
-        if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
+        console.log("Portal is authenticated. Displaying content.");
+        if (pageContentWrapper) {
+            pageContentWrapper.style.display = 'block';
+        } else {
+            console.error("pageContentWrapper not found!");
+        }
+        if (rightSidebarContentWrapper) {
+            rightSidebarContentWrapper.style.display = 'block';
+        } else {
+            console.error("rightSidebarContentWrapper not found!");
+        }
+
         initializeUIElements();
     } else {
-        // If not authenticated, redirect to login.html (or your login page)
-        // Ensure 'login.html' exists or change to your actual login page path.
-        // window.location.href = 'login.html';
-        // console.log("User not authenticated. Redirecting to login page (currently commented out).");
-
-        // For development: if login is not set up, you might want to show content anyway.
-        // Remove or comment this out for production if login is mandatory.
-        console.warn("Authentication check failed or login page redirect is commented out. Displaying content for development.");
-        if (pageContentWrapper) pageContentWrapper.style.display = 'block';
-        if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
-        initializeUIElements();
+        console.log("Portal not authenticated. Redirecting to login page.");
+        // Ensure this path is correct relative to where index.html is.
+        // If they are in the same directory, 'login.html' is fine.
+        window.location.href = 'login.html';
+        return; // Stop further script execution on this page
     }
-    // --- END OF LOGIN PAGE AUTHENTICATION BLOCK ---
-    */
-
 
     function initializeUIElements() {
-        console.log("Initializing UI elements...");
+        console.log("Initializing UI elements (department toggles)...");
         initializeDepartmentToggles();
-        initializeSidebarCollapsibles(); // This will only work if collapsible HTML structure is present in sidebar
-        // Right sidebar widget collapsible JS has been removed as HTML structure changed.
+        // Add any other UI initializations here
     }
-
-    // --- Sidebar Collapsible Logic (for social links or any other .collapsible section) ---
-    // This function remains in case you want to add collapsible sections to the sidebar later.
-    // It will only affect elements with '.nav-section.collapsible' and '.collapsible-toggle'.
-    function initializeSidebarCollapsibles() {
-        const collapsibleToggles = document.querySelectorAll('.sidebar-navigation .collapsible-toggle');
-
-        collapsibleToggles.forEach(toggle => {
-            if (toggle.dataset.listenerAttached === 'true') return;
-
-            toggle.addEventListener('click', function(event) {
-                event.preventDefault();
-                const parentNavSection = this.closest('.nav-section.collapsible');
-                const content = this.nextElementSibling; // Assumes ul is direct sibling of h4
-                const icon = this.querySelector('.toggle-icon-sidebar');
-
-                if (content && parentNavSection && icon) {
-                    parentNavSection.classList.toggle('open');
-
-                    if (content.style.display === "none" || content.style.display === "") {
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
-                        content.style.display = "block";
-                        requestAnimationFrame(() => {
-                           content.style.maxHeight = content.scrollHeight + "px";
-                        });
-                    } else {
-                        icon.classList.remove('fa-chevron-up');
-                        icon.classList.add('fa-chevron-down');
-                        content.style.maxHeight = "0";
-                        content.addEventListener('transitionend', function handler() {
-                            if (content.style.maxHeight === "0px") { // Check if still closing
-                                content.style.display = "none";
-                            }
-                            content.removeEventListener('transitionend', handler);
-                        }, { once: true });
-                    }
-                } else {
-                    // console.warn("Collapsible structure incomplete for:", this);
-                }
-            });
-            toggle.dataset.listenerAttached = 'true';
-        });
-        if (collapsibleToggles.length === 0) {
-            // console.log("No sidebar collapsible toggles found to initialize.");
-        }
-    }
-
 
     // --- Department Filter Logic ---
     function initializeDepartmentToggles() {
@@ -107,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             categorySections.forEach(section => {
                 const category = section.dataset.category;
                 if (selectedFilter === 'all' || category === selectedFilter) {
-                    section.style.display = 'block';
+                    section.style.display = 'block'; // Or your preferred display type like 'flex', 'grid'
                 } else {
                     section.style.display = 'none';
                 }
@@ -124,17 +100,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
 
+            // Set initial filter based on the button with 'active' class or default to the first/all
             const initialActiveFilterButton = document.querySelector('.department-filter-controls .filter-btn.active');
             if (initialActiveFilterButton) {
                 updateCategoryVisibility(initialActiveFilterButton.dataset.filter);
-            } else if (filterButtons.length > 0) {
-                filterButtons[0].classList.add('active'); // Default to first button if none are active
-                updateCategoryVisibility(filterButtons[0].dataset.filter);
             } else {
-                 updateCategoryVisibility('all'); // Fallback
+                // Default to the first button if no 'active' class is set in HTML
+                if (filterButtons.length > 0) {
+                    filterButtons[0].classList.add('active'); // Make the first button active
+                    updateCategoryVisibility(filterButtons[0].dataset.filter);
+                } else {
+                     updateCategoryVisibility('all'); // Fallback if no buttons (shouldn't happen with current HTML)
+                }
             }
         } else {
-            // console.warn("Filter buttons or category sections not found. Filtering will not work.");
+            console.warn("Filter buttons or category sections not found. Filtering will not work.");
         }
     }
 });
