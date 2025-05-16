@@ -30,7 +30,7 @@ body.sidebar-open {
     width: 100%;
     max-width: 1400px;
     min-height: calc(100vh - 40px); /* Adjusted to account for margin */
-    overflow: hidden; /* Important for fixed sidebar behavior if needed, but mainly for children */
+    overflow: hidden;
     margin: 20px auto; /* Center the portal container on desktop */
 }
 
@@ -51,8 +51,8 @@ body.sidebar-open {
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     transition: background-color 0.3s ease;
-    align-items: center; /* Added for better icon centering */
-    justify-content: center; /* Added for better icon centering */
+    align-items: center;
+    justify-content: center;
 }
 .mobile-menu-toggle:hover {
     background-color: #3a368a;
@@ -300,7 +300,7 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
 .impact-icon { color: #dc3545; } .changes-icon { color: #6c757d; } .story-icon { color: #e83e8c; }
 .review-icon { color: #20c997; } .funds-icon { color: #4B0082; } .space-booking-icon { color: #54a0ff; }
 .library-icon { color: #a55eea; } .ops-request-icon { color: #ff6b6b; } .bizdev-request-icon { color: #1dd1a1; }
-.card.placeholder-card .card-icon { color: #aaa; } .calendar-icon {color: brown;} .Life-icon{color: blue;}
+.card.placeholder-card .card-icon { color: #aaa; } .calendar-icon {color: brown;} .Life-icon{color: blue;} /* Assuming Life-icon was intended for one of the family life cards */
 
 .card h3 { font-size: 1.1em; margin-bottom: 8px; font-weight: 600; color: #333; }
 .card p { font-size: 0.9em; color: #666; margin-bottom: 15px; flex-grow: 1; }
@@ -316,8 +316,8 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
 .right-sidebar {
     background-color: #fff; padding: 25px; border-left: 1px solid #e0e0e0;
     display: flex; flex-direction: column; gap: 25px;
-    overflow-y: auto; /* Allow right sidebar to scroll if content exceeds its height */
-    height: calc(100vh - 40px); /* Match portal container height - margin */
+    overflow-y: auto;
+    height: calc(100vh - 40px);
 }
 
 /* Registration Forms Widget Styling */
@@ -326,20 +326,20 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
     border: 1px solid #e8ecf7;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Container for scrollable content */
-    flex-grow: 1; /* Allow widget to grow and fill space */
+    overflow: hidden;
+    flex-grow: 1;
 }
 .widget-header {
     display: flex; align-items: center; margin-bottom: 15px;
     padding-bottom: 10px; border-bottom: 1px solid #e0e6ed;
-    flex-shrink: 0; /* Prevent header from shrinking */
+    flex-shrink: 0;
 }
 .widget-header i { font-size: 1.3em; color: #4a47a3; margin-right: 10px; }
 .widget-header h3 { font-size: 1.15em; font-weight: 600; color: #333; margin: 0; }
 .widget-scroll-container {
     overflow-y: auto;
-    flex-grow: 1; /* Allow scroll container to take available space */
-    padding-right: 5px; /* Space for scrollbar to not overlap content */
+    flex-grow: 1;
+    padding-right: 5px;
 }
 .widget-scroll-container::-webkit-scrollbar { width: 6px; }
 .widget-scroll-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
@@ -384,35 +384,31 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
         min-height: calc(100vh - 30px);
     }
     .main-content, .right-sidebar {
-        height: auto; /* Allow content to determine height */
-        min-height: calc((100vh - 30px - 15px) / 2); /* Approximate split if stacked */
+        height: auto; 
+        min-height: calc((100vh - 30px - 15px) / 2);
     }
     .main-content { grid-area: main; padding: 20px; }
     .right-sidebar { grid-area: right; border-left: none; border-top: 1px solid #e0e0e0; padding: 20px; }
     .search-bar { width: 80%; }
-    .mobile-menu-toggle { display: none; } /* Hide toggle if sidebar is part of grid */
+    .mobile-menu-toggle { display: none; } /* Hide toggle if sidebar is part of grid (tablet view) */
 }
 
 @media (max-width: 767.98px) { /* Small devices (landscape phones, portrait tablets) */
-    body {
-        /* padding: 0; -- Already handled by portal-container margin:0 */
-    }
     .portal-container {
-        grid-template-columns: 1fr; /* Single column for main and right */
-        grid-template-areas: /* Sidebar is fixed, not in grid flow */
+        grid-template-columns: 1fr;
+        grid-template-areas: 
             "main"
             "right";
         border-radius: 0;
         min-height: 100vh;
         gap: 0;
-        margin: 0; /* Full width */
+        margin: 0;
         width: 100%;
         max-width: 100%;
-        /* padding-top: 60px; /* Space if fixed header, our toggle is independent */
     }
 
     .mobile-menu-toggle {
-        display: flex; /* Show the toggle */
+        display: flex; 
     }
 
     .sidebar {
@@ -425,23 +421,23 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
         transform: translateX(-100%);
         border-right: 1px solid #e0e0e0;
         box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        padding-top: 60px; /* Space for toggle button if it were above */
+        padding-top: 60px; /* Space below fixed toggle */
     }
     body.sidebar-open .sidebar {
         transform: translateX(0%);
     }
 
     .main-content, .right-sidebar {
-        height: auto; /* Content dictates height */
-        overflow-y: visible; /* Allow natural scrolling within page flow */
+        height: auto; 
+        overflow-y: visible;
     }
     .main-content {
         padding: 15px;
-        /* overflow-x: hidden; -- Body handles this */
-        margin-top: 0; /* Remove top margin for main content if sidebar is fixed */
+        margin-top: 0;
     }
      .main-content > header {
-        margin-top: 50px; /* Space for fixed mobile toggle button */
+        /* Mobile toggle button: top 15px + height 45px = 60px. Add some buffer. */
+        margin-top: 70px; 
         margin-bottom: 20px;
     }
 
@@ -455,12 +451,12 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
         overflow-x: auto;
         padding-bottom: 15px;
         -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
+        scrollbar-width: thin; /* For Firefox */
     }
     .department-filter-controls::-webkit-scrollbar { height: 5px; }
     .department-filter-controls::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
     .filter-btn {
-        flex-shrink: 0;
+        flex-shrink: 0; /* Prevent buttons from shrinking */
         font-size: 0.9em; padding: 8px 16px;
     }
 
@@ -488,15 +484,16 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
         font-size: 1.1em;
     }
     .main-content > header {
-       margin-top: 55px; /* Space for fixed mobile toggle button */
+       /* Mobile toggle button: top 10px + height 40px = 50px. Add some buffer. */
+       margin-top: 60px; 
     }
 
     .sidebar {
         width: 220px;
-        padding-top: 55px; /* Space for toggle */
+        padding-top: 55px; /* Space below fixed toggle */
     }
     .sidebar .logo { padding-left: 5px; margin-bottom: 15px;}
-    .sidebar .logo span { font-size: 1.1em; /* Or display: none; */ }
+    .sidebar .logo span { font-size: 1.1em; }
     .sidebar .logo i { font-size: 1.3em; }
     .sidebar nav a { padding: 8px 12px; font-size: 0.85em; }
     .nav-section-title { font-size: 0.7em; padding: 8px 10px 4px 10px; }
@@ -504,7 +501,7 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
     .welcome-banner h2 { font-size: 1.1em; }
     .welcome-banner p { font-size: 0.85em; }
 
-    .department-filter-controls { justify-content: flex-start; } /* Align to start for scroll */
+    .department-filter-controls { justify-content: flex-start; } 
     .filter-btn { font-size: 0.85em; padding: 7px 14px; }
 
     .category-header h2 { font-size: 1.2em; }
