@@ -11,66 +11,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* 
     // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE ---
-    const pageContentWrapper = document.getElementById('pageContentWrapper');
-    const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
-    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; 
-
-    function isPortalAuthenticated() {
-        const authenticated = sessionStorage.getItem(PORTAL_UNLOCKED_KEY) === 'true';
-        return authenticated;
-    }
-
-    if (isPortalAuthenticated()) {
-        if (pageContentWrapper) pageContentWrapper.style.display = 'block';
-        if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block'; 
-        initializeUIElements();
-    } else {
-        window.location.href = 'login.html'; 
-        return; 
-    }
-    // --- END OF LOGIN PAGE AUTHENTICATION BLOCK ---
+    // ... (login authentication logic as before) ...
     */
-
 
     function initializeUIElements() {
         console.log("Initializing UI elements...");
         initializeDepartmentToggles();
-        initializeSidebarCollapsibles(); 
+        // initializeSidebarCollapsibles(); // REMOVED as social groups are not JS collapsible anymore
         setupResponsiveWidgetCollapsibles();
     }
 
-    // --- Sidebar Collapsible Logic (for social links) ---
-    function initializeSidebarCollapsibles() {
-        const collapsibleToggles = document.querySelectorAll('.sidebar-navigation .collapsible-toggle');
-        
-        collapsibleToggles.forEach(toggle => {
-            if (toggle.dataset.listenerAttached === 'true') return;
-
-            toggle.addEventListener('click', function(event) {
-                event.preventDefault(); 
-                const parentNavSection = this.closest('.nav-section.collapsible');
-                const content = this.nextElementSibling; 
-                const icon = this.querySelector('.toggle-icon-sidebar');
-
-                if (content && parentNavSection && icon) {
-                    parentNavSection.classList.toggle('open');
-
-                    if (content.classList.contains('open')) { 
-                        content.style.maxHeight = null; 
-                        content.classList.remove('open');
-                        icon.classList.remove('fa-chevron-up');
-                        icon.classList.add('fa-chevron-down');
-                    } else { 
-                        content.classList.add('open');
-                        content.style.maxHeight = content.scrollHeight + "px"; 
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
-                    }
-                }
-            });
-            toggle.dataset.listenerAttached = 'true';
-        });
-    }
+    // --- Sidebar Collapsible Logic - REMOVED as CSS handles mobile layout now ---
+    // function initializeSidebarCollapsibles() { ... } 
 
     // --- Registration Forms Widget Collapsible Logic (Mobile Only) ---
     let widgetCollapsibleHandlers = []; 
@@ -79,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         removeWidgetCollapsibleListeners(); 
 
         const widgetCollapsibleToggles = document.querySelectorAll('.registration-forms-widget .collapsible-widget-toggle');
-        const mobileBreakpoint = 768; // Width in pixels
+        const mobileBreakpoint = 768;
 
         widgetCollapsibleToggles.forEach(toggle => {
             const parentGroup = toggle.closest('.collapsible-widget-group');
@@ -91,29 +43,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Reset classes and styles for accurate state detection before applying new ones
             content.classList.remove('open-mobile', 'collapsed-mobile');
             parentGroup.classList.remove('open');
             icon.classList.remove('fa-chevron-up');
             icon.classList.add('fa-chevron-down');
-            content.style.maxHeight = ""; // Clear any inline maxHeight
+            content.style.maxHeight = ""; 
 
             if (window.innerWidth > mobileBreakpoint) {
-                // DESKTOP: Ensure content is expanded and no click listener
                 content.style.maxHeight = content.scrollHeight + "px"; 
-                content.classList.add('open-mobile'); // Use open-mobile for consistency or just rely on scrollHeight
+                content.classList.add('open-mobile'); 
                 parentGroup.classList.add('open'); 
             } else {
-                // MOBILE: Set up for collapsing, ensure initially collapsed
                 content.classList.add('collapsed-mobile'); 
                 parentGroup.classList.remove('open');
 
                 const clickHandler = function(event) {
                     event.preventDefault();
-                    parentGroup.classList.toggle('open'); // For icon rotation
+                    parentGroup.classList.toggle('open'); 
                     
                     if (content.classList.contains('open-mobile')) {
-                        content.style.maxHeight = null; // Collapse
+                        content.style.maxHeight = null;
                         content.classList.remove('open-mobile');
                         content.classList.add('collapsed-mobile');
                         icon.classList.remove('fa-chevron-up');
@@ -121,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         content.classList.remove('collapsed-mobile');
                         content.classList.add('open-mobile');
-                        content.style.maxHeight = content.scrollHeight + "px"; // Expand
+                        content.style.maxHeight = content.scrollHeight + "px";
                         icon.classList.remove('fa-chevron-down');
                         icon.classList.add('fa-chevron-up');
                     }
@@ -151,8 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- Department Filter Logic ---
+    // --- Department Filter Logic (Keep as is) ---
     function initializeDepartmentToggles() {
+        // ... (existing department filter logic as provided in the previous full script) ...
         const filterButtons = document.querySelectorAll('.department-filter-controls .filter-btn');
         const categorySections = document.querySelectorAll('.categories-container .category-section');
 
