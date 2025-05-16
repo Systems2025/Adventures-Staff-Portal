@@ -62,8 +62,6 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeUIElements();
     } else {
         console.log("Portal not authenticated. Redirecting to login page.");
-        // Ensure this path is correct relative to where index.html is.
-        // If they are in the same directory, 'login.html' is fine.
         window.location.href = 'login.html';
         return; // Stop further script execution on this page
     }
@@ -83,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             categorySections.forEach(section => {
                 const category = section.dataset.category;
                 if (selectedFilter === 'all' || category === selectedFilter) {
-                    section.style.display = 'block'; // Or your preferred display type like 'flex', 'grid'
+                    section.style.display = 'block'; 
                 } else {
                     section.style.display = 'none';
                 }
@@ -100,17 +98,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
 
-            // Set initial filter based on the button with 'active' class or default to the first/all
             const initialActiveFilterButton = document.querySelector('.department-filter-controls .filter-btn.active');
             if (initialActiveFilterButton) {
                 updateCategoryVisibility(initialActiveFilterButton.dataset.filter);
             } else {
-                // Default to the first button if no 'active' class is set in HTML
                 if (filterButtons.length > 0) {
-                    filterButtons[0].classList.add('active'); // Make the first button active
+                    filterButtons[0].classList.add('active'); 
                     updateCategoryVisibility(filterButtons[0].dataset.filter);
                 } else {
-                     updateCategoryVisibility('all'); // Fallback if no buttons (shouldn't happen with current HTML)
+                     updateCategoryVisibility('all'); 
                 }
             }
         } else {
