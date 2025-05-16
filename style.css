@@ -60,7 +60,6 @@ body {
     width: auto;   
 }
 
-
 .sidebar .sidebar-navigation {
     margin-top: 0; 
 }
@@ -77,19 +76,19 @@ body {
 }
 .sidebar .sidebar-navigation ul:first-of-type .nav-section-title,
 .sidebar .sidebar-navigation > .nav-section-title:first-child,
-.sidebar .sidebar-navigation .social-icon-group:first-of-type .nav-section-title { /* For social group title */
+.sidebar .sidebar-navigation .social-icon-group:first-of-type .nav-section-title {
     margin-top: 0;
 }
-.nav-section.collapsible .nav-section-title.collapsible-toggle,
-.social-icon-group .nav-section-title.social-group-title { /* Make social titles look like other toggles */
-    cursor: default; /* No cursor pointer if it's not a toggle on desktop */
+.nav-section.collapsible .nav-section-title.collapsible-toggle {
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* transition: color 0.2s ease; /* Not needed if not clickable on desktop */
+    transition: color 0.2s ease;
 }
-/* No hover effect for social group titles on desktop */
-
+.nav-section.collapsible .nav-section-title.collapsible-toggle:hover {
+    color: #4a47a3;
+}
 .toggle-icon-sidebar { 
     transition: transform 0.3s ease-in-out;
     font-size: 0.8em;
@@ -98,23 +97,18 @@ body {
     transform: rotate(180deg);
 }
 
-
 .sidebar nav ul { list-style: none; padding-left: 0; }
 .sidebar nav ul.collapsible-content-sidebar { /* For Instagram/Facebook dropdowns */
     padding-left: 10px; 
     margin-left: 5px; 
     margin-top: 5px; 
     overflow: hidden; 
-    max-height: 0; 
-    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out; 
-    padding-top: 0; 
-    padding-bottom: 0; 
+    /* display: none; /* Initial state set in HTML, JS toggles to block/none */
+    /* max-height: 0; /* Removed, JS handles display property now */
+    /* transition: max-height 0.35s ease-out... /* Removed if not using max-height animation */
 }
-.sidebar nav ul.collapsible-content-sidebar.open {
-    max-height: 500px; 
-    padding-top: 5px; 
-    padding-bottom: 5px;
-}
+/* NO .open class needed here if JS directly manipulates display */
+
 
 .sidebar nav li { margin-bottom: 3px; }
 .sidebar nav a {
@@ -128,10 +122,10 @@ body {
     font-size: 0.9em;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
-.sidebar nav a .link-text { /* Desktop: text shown */
+.sidebar nav a .link-text { 
     display: inline;
 }
-.sidebar nav a .icon-label-mobile { /* Mobile: small text below icon */
+.sidebar nav a .icon-label-mobile { 
     display: none; 
     font-size: 0.7em;
     margin-top: 3px;
@@ -149,15 +143,12 @@ body {
     color: #4a47a3;
 }
 .sidebar nav a:hover i,
-.sidebar nav a:hover .icon-label-mobile { /* Change label color on hover too */
+.sidebar nav a:hover .icon-label-mobile { 
     color: #4a47a3;
 }
-
-/* Styles for the new social icon group layout on mobile */
 .social-icon-group .social-links-list {
     /* Desktop: behaves like normal ul */
 }
-
 
 /* --- Main Content --- */
 .main-content {
@@ -169,17 +160,33 @@ body {
     /* display: none; /* UNCOMMENT if using separate login page */
 }
 
-/* ... (Keep .main-content > header, .search-bar, .welcome-banner, */
-/* .department-filter-controls, .filter-btn, .categories-container, */
-/* .category-section, .category-header, .category-description, */
-/* .link-cards-grid, .card, .card-icon and specific icon colors, */
-/* .card-content-wrapper, .card h3, .card p, .card-button, .card.placeholder-card styles AS IS) ... */
-.card-content-wrapper { 
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    flex-grow: 1; 
-}
+.main-content > header { /* ... existing ... */ }
+.search-bar { /* ... existing ... */ }
+.welcome-banner { /* ... existing ... */ }
+.department-filter-controls { /* ... existing ... */ }
+.filter-btn { /* ... existing ... */ }
+.categories-container { /* ... existing ... */ }
+.category-section { /* ... existing ... */ }
+.category-header { /* ... existing ... */ }
+.category-description { /* ... existing ... */ }
+.link-cards-grid { /* ... existing ... */ }
+.card { /* ... existing ... */ }
+.card-icon { /* ... existing ... */ }
+/* Card specific icon colors (job-icon, gym-icon etc. as before) */
+.job-icon { color: #28a745; } .gym-icon { color: #fd7e14; } .form-icon { color: #17a2b8; } 
+.route-icon { color: #6f42c1; } .staff-icon { color: #ffc107; } .input-icon { color: #007bff; } 
+.impact-icon { color: #dc3545; } .changes-icon { color: #6c757d; } .story-icon { color: #e83e8c; } 
+.review-icon { color: #20c997; } .funds-icon { color: #4B0082; } 
+.space-booking-icon { color: #54a0ff; } .library-icon { color: #a55eea; } 
+.ops-request-icon { color: #ff6b6b; } .bizdev-request-icon { color: #1dd1a1; } 
+.card.placeholder-card .card-icon { color: #aaa; }
+
+.card-content-wrapper { /* ... existing ... */ }
+.card h3 { /* ... existing ... */ }
+.card p { /* ... existing ... */ }
+.card-button { /* ... existing ... */ }
+.card.placeholder-card { /* ... existing ... */ }
+
 
 /* --- Right Sidebar --- */
 .right-sidebar { /* ... existing ... */ }
@@ -191,9 +198,37 @@ body {
 .toggle-icon-widget { /* ... existing ... */ }
 .form-group.collapsible-widget-group.open .form-group-title { /* ... existing ... */ }
 .form-group.collapsible-widget-group.open .toggle-icon-widget { /* ... existing ... */ }
-.widget-links-list.collapsible-widget-content { /* ... existing ... */ }
-.widget-links-list.collapsible-widget-content.collapsed-mobile { /* ... existing ... */ }
-.widget-links-list.collapsible-widget-content.open-mobile { /* ... existing ... */ }
+
+.widget-links-list.collapsible-widget-content {
+    list-style: none; padding: 0; margin: 0;
+    overflow: hidden;
+    /* display: none; /* Controlled by JS for mobile, expanded for desktop */
+    /* max-height: 500px; /* Default for desktop, JS will manage for mobile */
+    padding-left: 5px; 
+    background-color: #fff; 
+    /* No transition by default for desktop to avoid FOUC, JS will handle mobile transition */
+}
+.widget-links-list.collapsible-widget-content.collapsed-mobile {
+    max-height: 0 !important; 
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+    border: 1px solid transparent !important; 
+    display: none !important; /* Ensure hidden */
+}
+.widget-links-list.collapsible-widget-content.open-mobile {
+    display: block !important; /* Ensure shown */
+    max-height: 500px !important; 
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    border: 1px solid #f0f4f8 !important; 
+    border-top: none !important;
+    border-radius: 0 0 4px 4px !important;
+    margin-top: 0 !important; 
+    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out;
+}
+
 .widget-links-list li { /* ... existing ... */ }
 .widget-links-list a { /* ... existing ... */ }
 .form-link-icon { /* ... existing ... */ }
@@ -204,91 +239,54 @@ body {
 @media (max-width: 992px) { /* ... existing ... */ }
 
 @media (max-width: 768px) {
-    body { padding: 0; align-items: stretch; }
-    .portal-container {
-        grid-template-columns: 1fr; grid-template-areas: "sidebar" "main" "right";
-        border-radius: 0; min-height: 100vh; gap: 0;
-    }
-    .sidebar { border-right: none; border-bottom: 1px solid #e0e0e0; padding: 15px; height: auto; }
-    .sidebar .logo { justify-content: center; padding-left: 0; margin-bottom: 15px; }
-    
-    /* Sidebar Links Mobile Styling */
-    .nav-section-title { 
-        text-align: left; /* Keep left for consistency */
-        font-size: 0.85em; 
-        padding: 10px 10px 8px 10px; 
-    } 
-    /* Main "Connect with us" links - icon only, centered */
-    .sidebar nav ul.main-connect-links {
-        display: flex; flex-wrap: wrap; justify-content: space-around; gap: 10px; padding-bottom: 10px;
-    }
-    .sidebar nav ul.main-connect-links li a {
-        padding: 12px; justify-content: center; 
-        min-width: 48px; min-height: 48px;
-        border: 1px solid #e0e0e0; background-color: #f9faff;
-    }
-    .sidebar nav ul.main-connect-links li a i { margin-right: 0; font-size: 1.6em; color: #4a47a3; }
+    /* ... (Keep existing general mobile styles for .sidebar, .logo, main content, cards etc.) ... */
+
+    /* Sidebar Social Links Mobile Styling */
+    .nav-section-title { text-align: left; font-size: 0.85em; padding: 10px 10px 8px 10px; } 
+    .nav-section.collapsible .nav-section-title.collapsible-toggle { padding-right: 10px; }
+    .sidebar nav ul.main-connect-links { /* ... existing icon-only styles ... */ }
     .sidebar nav ul.main-connect-links li a .link-text { display: none !important; }
+    
+    /* For Collapsible Instagram/Facebook titles */
+    .nav-section.collapsible .nav-section-title.collapsible-toggle {
+         /* Ensure it remains clickable and styled correctly */
+    }
+    /* For links inside sidebar collapsibles on mobile */
+    .sidebar nav ul.collapsible-content-sidebar { padding-left: 10px; margin-left: 0; border-left: none; }
+    .sidebar nav ul.collapsible-content-sidebar a { padding: 10px 5px; font-size: 0.9em; }
+    .sidebar nav ul.collapsible-content-sidebar a i { margin-right: 8px; font-size: 1em; }
+    .toggle-icon-sidebar { font-size: 0.9em; }
 
-    /* Instagram & Facebook groups become icon rows with small labels */
-    .sidebar .social-icon-group .nav-section-title.social-group-title {
-        text-align: center; /* Center the "Instagram" / "Facebook" title */
-        margin-bottom: 8px;
+    /* Card layout for mobile */
+    .card { flex-direction: row; align-items: center; text-align: left; }
+    .card-icon { margin-bottom: 0; margin-right: 15px; }
+    .card-content-wrapper { align-items: flex-start; } 
+    .card-button { width: 100%; margin-top: 10px;}
+    
+    /* Right Sidebar Registration Forms Mobile Enhancements */
+    .right-sidebar { padding: 15px 10px; background-color: #f8f9fe; }
+    .registration-forms-widget { padding: 10px; }
+    .widget-header { margin-bottom: 10px; padding-bottom: 8px;}
+    .widget-header i { font-size: 1.2em; }
+    .widget-header h3 { font-size: 1.1em; }
+    .form-group { margin-bottom: 8px; }
+    .form-group-title.collapsible-widget-toggle { cursor: pointer; padding: 12px 10px; }
+    .form-group-title i:first-child { font-size: 0.9em; }
+    .toggle-icon-widget { display: inline-block; }
+    /* .widget-links-list.collapsible-widget-content styling for mobile handled by .collapsed-mobile & .open-mobile */
+    .widget-links-list li { margin-bottom: 5px; }
+    .widget-links-list a {
+        font-size: 0.9em; padding: 10px 8px; 
+        background-color: #fff; border: 1px solid #eef2ff;
     }
-    .sidebar .social-icon-group .social-links-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around; /* Or center */
-        gap: 10px;
-        padding-left: 0; /* Override any previous indent */
-    }
-    .sidebar .social-icon-group .social-links-list li {
-        margin-bottom: 5px;
-    }
-    .sidebar .social-icon-group .social-links-list li a {
-        flex-direction: column; /* Icon above label */
-        padding: 8px;
-        min-width: 60px; /* Adjust for tap target and label */
-        text-align: center;
-        border: 1px solid #eee;
-        border-radius: 6px;
-        background-color: #f9faff;
-    }
-    .sidebar .social-icon-group .social-links-list li a i {
-        margin-right: 0;
-        margin-bottom: 4px; /* Space between icon and label */
-        font-size: 1.5em; /* Prominent icon */
-        color: #4a47a3;
-    }
-    .sidebar .social-icon-group .social-links-list li a .link-text {
-        display: none; /* Hide the full text from desktop */
-    }
-    .sidebar .social-icon-group .social-links-list li a .icon-label-mobile {
-        display: block; /* Show the small mobile label */
-    }
-    /* Remove collapsible behavior for social groups on mobile as they are now icon rows */
-    .sidebar .social-icon-group .collapsible-toggle .toggle-icon-sidebar {
-        display: none;
-    }
-    .sidebar .social-icon-group .collapsible-content-sidebar {
-        max-height: none !important; /* Ensure it's visible */
-        padding: 0 !important;
-        margin: 0 !important;
-        border: none !important;
-        display: contents; /* Make the UL not take up layout space itself */
-    }
-
-
-    /* ... (Keep other existing mobile styles for main content, cards, right sidebar registration forms) ... */
-    .main-content { padding: 20px 15px; }
-    .main-content > header { flex-direction: column; gap: 10px; align-items: flex-start; margin-bottom: 20px; }
-    /* ... etc. for cards and right sidebar as they were in the previous full CSS ... */
+    .form-link-icon { font-size: 1em; margin-right: 8px;}
 }
 
 @media (max-width: 576px) {
-    /* ... (Keep existing smallest screen styles, potentially further adjust social icon/label sizes if needed) ... */
-    .sidebar nav ul.main-connect-links li a i { font-size: 1.5em; }
-    .sidebar .social-icon-group .social-links-list li a { min-width: 55px; padding: 6px;}
-    .sidebar .social-icon-group .social-links-list li a i { font-size: 1.3em; }
-    .sidebar .social-icon-group .social-links-list li a .icon-label-mobile { font-size: 0.65em; }
+    /* ... (Keep existing smallest screen styles, further fine-tune if needed) ... */
+    .sidebar nav ul.collapsible-content-sidebar a { font-size: 0.88em; }
+    .nav-section-title { font-size: 0.8em; }
+    .widget-header h3 { font-size: 1.05em; }
+    .form-group-title { font-size: 0.95em; padding: 10px 8px;}
+    .widget-links-list a { font-size: 0.85em; padding: 9px 10px; }
 }
