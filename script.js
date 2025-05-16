@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Main portal (index.html) DOM loaded.");
 
     // --- Simplified visibility for non-login page setup ---
+    // If using a separate login page, comment out these lines and uncomment the auth block below.
     const pageContentWrapper = document.getElementById('pageContentWrapper');
     const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
     if (pageContentWrapper) pageContentWrapper.style.display = 'block';
@@ -11,18 +12,77 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* 
     // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE ---
-    // ... (login authentication logic as before) ...
+    const pageContentWrapper = document.getElementById('pageContentWrapper');
+    const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
+    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; 
+
+    function isPortalAuthenticated() {
+        const authenticated = sessionStorage.getItem(PORTAL_UNLOCKED_KEY) === 'true';
+        return authenticated;
+    }
+
+    if (isPortalAuthenticated()) {
+        if (pageContentWrapper) pageContentWrapper.style.display = 'block';
+        if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block'; 
+        initializeUIElements();
+    } else {
+        window.location.href = 'login.html'; 
+        return; 
+    }
+    // --- END OF LOGIN PAGE AUTHENTICATION BLOCK ---
     */
+
 
     function initializeUIElements() {
         console.log("Initializing UI elements...");
         initializeDepartmentToggles();
-        // initializeSidebarCollapsibles(); // REMOVED as social groups are not JS collapsible anymore
+        initializeSidebarCollapsibles(); 
         setupResponsiveWidgetCollapsibles();
     }
 
-    // --- Sidebar Collapsible Logic - REMOVED as CSS handles mobile layout now ---
-    // function initializeSidebarCollapsibles() { ... } 
+    // --- Sidebar Collapsible Logic (for social links) ---
+    function initializeSidebarCollapsibles() {
+        const collapsibleToggles = document.querySelectorAll('.sidebar-navigation .collapsible-toggle');
+        
+        collapsibleToggles.forEach(toggle => {
+            // Prevent attaching multiple listeners if this function is called again
+            if (toggle.dataset.listenerAttached === 'true') return;
+
+            toggle.addEventListener('click', function(event) {
+                event.preventDefault(); 
+                const parentNavSection = this.closest('.nav-section.collapsible');
+                const content = this.nextElementSibling; // Assumes ul is direct sibling of h4
+                const icon = this.querySelector('.toggle-icon-sidebar');
+
+                if (content && parentNavSection && icon) {
+                    parentNavSection.classList.toggle('open'); // For CSS to rotate icon
+
+                    // Toggle display for the content
+                    if (content.style.display === "none" || content.style.display === "") {
+                        content.style.display = "block";
+                        // Animate max-height for opening
+                        // Set max-height to scrollHeight after display is block to get correct height
+                        requestAnimationFrame(() => { // Ensure display change has rendered
+                           content.style.maxHeight = content.scrollHeight + "px";
+                        });
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        content.style.maxHeight = "0"; // Animate max-height for closing
+                        // Listen for transition end to set display to none for accessibility
+                        // and to ensure scrollHeight is 0 if re-opened before transition fully ends.
+                        content.addEventListener('transitionend', function handler() {
+                            content.style.display = "none";
+                            content.removeEventListener('transitionend', handler);
+                        });
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                }
+            });
+            toggle.dataset.listenerAttached = 'true';
+        });
+    }
 
     // --- Registration Forms Widget Collapsible Logic (Mobile Only) ---
     let widgetCollapsibleHandlers = []; 
@@ -38,41 +98,51 @@ document.addEventListener('DOMContentLoaded', function() {
             const content = toggle.nextElementSibling; 
             const icon = toggle.querySelector('.toggle-icon-widget');
 
-            if (!content || !parentGroup || !icon) {
-                console.warn("Widget collapsible elements not found for a toggle (content, parentGroup, or icon).");
-                return;
-            }
+            if (!content || !parentGroup || !icon) return;
             
+            // Reset styles/classes before applying new state
+            content.style.maxHeight = ""; 
             content.classList.remove('open-mobile', 'collapsed-mobile');
             parentGroup.classList.remove('open');
             icon.classList.remove('fa-chevron-up');
             icon.classList.add('fa-chevron-down');
-            content.style.maxHeight = ""; 
 
             if (window.innerWidth > mobileBreakpoint) {
+                // DESKTOP: Ensure content is expanded
+                content.style.display = 'block'; // Make sure it's visible
                 content.style.maxHeight = content.scrollHeight + "px"; 
-                content.classList.add('open-mobile'); 
                 parentGroup.classList.add('open'); 
             } else {
-                content.classList.add('collapsed-mobile'); 
+                // MOBILE: Set up for collapsing, ensure initially collapsed
+                content.style.display = 'none'; // Start hidden on mobile
                 parentGroup.classList.remove('open');
 
                 const clickHandler = function(event) {
                     event.preventDefault();
                     parentGroup.classList.toggle('open'); 
                     
-                    if (content.classList.contains('open-mobile')) {
-                        content.style.maxHeight = null;
+                    if (content.style.display === "none" || content.style.display === "") {
+                        content.style.display = 'block';
+                        requestAnimationFrame(() => {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                        });
+                        content.classList.add('open-mobile'); // Add class after display change for transition
+                        content.classList.remove('collapsed-mobile');
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        content.style.maxHeight = null; // Start collapse animation
                         content.classList.remove('open-mobile');
                         content.classList.add('collapsed-mobile');
                         icon.classList.remove('fa-chevron-up');
                         icon.classList.add('fa-chevron-down');
-                    } else {
-                        content.classList.remove('collapsed-mobile');
-                        content.classList.add('open-mobile');
-                        content.style.maxHeight = content.scrollHeight + "px";
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
+                        // Set display to none after transition for accessibility and proper re-opening
+                        content.addEventListener('transitionend', function handler() {
+                            if (!content.classList.contains('open-mobile')) { // Check if it's still meant to be closed
+                                content.style.display = "none";
+                            }
+                            content.removeEventListener('transitionend', handler);
+                        }, { once: true }); // Ensure listener fires only once per transition
                     }
                 };
                 toggle.addEventListener('click', clickHandler);
@@ -100,9 +170,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- Department Filter Logic (Keep as is) ---
+    // --- Department Filter Logic ---
     function initializeDepartmentToggles() {
-        // ... (existing department filter logic as provided in the previous full script) ...
         const filterButtons = document.querySelectorAll('.department-filter-controls .filter-btn');
         const categorySections = document.querySelectorAll('.categories-container .category-section');
 
