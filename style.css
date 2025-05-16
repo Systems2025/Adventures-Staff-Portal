@@ -10,8 +10,8 @@ body {
     background-color: #f4f7fe;
     color: #333;
     min-height: 100vh;
-    position: relative; /* For positioning mobile toggle and overlay */
-    overflow-x: hidden; /* Prevent horizontal scroll from fixed sidebar animations if body shifts */
+    position: relative; 
+    overflow-x: hidden; /* Generally good to prevent minor horizontal scroll issues */
 }
 
 body.sidebar-open {
@@ -29,18 +29,19 @@ body.sidebar-open {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     width: 100%;
     max-width: 1400px;
-    min-height: calc(100vh - 40px); /* Adjusted to account for margin */
-    overflow: hidden;
-    margin: 20px auto; /* Center the portal container on desktop */
+    /* min-height will be handled by content or specific media queries */
+    margin: 20px auto; 
+    /* overflow: hidden; Avoid this on the main container if its children define page length */
 }
+
 
 /* --- Mobile Menu Toggle Button --- */
 .mobile-menu-toggle {
-    display: none; /* Hidden by default, shown on mobile */
+    display: none; 
     position: fixed;
     top: 15px;
     left: 15px;
-    z-index: 1005; /* Above sidebar and overlay */
+    z-index: 1005; 
     background-color: #4a47a3;
     color: white;
     border: none;
@@ -51,45 +52,50 @@ body.sidebar-open {
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     transition: background-color 0.3s ease;
-    align-items: center;
-    justify-content: center;
+    align-items: center; 
+    justify-content: center; 
 }
 .mobile-menu-toggle:hover {
     background-color: #3a368a;
 }
-.mobile-menu-toggle i.fa-times { /* Style for close icon */
+.mobile-menu-toggle i.fa-times { 
     font-size: 1.3em;
 }
 
 
 /* --- Mobile Sidebar Overlay --- */
 .mobile-sidebar-overlay {
-    display: none; /* Hidden by default */
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999; /* Below sidebar, above main content */
+    z-index: 999; 
     transition: opacity 0.3s ease-in-out;
     opacity: 0;
 }
-body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
+body.sidebar-open .mobile-sidebar-overlay { 
     display: block;
     opacity: 1;
 }
 
 
-/* --- Sidebar --- */
+/* --- Sidebar (Left) --- */
 .sidebar {
     background-color: #fff;
     padding: 25px 15px;
     display: flex;
     flex-direction: column;
     border-right: 1px solid #e0e0e0;
-    overflow-y: auto;
-    transition: transform 0.3s ease-in-out; /* For slide animation */
+    transition: transform 0.3s ease-in-out; /* For mobile slide animation */
+
+    /* Desktop: Sticky and independently scrollable */
+    position: sticky;
+    top: 20px; /* Align with portal-container margin-top */
+    height: calc(100vh - 40px); /* Fill viewport height minus top/bottom margins */
+    overflow-y: auto; /* Allow sidebar to scroll if its content is too long */
 }
 
 .sidebar .logo {
@@ -156,8 +162,7 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
 /* --- Main Content --- */
 .main-content {
     padding: 25px;
-    overflow-y: auto;
-    height: calc(100vh - 40px); /* Match portal container height - margin */
+    /* REMOVED overflow-y: auto; and fixed height to allow content to define page length */
 }
 
 #pageContentWrapper, #rightSidebarContentWrapper {
@@ -284,7 +289,7 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    min-height: 200px;
+    min-height: 200px; /* Keep min-height for visual consistency if desired */
 }
 .card:hover {
     transform: translateY(-5px);
@@ -300,10 +305,18 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
 .impact-icon { color: #dc3545; } .changes-icon { color: #6c757d; } .story-icon { color: #e83e8c; }
 .review-icon { color: #20c997; } .funds-icon { color: #4B0082; } .space-booking-icon { color: #54a0ff; }
 .library-icon { color: #a55eea; } .ops-request-icon { color: #ff6b6b; } .bizdev-request-icon { color: #1dd1a1; }
-.card.placeholder-card .card-icon { color: #aaa; } .calendar-icon {color: brown;} .Life-icon{color: blue;} /* Assuming Life-icon was intended for one of the family life cards */
+.card.placeholder-card .card-icon { color: #aaa; } .calendar-icon {color: brown;} .Life-icon{color: blue;}
 
-.card h3 { font-size: 1.1em; margin-bottom: 8px; font-weight: 600; color: #333; }
-.card p { font-size: 0.9em; color: #666; margin-bottom: 15px; flex-grow: 1; }
+.card h3 { 
+    font-size: 1.1em; margin-bottom: 8px; font-weight: 600; color: #333;
+    overflow-wrap: break-word; /* Help prevent overflow from long words */
+    word-break: break-word; /* Broader support for word breaking */
+}
+.card p { 
+    font-size: 0.9em; color: #666; margin-bottom: 15px; flex-grow: 1;
+    overflow-wrap: break-word; /* Help prevent overflow from long words */
+    word-break: break-word; /* Broader support for word breaking */
+}
 .card-button {
     display: inline-block; background-color: #4a47a3; color: #fff; padding: 8px 18px;
     border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9em;
@@ -316,8 +329,13 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
 .right-sidebar {
     background-color: #fff; padding: 25px; border-left: 1px solid #e0e0e0;
     display: flex; flex-direction: column; gap: 25px;
-    overflow-y: auto;
-    height: calc(100vh - 40px);
+    /* REMOVED overflow-y: auto; and fixed height to allow content to define page length */
+
+    /* Desktop: Sticky and independently scrollable */
+    position: sticky;
+    top: 20px; /* Align with portal-container margin-top */
+    height: calc(100vh - 40px); /* Fill viewport height minus top/bottom margins */
+    overflow-y: auto; /* Allow sidebar to scroll if its content is too long */
 }
 
 /* Registration Forms Widget Styling */
@@ -326,25 +344,28 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
     border: 1px solid #e8ecf7;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    flex-grow: 1;
+    /* overflow: hidden; REMOVED - let widget content flow within scrolling sidebar */
+    flex-grow: 1; 
 }
 .widget-header {
     display: flex; align-items: center; margin-bottom: 15px;
     padding-bottom: 10px; border-bottom: 1px solid #e0e6ed;
-    flex-shrink: 0;
+    flex-shrink: 0; 
 }
 .widget-header i { font-size: 1.3em; color: #4a47a3; margin-right: 10px; }
 .widget-header h3 { font-size: 1.15em; font-weight: 600; color: #333; margin: 0; }
+
 .widget-scroll-container {
-    overflow-y: auto;
-    flex-grow: 1;
-    padding-right: 5px;
+    /* This container will now scroll as part of the .right-sidebar scroll */
+    flex-grow: 1; 
+    /* padding-right: 5px; Only if individual scrollbar is needed */
 }
-.widget-scroll-container::-webkit-scrollbar { width: 6px; }
-.widget-scroll-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-.widget-scroll-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
-.widget-scroll-container::-webkit-scrollbar-thumb:hover { background: #aaa; }
+/* Styles for individual scrollbar (if .widget-scroll-container had overflow: auto and fixed height) */
+/* .widget-scroll-container::-webkit-scrollbar { width: 6px; } */
+/* .widget-scroll-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; } */
+/* .widget-scroll-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; } */
+/* .widget-scroll-container::-webkit-scrollbar-thumb:hover { background: #aaa; } */
+
 .form-group { margin-bottom: 20px; }
 .form-group:last-child { margin-bottom: 0; }
 .form-group-title {
@@ -370,58 +391,76 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
 /* --- Responsive Styles --- */
 @media (max-width: 1199.98px) { /* Large devices */
     .portal-container { grid-template-columns: 220px 1fr 280px; gap: 20px; }
+    .sidebar, .right-sidebar {
+        /* Ensure sticky positioning is maintained or adjusted if needed for this breakpoint */
+        top: 20px; /* Adjust if portal margin changes */
+        height: calc(100vh - 40px); /* Adjust if portal margin changes */
+    }
 }
 
 @media (max-width: 991.98px) { /* Medium devices (tablets) */
     .portal-container {
-        grid-template-columns: 200px 1fr;
+        grid-template-columns: 200px 1fr; /* Left Sidebar | Main Content Area (which will stack main & right) */
         grid-template-areas:
-            "sidebar main"
-            "sidebar right";
+            "sidebar main"    /* Main content area */
+            "sidebar right";  /* Right sidebar content stacked below main */
         gap: 15px;
         margin: 15px auto;
         max-width: 95%;
-        min-height: calc(100vh - 30px);
+        /* Remove min-height to let content dictate page length */
+    }
+    .sidebar { /* Left sidebar remains sticky on tablet */
+        position: sticky;
+        top: 15px; /* Align with new portal-container margin */
+        height: calc(100vh - 30px); /* Adjust for new margin */
+        overflow-y: auto;
     }
     .main-content, .right-sidebar {
-        height: auto; 
-        min-height: calc((100vh - 30px - 15px) / 2);
+        position: static; /* Override sticky from desktop */
+        height: auto;     /* Allow content to determine height */
+        overflow-y: visible; /* Scroll with the page */
     }
     .main-content { grid-area: main; padding: 20px; }
-    .right-sidebar { grid-area: right; border-left: none; border-top: 1px solid #e0e0e0; padding: 20px; }
+    .right-sidebar { 
+        grid-area: right; 
+        border-left: none; 
+        border-top: 1px solid #e0e0e0; 
+        padding: 20px; 
+    }
     .search-bar { width: 80%; }
-    .mobile-menu-toggle { display: none; } /* Hide toggle if sidebar is part of grid (tablet view) */
+    .mobile-menu-toggle { display: none; } /* Still hidden on tablet */
 }
 
 @media (max-width: 767.98px) { /* Small devices (landscape phones, portrait tablets) */
     .portal-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; 
         grid-template-areas: 
             "main"
             "right";
         border-radius: 0;
-        min-height: 100vh;
         gap: 0;
-        margin: 0;
+        margin: 0; 
         width: 100%;
         max-width: 100%;
+        /* No fixed height, let content scroll */
     }
 
     .mobile-menu-toggle {
         display: flex; 
     }
 
-    .sidebar {
-        position: fixed;
+    .sidebar { /* Left sidebar becomes mobile overlay menu */
+        position: fixed; /* Not sticky, but fixed for overlay */
         left: 0;
         top: 0;
         width: 250px;
-        height: 100vh;
+        height: 100vh; /* Full viewport height */
         z-index: 1000;
         transform: translateX(-100%);
         border-right: 1px solid #e0e0e0;
         box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        padding-top: 60px; /* Space below fixed toggle */
+        padding-top: 60px; /* Space for toggle button if it were above */
+        overflow-y: auto; /* Scrollable if content exceeds height */
     }
     body.sidebar-open .sidebar {
         transform: translateX(0%);
@@ -429,15 +468,15 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
 
     .main-content, .right-sidebar {
         height: auto; 
-        overflow-y: visible;
+        overflow-y: visible; /* Allow natural scrolling within page flow */
+        position: static; /* Ensure no sticky positioning interferes */
     }
     .main-content {
         padding: 15px;
-        margin-top: 0;
+        margin-top: 0; 
     }
      .main-content > header {
-        /* Mobile toggle button: top 15px + height 45px = 60px. Add some buffer. */
-        margin-top: 70px; 
+        margin-top: 70px; /* Space for fixed mobile toggle button */
         margin-bottom: 20px;
     }
 
@@ -451,19 +490,26 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
         overflow-x: auto;
         padding-bottom: 15px;
         -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin; /* For Firefox */
+        scrollbar-width: thin;
     }
     .department-filter-controls::-webkit-scrollbar { height: 5px; }
     .department-filter-controls::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
     .filter-btn {
-        flex-shrink: 0; /* Prevent buttons from shrinking */
+        flex-shrink: 0;
         font-size: 0.9em; padding: 8px 16px;
     }
 
     .category-header h2 { font-size: 1.3em; }
-    .link-cards-grid { grid-template-columns: 1fr; gap: 15px; }
-    .card { min-height: auto; padding: 20px; }
-    .card:hover { transform: none; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .link-cards-grid { 
+        grid-template-columns: 1fr; /* Ensures single column for cards */
+        gap: 15px; 
+    }
+    .card { 
+        min-height: auto; /* Allow height to be determined by content */
+        padding: 20px;
+        width: 100%; /* Ensure card takes full width of the 1fr column */
+    }
+    .card:hover { transform: none; box-shadow: 0 2px 8px rgba(0,0,0,0.03); } /* Simplify hover on mobile */
     .card-button { padding: 10px 20px; font-size: 0.95em; }
 
     .right-sidebar {
@@ -484,16 +530,15 @@ body.sidebar-open .mobile-sidebar-overlay { /* Show when sidebar is open */
         font-size: 1.1em;
     }
     .main-content > header {
-       /* Mobile toggle button: top 10px + height 40px = 50px. Add some buffer. */
-       margin-top: 60px; 
+       margin-top: 60px; /* Adjust for smaller toggle */
     }
 
-    .sidebar {
+    .sidebar { /* Mobile overlay menu */
         width: 220px;
-        padding-top: 55px; /* Space below fixed toggle */
+        padding-top: 55px; /* Adjust for smaller toggle */
     }
     .sidebar .logo { padding-left: 5px; margin-bottom: 15px;}
-    .sidebar .logo span { font-size: 1.1em; }
+    .sidebar .logo span { font-size: 1.1em; /* Or display: none; */ }
     .sidebar .logo i { font-size: 1.3em; }
     .sidebar nav a { padding: 8px 12px; font-size: 0.85em; }
     .nav-section-title { font-size: 0.7em; padding: 8px 10px 4px 10px; }
