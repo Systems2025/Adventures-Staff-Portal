@@ -10,8 +10,8 @@ body {
     background-color: #f4f7fe;
     color: #333;
     min-height: 100vh;
-    position: relative; 
-    overflow-x: hidden; /* Generally good to prevent minor horizontal scroll issues */
+    position: relative;
+    overflow-x: hidden; /* Prevent minor horizontal scroll issues globally */
 }
 
 body.sidebar-open {
@@ -29,19 +29,17 @@ body.sidebar-open {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     width: 100%;
     max-width: 1400px;
-    /* min-height will be handled by content or specific media queries */
-    margin: 20px auto; 
-    /* overflow: hidden; Avoid this on the main container if its children define page length */
+    margin: 20px auto;
 }
 
 
 /* --- Mobile Menu Toggle Button --- */
 .mobile-menu-toggle {
-    display: none; 
+    display: none;
     position: fixed;
     top: 15px;
     left: 15px;
-    z-index: 1005; 
+    z-index: 1005;
     background-color: #4a47a3;
     color: white;
     border: none;
@@ -52,31 +50,31 @@ body.sidebar-open {
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     transition: background-color 0.3s ease;
-    align-items: center; 
-    justify-content: center; 
+    align-items: center;
+    justify-content: center;
 }
 .mobile-menu-toggle:hover {
     background-color: #3a368a;
 }
-.mobile-menu-toggle i.fa-times { 
+.mobile-menu-toggle i.fa-times {
     font-size: 1.3em;
 }
 
 
 /* --- Mobile Sidebar Overlay --- */
 .mobile-sidebar-overlay {
-    display: none; 
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999; 
+    z-index: 999;
     transition: opacity 0.3s ease-in-out;
     opacity: 0;
 }
-body.sidebar-open .mobile-sidebar-overlay { 
+body.sidebar-open .mobile-sidebar-overlay {
     display: block;
     opacity: 1;
 }
@@ -162,7 +160,7 @@ body.sidebar-open .mobile-sidebar-overlay {
 /* --- Main Content --- */
 .main-content {
     padding: 25px;
-    /* REMOVED overflow-y: auto; and fixed height to allow content to define page length */
+    /* Removed fixed height and overflow-y: auto to allow natural page scroll */
 }
 
 #pageContentWrapper, #rightSidebarContentWrapper {
@@ -289,7 +287,8 @@ body.sidebar-open .mobile-sidebar-overlay {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    min-height: 200px; /* Keep min-height for visual consistency if desired */
+    min-height: 200px;
+    overflow: hidden; /* Helps contain child elements, especially on mobile */
 }
 .card:hover {
     transform: translateY(-5px);
@@ -298,6 +297,7 @@ body.sidebar-open .mobile-sidebar-overlay {
 .card-icon {
     font-size: 2.5em;
     margin-bottom: 15px;
+    /* max-width: 100%; height: auto; if icons are images/SVG that might overflow */
 }
 /* Specific card icon colors */
 .job-icon { color: #28a745; } .gym-icon { color: #fd7e14; } .form-icon { color: #17a2b8; }
@@ -307,15 +307,19 @@ body.sidebar-open .mobile-sidebar-overlay {
 .library-icon { color: #a55eea; } .ops-request-icon { color: #ff6b6b; } .bizdev-request-icon { color: #1dd1a1; }
 .card.placeholder-card .card-icon { color: #aaa; } .calendar-icon {color: brown;} .Life-icon{color: blue;}
 
-.card h3 { 
+.card h3 {
     font-size: 1.1em; margin-bottom: 8px; font-weight: 600; color: #333;
-    overflow-wrap: break-word; /* Help prevent overflow from long words */
-    word-break: break-word; /* Broader support for word breaking */
+    width: 100%; /* Prevent h3 from expanding card */
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto; /* Optional */
 }
-.card p { 
+.card p {
     font-size: 0.9em; color: #666; margin-bottom: 15px; flex-grow: 1;
-    overflow-wrap: break-word; /* Help prevent overflow from long words */
-    word-break: break-word; /* Broader support for word breaking */
+    width: 100%; /* Prevent p from expanding card */
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto; /* Optional */
 }
 .card-button {
     display: inline-block; background-color: #4a47a3; color: #fff; padding: 8px 18px;
@@ -329,13 +333,12 @@ body.sidebar-open .mobile-sidebar-overlay {
 .right-sidebar {
     background-color: #fff; padding: 25px; border-left: 1px solid #e0e0e0;
     display: flex; flex-direction: column; gap: 25px;
-    /* REMOVED overflow-y: auto; and fixed height to allow content to define page length */
 
     /* Desktop: Sticky and independently scrollable */
     position: sticky;
-    top: 20px; /* Align with portal-container margin-top */
-    height: calc(100vh - 40px); /* Fill viewport height minus top/bottom margins */
-    overflow-y: auto; /* Allow sidebar to scroll if its content is too long */
+    top: 20px;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
 }
 
 /* Registration Forms Widget Styling */
@@ -344,28 +347,19 @@ body.sidebar-open .mobile-sidebar-overlay {
     border: 1px solid #e8ecf7;
     display: flex;
     flex-direction: column;
-    /* overflow: hidden; REMOVED - let widget content flow within scrolling sidebar */
-    flex-grow: 1; 
+    flex-grow: 1;
 }
 .widget-header {
     display: flex; align-items: center; margin-bottom: 15px;
     padding-bottom: 10px; border-bottom: 1px solid #e0e6ed;
-    flex-shrink: 0; 
+    flex-shrink: 0;
 }
 .widget-header i { font-size: 1.3em; color: #4a47a3; margin-right: 10px; }
 .widget-header h3 { font-size: 1.15em; font-weight: 600; color: #333; margin: 0; }
-
 .widget-scroll-container {
-    /* This container will now scroll as part of the .right-sidebar scroll */
-    flex-grow: 1; 
-    /* padding-right: 5px; Only if individual scrollbar is needed */
+    flex-grow: 1;
+    /* Scrolls as part of .right-sidebar */
 }
-/* Styles for individual scrollbar (if .widget-scroll-container had overflow: auto and fixed height) */
-/* .widget-scroll-container::-webkit-scrollbar { width: 6px; } */
-/* .widget-scroll-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; } */
-/* .widget-scroll-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; } */
-/* .widget-scroll-container::-webkit-scrollbar-thumb:hover { background: #aaa; } */
-
 .form-group { margin-bottom: 20px; }
 .form-group:last-child { margin-bottom: 0; }
 .form-group-title {
@@ -392,91 +386,90 @@ body.sidebar-open .mobile-sidebar-overlay {
 @media (max-width: 1199.98px) { /* Large devices */
     .portal-container { grid-template-columns: 220px 1fr 280px; gap: 20px; }
     .sidebar, .right-sidebar {
-        /* Ensure sticky positioning is maintained or adjusted if needed for this breakpoint */
-        top: 20px; /* Adjust if portal margin changes */
-        height: calc(100vh - 40px); /* Adjust if portal margin changes */
+        top: 20px;
+        height: calc(100vh - 40px);
     }
 }
 
 @media (max-width: 991.98px) { /* Medium devices (tablets) */
     .portal-container {
-        grid-template-columns: 200px 1fr; /* Left Sidebar | Main Content Area (which will stack main & right) */
+        grid-template-columns: 200px 1fr;
         grid-template-areas:
-            "sidebar main"    /* Main content area */
-            "sidebar right";  /* Right sidebar content stacked below main */
+            "sidebar main"
+            "sidebar right";
         gap: 15px;
         margin: 15px auto;
         max-width: 95%;
-        /* Remove min-height to let content dictate page length */
     }
     .sidebar { /* Left sidebar remains sticky on tablet */
         position: sticky;
-        top: 15px; /* Align with new portal-container margin */
-        height: calc(100vh - 30px); /* Adjust for new margin */
+        top: 15px;
+        height: calc(100vh - 30px);
         overflow-y: auto;
     }
     .main-content, .right-sidebar {
         position: static; /* Override sticky from desktop */
-        height: auto;     /* Allow content to determine height */
+        height: auto;
         overflow-y: visible; /* Scroll with the page */
     }
     .main-content { grid-area: main; padding: 20px; }
-    .right-sidebar { 
-        grid-area: right; 
-        border-left: none; 
-        border-top: 1px solid #e0e0e0; 
-        padding: 20px; 
+    .right-sidebar {
+        grid-area: right;
+        border-left: none;
+        border-top: 1px solid #e0e0e0;
+        padding: 20px;
     }
     .search-bar { width: 80%; }
-    .mobile-menu-toggle { display: none; } /* Still hidden on tablet */
+    .mobile-menu-toggle { display: none; }
 }
 
 @media (max-width: 767.98px) { /* Small devices (landscape phones, portrait tablets) */
     .portal-container {
-        grid-template-columns: 1fr; 
-        grid-template-areas: 
+        grid-template-columns: 1fr;
+        grid-template-areas:
             "main"
             "right";
         border-radius: 0;
         gap: 0;
-        margin: 0; 
+        margin: 0;
         width: 100%;
         max-width: 100%;
-        /* No fixed height, let content scroll */
+        overflow-x: hidden; /* Prevent horizontal scroll on the main container */
     }
 
     .mobile-menu-toggle {
-        display: flex; 
+        display: flex;
     }
 
     .sidebar { /* Left sidebar becomes mobile overlay menu */
-        position: fixed; /* Not sticky, but fixed for overlay */
+        position: fixed;
         left: 0;
         top: 0;
         width: 250px;
-        height: 100vh; /* Full viewport height */
+        height: 100vh;
         z-index: 1000;
         transform: translateX(-100%);
         border-right: 1px solid #e0e0e0;
         box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        padding-top: 60px; /* Space for toggle button if it were above */
-        overflow-y: auto; /* Scrollable if content exceeds height */
+        padding-top: 60px;
+        overflow-y: auto;
     }
     body.sidebar-open .sidebar {
         transform: translateX(0%);
     }
 
     .main-content, .right-sidebar {
-        height: auto; 
-        overflow-y: visible; /* Allow natural scrolling within page flow */
-        position: static; /* Ensure no sticky positioning interferes */
+        height: auto;
+        overflow-y: visible;
+        position: static;
     }
     .main-content {
         padding: 15px;
-        margin-top: 0; 
+        margin-top: 0;
+        overflow-x: hidden; /* Prevent horizontal scroll within main content */
     }
      .main-content > header {
-        margin-top: 70px; /* Space for fixed mobile toggle button */
+        margin-top: 70px;
         margin-bottom: 20px;
     }
 
@@ -498,19 +491,50 @@ body.sidebar-open .mobile-sidebar-overlay {
         flex-shrink: 0;
         font-size: 0.9em; padding: 8px 16px;
     }
+    
+    .categories-container, .category-section {
+        overflow-x: hidden; /* Prevent these containers from causing horizontal scroll */
+    }
 
     .category-header h2 { font-size: 1.3em; }
-    .link-cards-grid { 
-        grid-template-columns: 1fr; /* Ensures single column for cards */
-        gap: 15px; 
+
+    .link-cards-grid {
+        grid-template-columns: 1fr; /* Single column for cards */
+        gap: 15px;
+        width: 100%; /* Grid takes full available width */
     }
-    .card { 
-        min-height: auto; /* Allow height to be determined by content */
-        padding: 20px;
-        width: 100%; /* Ensure card takes full width of the 1fr column */
+    .card {
+        min-height: auto;
+        padding: 15px;
+        width: 100%; /* Card takes full width of its grid column */
+        max-width: 100%; /* Explicitly prevent card from exceeding parent */
+        text-align: left;
+        align-items: flex-start;
+        /* overflow: visible; If you need to debug child overflow, then set to hidden */
     }
-    .card:hover { transform: none; box-shadow: 0 2px 8px rgba(0,0,0,0.03); } /* Simplify hover on mobile */
-    .card-button { padding: 10px 20px; font-size: 0.95em; }
+    .card-icon {
+        font-size: 2em;
+        margin-bottom: 10px;
+        align-self: center; /* Center icon if card text is left-aligned */
+    }
+    .card h3 {
+        font-size: 1em;
+        margin-bottom: 6px;
+        align-self: stretch;
+        text-align: center; /* Or left, depending on desired look */
+    }
+    .card p {
+        font-size: 0.85em;
+        margin-bottom: 12px;
+        align-self: stretch;
+        text-align: left;
+    }
+    .card-button {
+        padding: 9px 15px;
+        font-size: 0.9em;
+        align-self: center;
+    }
+    .card:hover { transform: none; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
 
     .right-sidebar {
         padding: 15px;
@@ -530,15 +554,18 @@ body.sidebar-open .mobile-sidebar-overlay {
         font-size: 1.1em;
     }
     .main-content > header {
-       margin-top: 60px; /* Adjust for smaller toggle */
+       margin-top: 60px;
+    }
+    .main-content {
+        padding: 10px;
     }
 
-    .sidebar { /* Mobile overlay menu */
+    .sidebar {
         width: 220px;
-        padding-top: 55px; /* Adjust for smaller toggle */
+        padding-top: 55px;
     }
     .sidebar .logo { padding-left: 5px; margin-bottom: 15px;}
-    .sidebar .logo span { font-size: 1.1em; /* Or display: none; */ }
+    .sidebar .logo span { font-size: 1.1em; }
     .sidebar .logo i { font-size: 1.3em; }
     .sidebar nav a { padding: 8px 12px; font-size: 0.85em; }
     .nav-section-title { font-size: 0.7em; padding: 8px 10px 4px 10px; }
@@ -546,13 +573,28 @@ body.sidebar-open .mobile-sidebar-overlay {
     .welcome-banner h2 { font-size: 1.1em; }
     .welcome-banner p { font-size: 0.85em; }
 
-    .department-filter-controls { justify-content: flex-start; } 
+    .department-filter-controls { justify-content: flex-start; }
     .filter-btn { font-size: 0.85em; padding: 7px 14px; }
 
     .category-header h2 { font-size: 1.2em; }
     .category-description { font-size: 0.9em; margin-bottom: 15px; }
-    .card p { font-size: 0.85em; }
-    .card-button { padding: 9px 18px; font-size: 0.9em; }
+    
+    .card {
+        padding: 12px;
+    }
+    .card-icon {
+        font-size: 1.8em;
+    }
+    .card h3 {
+        font-size: 0.95em;
+    }
+    .card p {
+        font-size: 0.8em;
+    }
+    .card-button {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
 
     .widget-header i { font-size: 1.2em; }
     .widget-header h3 { font-size: 1em; }
