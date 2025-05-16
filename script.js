@@ -4,16 +4,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const pageContentWrapper = document.getElementById('pageContentWrapper');
     const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper');
 
-    // Simplified visibility for non-login page setup
+    // --- Simplified visibility for non-login page setup ---
+    // If using a separate login page, comment out these lines and uncomment the auth block below.
     if (pageContentWrapper) pageContentWrapper.style.display = 'block';
     if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
     initializeUIElements();
+    // --- End of simplified visibility ---
 
     /*
     // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE ---
-    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3';
+    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; // Choose a unique key
+
     function isPortalAuthenticated() {
-        return sessionStorage.getItem(PORTAL_UNLOCKED_KEY) === 'true';
+        // Check sessionStorage for the key
+        const authenticated = sessionStorage.getItem(PORTAL_UNLOCKED_KEY) === 'true';
+        // console.log("Is portal authenticated:", authenticated);
+        return authenticated;
     }
 
     if (isPortalAuthenticated()) {
@@ -21,10 +27,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
         initializeUIElements();
     } else {
-        // window.location.href = 'login.html'; // Redirect to login page
-        // return; // Stop further execution
-        // For testing without login, temporarily show content and init UI
-        console.warn("Authentication bypassed for testing. Login page logic is commented out.");
+        // If not authenticated, redirect to login.html (or your login page)
+        // Ensure 'login.html' exists or change to your actual login page path.
+        // window.location.href = 'login.html';
+        // console.log("User not authenticated. Redirecting to login page (currently commented out).");
+
+        // For development: if login is not set up, you might want to show content anyway.
+        // Remove or comment this out for production if login is mandatory.
+        console.warn("Authentication check failed or login page redirect is commented out. Displaying content for development.");
         if (pageContentWrapper) pageContentWrapper.style.display = 'block';
         if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
         initializeUIElements();
@@ -32,14 +42,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- END OF LOGIN PAGE AUTHENTICATION BLOCK ---
     */
 
+
     function initializeUIElements() {
         console.log("Initializing UI elements...");
         initializeDepartmentToggles();
-        initializeSidebarCollapsibles();
-        setupResponsiveWidgetCollapsibles();
+        initializeSidebarCollapsibles(); // This will only work if collapsible HTML structure is present in sidebar
+        // Right sidebar widget collapsible JS has been removed as HTML structure changed.
     }
 
-    // --- Sidebar Collapsible Logic (for social links) ---
+    // --- Sidebar Collapsible Logic (for social links or any other .collapsible section) ---
+    // This function remains in case you want to add collapsible sections to the sidebar later.
+    // It will only affect elements with '.nav-section.collapsible' and '.collapsible-toggle'.
     function initializeSidebarCollapsibles() {
         const collapsibleToggles = document.querySelectorAll('.sidebar-navigation .collapsible-toggle');
 
@@ -53,13 +66,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const icon = this.querySelector('.toggle-icon-sidebar');
 
                 if (content && parentNavSection && icon) {
-                    parentNavSection.classList.toggle('open'); // For CSS to rotate icon (if .open class is used)
+                    parentNavSection.classList.toggle('open');
 
                     if (content.style.display === "none" || content.style.display === "") {
                         icon.classList.remove('fa-chevron-down');
                         icon.classList.add('fa-chevron-up');
                         content.style.display = "block";
-                        requestAnimationFrame(() => { // Ensure display change has rendered
+                        requestAnimationFrame(() => {
                            content.style.maxHeight = content.scrollHeight + "px";
                         });
                     } else {
@@ -67,116 +80,23 @@ document.addEventListener('DOMContentLoaded', function() {
                         icon.classList.add('fa-chevron-down');
                         content.style.maxHeight = "0";
                         content.addEventListener('transitionend', function handler() {
-                            // Only set display to none if it's still intended to be closed
-                            if (content.style.maxHeight === "0px") {
+                            if (content.style.maxHeight === "0px") { // Check if still closing
                                 content.style.display = "none";
                             }
                             content.removeEventListener('transitionend', handler);
                         }, { once: true });
                     }
+                } else {
+                    // console.warn("Collapsible structure incomplete for:", this);
                 }
             });
             toggle.dataset.listenerAttached = 'true';
         });
+        if (collapsibleToggles.length === 0) {
+            // console.log("No sidebar collapsible toggles found to initialize.");
+        }
     }
 
-    // --- Registration Forms Widget Collapsible Logic (Responsive) ---
-    let widgetCollapsibleHandlers = [];
-
-    function applyWidgetCollapsibleBehavior() {
-        removeWidgetCollapsibleListeners();
-
-        const widgetCollapsibleToggles = document.querySelectorAll('.registration-forms-widget .collapsible-widget-toggle');
-        const mobileBreakpoint = 768; // Same as CSS media query breakpoint
-
-        widgetCollapsibleToggles.forEach(toggle => {
-            const parentGroup = toggle.closest('.collapsible-widget-group');
-            const content = toggle.nextElementSibling; // ul.widget-links-list.collapsible-widget-content
-            const icon = toggle.querySelector('.toggle-icon-widget');
-
-            if (!content || !parentGroup || !icon) {
-                console.warn("Skipping widget: missing elements for", toggle);
-                return;
-            }
-            
-            // Ensure CSS transition is present on the content element
-            // content.style.transition = 'max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out';
-
-
-            if (window.innerWidth > mobileBreakpoint) {
-                // DESKTOP: Always open
-                parentGroup.classList.add('open');
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-up');
-                content.style.display = 'block';
-                content.style.maxHeight = content.scrollHeight + 'px';
-                // Remove any mobile click listener
-                // (already handled by removeWidgetCollapsibleListeners)
-            } else {
-                // MOBILE: Collapsible
-                // Set initial state based on whether .open class is already there (e.g. from previous interaction)
-                // or default to closed if no .open class.
-                const isInitiallyOpen = parentGroup.classList.contains('open');
-
-                if (isInitiallyOpen) {
-                    icon.classList.remove('fa-chevron-down');
-                    icon.classList.add('fa-chevron-up');
-                    content.style.display = 'block';
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                } else {
-                    icon.classList.remove('fa-chevron-up');
-                    icon.classList.add('fa-chevron-down');
-                    content.style.maxHeight = '0';
-                    content.style.display = 'none';
-                }
-
-                const clickHandler = function(event) {
-                    event.preventDefault();
-                    const isOpen = parentGroup.classList.toggle('open');
-
-                    if (isOpen) {
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
-                        content.style.display = 'block';
-                        requestAnimationFrame(() => {
-                            content.style.maxHeight = content.scrollHeight + 'px';
-                        });
-                    } else {
-                        icon.classList.remove('fa-chevron-up');
-                        icon.classList.add('fa-chevron-down');
-                        content.style.maxHeight = '0';
-                        content.addEventListener('transitionend', function transitionEnd() {
-                            if (!parentGroup.classList.contains('open')) {
-                                content.style.display = 'none';
-                            }
-                            content.removeEventListener('transitionend', transitionEnd);
-                        }, { once: true });
-                    }
-                };
-                toggle.addEventListener('click', clickHandler);
-                widgetCollapsibleHandlers.push({ element: toggle, type: 'click', handler: clickHandler });
-            }
-        });
-    }
-
-    function removeWidgetCollapsibleListeners() {
-        widgetCollapsibleHandlers.forEach(item => {
-            item.element.removeEventListener(item.type, item.handler);
-        });
-        widgetCollapsibleHandlers = [];
-    }
-
-    function setupResponsiveWidgetCollapsibles() {
-        applyWidgetCollapsibleBehavior(); // Initial setup
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                console.log("Resizing, re-applying widget collapsible behavior");
-                applyWidgetCollapsibleBehavior();
-            }, 250);
-        });
-    }
 
     // --- Department Filter Logic ---
     function initializeDepartmentToggles() {
@@ -204,18 +124,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
 
-            // Set initial view based on the 'active' button or default to 'all'
             const initialActiveFilterButton = document.querySelector('.department-filter-controls .filter-btn.active');
             if (initialActiveFilterButton) {
                 updateCategoryVisibility(initialActiveFilterButton.dataset.filter);
-            } else if (filterButtons.length > 0) { // If no explicit active, make the first one active
-                filterButtons[0].classList.add('active');
+            } else if (filterButtons.length > 0) {
+                filterButtons[0].classList.add('active'); // Default to first button if none are active
                 updateCategoryVisibility(filterButtons[0].dataset.filter);
-            } else { // Fallback if no buttons at all (should not happen with current HTML)
-                 updateCategoryVisibility('all');
+            } else {
+                 updateCategoryVisibility('all'); // Fallback
             }
         } else {
-            console.warn("Filter buttons or category sections not found. Filtering will not work.");
+            // console.warn("Filter buttons or category sections not found. Filtering will not work.");
         }
     }
 });
