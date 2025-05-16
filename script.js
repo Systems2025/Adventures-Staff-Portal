@@ -1,82 +1,78 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Main portal (index.html) DOM loaded.");
 
-    // --- Simplified visibility for non-login page setup ---
-    // If using a separate login page, comment out these lines and uncomment the auth block below.
     const pageContentWrapper = document.getElementById('pageContentWrapper');
-    const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
+    const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper');
+
+    // Simplified visibility for non-login page setup
     if (pageContentWrapper) pageContentWrapper.style.display = 'block';
     if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
     initializeUIElements();
-    // --- End of simplified visibility ---
 
-    /* 
+    /*
     // --- UNCOMMENT THIS BLOCK IF USING SEPARATE LOGIN PAGE ---
-    const pageContentWrapper = document.getElementById('pageContentWrapper');
-    const rightSidebarContentWrapper = document.getElementById('rightSidebarContentWrapper'); 
-    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; 
-
+    const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3';
     function isPortalAuthenticated() {
-        const authenticated = sessionStorage.getItem(PORTAL_UNLOCKED_KEY) === 'true';
-        return authenticated;
+        return sessionStorage.getItem(PORTAL_UNLOCKED_KEY) === 'true';
     }
 
     if (isPortalAuthenticated()) {
         if (pageContentWrapper) pageContentWrapper.style.display = 'block';
-        if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block'; 
+        if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
         initializeUIElements();
     } else {
-        window.location.href = 'login.html'; 
-        return; 
+        // window.location.href = 'login.html'; // Redirect to login page
+        // return; // Stop further execution
+        // For testing without login, temporarily show content and init UI
+        console.warn("Authentication bypassed for testing. Login page logic is commented out.");
+        if (pageContentWrapper) pageContentWrapper.style.display = 'block';
+        if (rightSidebarContentWrapper) rightSidebarContentWrapper.style.display = 'block';
+        initializeUIElements();
     }
     // --- END OF LOGIN PAGE AUTHENTICATION BLOCK ---
     */
 
-
     function initializeUIElements() {
         console.log("Initializing UI elements...");
         initializeDepartmentToggles();
-        initializeSidebarCollapsibles(); 
+        initializeSidebarCollapsibles();
         setupResponsiveWidgetCollapsibles();
     }
 
     // --- Sidebar Collapsible Logic (for social links) ---
     function initializeSidebarCollapsibles() {
         const collapsibleToggles = document.querySelectorAll('.sidebar-navigation .collapsible-toggle');
-        
+
         collapsibleToggles.forEach(toggle => {
-            // Prevent attaching multiple listeners if this function is called again
             if (toggle.dataset.listenerAttached === 'true') return;
 
             toggle.addEventListener('click', function(event) {
-                event.preventDefault(); 
+                event.preventDefault();
                 const parentNavSection = this.closest('.nav-section.collapsible');
                 const content = this.nextElementSibling; // Assumes ul is direct sibling of h4
                 const icon = this.querySelector('.toggle-icon-sidebar');
 
                 if (content && parentNavSection && icon) {
-                    parentNavSection.classList.toggle('open'); // For CSS to rotate icon
+                    parentNavSection.classList.toggle('open'); // For CSS to rotate icon (if .open class is used)
 
-                    // Toggle display for the content
                     if (content.style.display === "none" || content.style.display === "") {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
                         content.style.display = "block";
-                        // Animate max-height for opening
-                        // Set max-height to scrollHeight after display is block to get correct height
                         requestAnimationFrame(() => { // Ensure display change has rendered
                            content.style.maxHeight = content.scrollHeight + "px";
                         });
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
                     } else {
-                        content.style.maxHeight = "0"; // Animate max-height for closing
-                        // Listen for transition end to set display to none for accessibility
-                        // and to ensure scrollHeight is 0 if re-opened before transition fully ends.
-                        content.addEventListener('transitionend', function handler() {
-                            content.style.display = "none";
-                            content.removeEventListener('transitionend', handler);
-                        });
                         icon.classList.remove('fa-chevron-up');
                         icon.classList.add('fa-chevron-down');
+                        content.style.maxHeight = "0";
+                        content.addEventListener('transitionend', function handler() {
+                            // Only set display to none if it's still intended to be closed
+                            if (content.style.maxHeight === "0px") {
+                                content.style.display = "none";
+                            }
+                            content.removeEventListener('transitionend', handler);
+                        }, { once: true });
                     }
                 }
             });
@@ -84,65 +80,77 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- Registration Forms Widget Collapsible Logic (Mobile Only) ---
-    let widgetCollapsibleHandlers = []; 
+    // --- Registration Forms Widget Collapsible Logic (Responsive) ---
+    let widgetCollapsibleHandlers = [];
 
     function applyWidgetCollapsibleBehavior() {
-        removeWidgetCollapsibleListeners(); 
+        removeWidgetCollapsibleListeners();
 
         const widgetCollapsibleToggles = document.querySelectorAll('.registration-forms-widget .collapsible-widget-toggle');
-        const mobileBreakpoint = 768;
+        const mobileBreakpoint = 768; // Same as CSS media query breakpoint
 
         widgetCollapsibleToggles.forEach(toggle => {
             const parentGroup = toggle.closest('.collapsible-widget-group');
-            const content = toggle.nextElementSibling; 
+            const content = toggle.nextElementSibling; // ul.widget-links-list.collapsible-widget-content
             const icon = toggle.querySelector('.toggle-icon-widget');
 
-            if (!content || !parentGroup || !icon) return;
+            if (!content || !parentGroup || !icon) {
+                console.warn("Skipping widget: missing elements for", toggle);
+                return;
+            }
             
-            // Reset styles/classes before applying new state
-            content.style.maxHeight = ""; 
-            content.classList.remove('open-mobile', 'collapsed-mobile');
-            parentGroup.classList.remove('open');
-            icon.classList.remove('fa-chevron-up');
-            icon.classList.add('fa-chevron-down');
+            // Ensure CSS transition is present on the content element
+            // content.style.transition = 'max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out';
+
 
             if (window.innerWidth > mobileBreakpoint) {
-                // DESKTOP: Ensure content is expanded
-                content.style.display = 'block'; // Make sure it's visible
-                content.style.maxHeight = content.scrollHeight + "px"; 
-                parentGroup.classList.add('open'); 
+                // DESKTOP: Always open
+                parentGroup.classList.add('open');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+                content.style.display = 'block';
+                content.style.maxHeight = content.scrollHeight + 'px';
+                // Remove any mobile click listener
+                // (already handled by removeWidgetCollapsibleListeners)
             } else {
-                // MOBILE: Set up for collapsing, ensure initially collapsed
-                content.style.display = 'none'; // Start hidden on mobile
-                parentGroup.classList.remove('open');
+                // MOBILE: Collapsible
+                // Set initial state based on whether .open class is already there (e.g. from previous interaction)
+                // or default to closed if no .open class.
+                const isInitiallyOpen = parentGroup.classList.contains('open');
+
+                if (isInitiallyOpen) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                    content.style.display = 'block';
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                } else {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                    content.style.maxHeight = '0';
+                    content.style.display = 'none';
+                }
 
                 const clickHandler = function(event) {
                     event.preventDefault();
-                    parentGroup.classList.toggle('open'); 
-                    
-                    if (content.style.display === "none" || content.style.display === "") {
-                        content.style.display = 'block';
-                        requestAnimationFrame(() => {
-                            content.style.maxHeight = content.scrollHeight + "px";
-                        });
-                        content.classList.add('open-mobile'); // Add class after display change for transition
-                        content.classList.remove('collapsed-mobile');
+                    const isOpen = parentGroup.classList.toggle('open');
+
+                    if (isOpen) {
                         icon.classList.remove('fa-chevron-down');
                         icon.classList.add('fa-chevron-up');
+                        content.style.display = 'block';
+                        requestAnimationFrame(() => {
+                            content.style.maxHeight = content.scrollHeight + 'px';
+                        });
                     } else {
-                        content.style.maxHeight = null; // Start collapse animation
-                        content.classList.remove('open-mobile');
-                        content.classList.add('collapsed-mobile');
                         icon.classList.remove('fa-chevron-up');
                         icon.classList.add('fa-chevron-down');
-                        // Set display to none after transition for accessibility and proper re-opening
-                        content.addEventListener('transitionend', function handler() {
-                            if (!content.classList.contains('open-mobile')) { // Check if it's still meant to be closed
-                                content.style.display = "none";
+                        content.style.maxHeight = '0';
+                        content.addEventListener('transitionend', function transitionEnd() {
+                            if (!parentGroup.classList.contains('open')) {
+                                content.style.display = 'none';
                             }
-                            content.removeEventListener('transitionend', handler);
-                        }, { once: true }); // Ensure listener fires only once per transition
+                            content.removeEventListener('transitionend', transitionEnd);
+                        }, { once: true });
                     }
                 };
                 toggle.addEventListener('click', clickHandler);
@@ -159,14 +167,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function setupResponsiveWidgetCollapsibles() {
-        applyWidgetCollapsibleBehavior(); 
+        applyWidgetCollapsibleBehavior(); // Initial setup
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
                 console.log("Resizing, re-applying widget collapsible behavior");
-                applyWidgetCollapsibleBehavior(); 
-            }, 250); 
+                applyWidgetCollapsibleBehavior();
+            }, 250);
         });
     }
 
@@ -196,16 +204,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
 
+            // Set initial view based on the 'active' button or default to 'all'
             const initialActiveFilterButton = document.querySelector('.department-filter-controls .filter-btn.active');
             if (initialActiveFilterButton) {
                 updateCategoryVisibility(initialActiveFilterButton.dataset.filter);
-            } else {
-                if (filterButtons.length > 0) {
-                    filterButtons[0].classList.add('active');
-                    updateCategoryVisibility(filterButtons[0].dataset.filter);
-                } else {
-                     updateCategoryVisibility('all');
-                }
+            } else if (filterButtons.length > 0) { // If no explicit active, make the first one active
+                filterButtons[0].classList.add('active');
+                updateCategoryVisibility(filterButtons[0].dataset.filter);
+            } else { // Fallback if no buttons at all (should not happen with current HTML)
+                 updateCategoryVisibility('all');
             }
         } else {
             console.warn("Filter buttons or category sections not found. Filtering will not work.");
