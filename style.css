@@ -43,17 +43,25 @@ body {
 .sidebar .logo {
     display: flex;
     align-items: center;
-    font-size: 1.3em;
-    font-weight: 600;
-    color: #4a47a3;
+    /* font-size: 1.3em; */ /* Using image now */
+    /* font-weight: 600; */
+    color: #4a47a3; /* For icon if kept */
     margin-bottom: 20px; 
     padding-left: 10px;
+    height: 40px; /* Example height for logo area */
 }
 
-.sidebar .logo i {
+.sidebar .logo i { /* For the mountain icon */
     margin-right: 10px;
-    font-size: 1.5em;
+    font-size: 1.8em; 
+    color: #4a47a3; 
+    line-height: 1; 
 }
+.logo-image { /* For your actual image logo */
+    height: 35px; 
+    width: auto;   
+}
+
 
 .sidebar .sidebar-navigation {
     margin-top: 0; 
@@ -357,7 +365,7 @@ body {
     cursor: default; 
     background-color: #f0f4f8; 
     border-radius: 4px;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, border-radius 0.2s ease; /* Added border-radius transition */
 }
 .form-group-title i:first-child { 
     margin-right: 8px;
@@ -384,23 +392,27 @@ body {
     max-height: 500px; /* Default expanded for desktop */
     padding-left: 5px; 
     background-color: #fff; 
-    /* Default state for desktop: expanded content */
-    /* JS will add 'collapsed-mobile' for initial mobile state */
-    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out;
+    transition: max-height 0.35s ease-out, padding-top 0.35s ease-out, padding-bottom 0.35s ease-out, border 0.35s ease-out;
+    /* Add border transition */
 }
+/* This class is ADDED by JS for mobile collapse/expand */
 .widget-links-list.collapsible-widget-content.collapsed-mobile {
-    max-height: 0 !important;
+    max-height: 0 !important; 
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     border-top: none !important;
     margin-top: 0 !important;
+    border: 1px solid transparent !important; /* Ensure no border when collapsed */
+
 }
 .widget-links-list.collapsible-widget-content.open-mobile {
-    max-height: 500px !important; /* Or scrollHeight via JS */
+    max-height: 500px !important; 
     padding-top: 10px !important;
     padding-bottom: 10px !important;
-    border-top: 1px solid #e0e6ed !important; 
-    margin-top: -1px !important; 
+    border: 1px solid #f0f4f8 !important; /* Match title background */
+    border-top: none !important;
+    border-radius: 0 0 4px 4px !important;
+    margin-top: 0 !important; 
 }
 
 
@@ -499,23 +511,25 @@ body {
     }
     .form-group-title i:first-child { font-size: 0.9em; }
     .toggle-icon-widget {
-        display: inline-block; /* Show toggle icon on mobile */
+        display: inline-block; 
     }
+    /* Mobile: ensure lists start collapsed and transition correctly */
     .widget-links-list.collapsible-widget-content {
-        /* JS will add .collapsed-mobile and .open-mobile as needed */
-        background-color: transparent; 
-        border:none;
-        box-shadow: none;
-        padding-left: 0;
-        /* transition is set on .open-mobile */
+        background-color: #fff; /* Give a background for mobile when open */
+        border: 1px solid #eef2ff;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        padding-left: 10px; /* Indent links when open */
+        /* max-height and padding for open/closed handled by .collapsed-mobile and .open-mobile */
     }
     .widget-links-list li { margin-bottom: 5px; }
     .widget-links-list a {
         font-size: 0.9em; 
         padding: 10px 8px; 
-        background-color: #fff; 
-        border: 1px solid #eef2ff;
-        border-radius: 4px;
+        background-color: transparent; /* Remove individual link background if parent has one */
+        border: none; /* Remove individual link border */
+        border-left-width: 3px; 
     }
     .form-link-icon { font-size: 1em; margin-right: 8px;}
 }
