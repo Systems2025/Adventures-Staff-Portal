@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitButton = document.getElementById('submitLoginButton');
     const errorParagraph = document.getElementById('loginError');
 
-    const PORTAL_PASSWORD = "BSK@2025"; // The global password
+    const PORTAL_PASSWORD = "bskstaff"; // The global password
     const PORTAL_UNLOCKED_KEY = 'portalUnlocked_v3'; // Use a consistent key
 
     if (!passwordInput || !submitButton || !errorParagraph) {
