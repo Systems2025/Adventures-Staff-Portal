@@ -297,15 +297,49 @@ body.sidebar-open .mobile-sidebar-overlay {
 .card-icon {
     font-size: 2.5em;
     margin-bottom: 15px;
-    /* max-width: 100%; height: auto; if icons are images/SVG that might overflow */
 }
-/* Specific card icon colors */
-.job-icon { color: #28a745; } .gym-icon { color: #fd7e14; } .form-icon { color: #17a2b8; }
-.route-icon { color: #6f42c1; } .staff-icon { color: #ffc107; } .input-icon { color: #007bff; }
-.impact-icon { color: #dc3545; } .changes-icon { color: #6c757d; } .story-icon { color: #e83e8c; }
-.review-icon { color: #20c997; } .funds-icon { color: #4B0082; } .space-booking-icon { color: #54a0ff; }
-.library-icon { color: #a55eea; } .ops-request-icon { color: #ff6b6b; } .bizdev-request-icon { color: #1dd1a1; }
-.card.placeholder-card .card-icon { color: #aaa; } .calendar-icon {color: brown;} .Life-icon{color: blue;}
+
+/* Specific card icon colors - UPDATED BLOCK */
+/* Adventures */
+.job-icon { color: #28a745; } /* Green */
+.gym-icon { color: #fd7e14; } /* Orange */
+.route-icon { color: #6f42c1; } /* Purple */
+.input-icon { color: #007bff; } /* Blue */
+.impact-icon { color: #dc3545; } /* Red */
+.staff-icon { color: #ffc107; } /* Yellow */
+.changes-icon { color: #6c757d; } /* Gray */
+
+/* Camp */
+.camper-reg-icon { color: #17a2b8; } /* Teal */
+.parent-feedback-icon { color: #20c997; } /* Mint Green */
+.staff-feedback-icon { color: #e83e8c; } /* Pink */
+
+/* Family Life */
+.calendar-icon { color: #8B4513; } /* Brown */
+.life-guard-icon { color: #3498db; } /* Bright Blue */
+
+/* Operations */
+.funds-icon { color: #4B0082; } /* Indigo */
+.space-booking-icon { color: #54a0ff; } /* Light Blue */
+.library-icon { color: #a55eea; } /* Light Purple */
+.ops-request-icon { color: #ff6b6b; } /* Coral */
+
+/* Business Development */
+.bizdev-request-icon { color: #1dd1a1; } /* Aqua Green */
+
+/* Team Development */
+.signature-icon { color: #6f42c1; } /* Purple */
+.contract-icon { color: #20c997; } /* Mint Green */
+.needs-assessment-icon { color: #007bff; } /* Blue */
+.aar-icon { color: #fd7e14; } /* Orange */
+.evaluation-icon { color: #e83e8c; } /* Pink */
+
+/* BlueSky General */
+.form-icon { color: #17a2b8; } /* Teal */
+.story-icon { color: #e83e8c; } /* Pink */
+.review-icon { color: #20c997; } /* Mint Green */
+.card.placeholder-card .card-icon { color: #aaa; }
+
 
 .card h3 {
     font-size: 1.1em; margin-bottom: 8px; font-weight: 600; color: #333;
